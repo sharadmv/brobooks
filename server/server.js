@@ -1,7 +1,6 @@
 var express = require('express');
 var app = express.createServer();
+var port = 8080;
 app.use(express.static('../static'));
-app.get('/', function(req, res){
-  res.send('Hello World');
-});
-app.listen(3000);
+app.listen(port);
+console.log("Server listening on port "+port);
