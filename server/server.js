@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express.createServer();
 app.use(express.static('../static'));
-var dao = require('./dao.js');
+var dao = require('./dao.js')("localhost:3306","root");
 var port = 80;
 app.use(express.static('../static'));
 app.get('/user.create', function(req, res) {
