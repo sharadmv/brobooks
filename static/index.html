@@ -2,6 +2,9 @@
 
 	<head>
 		<title>BroBooks</title>
+		<link rel="stylesheet" href="style.css">
+		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
 	</head>
 
 	<body>
@@ -10,12 +13,11 @@
 			window.fbAsyncInit = function() {
 				FB.init({
 					appId      : '305320992851654', // App ID
-					channelUrl : '//WWW.brobooks.COM/channel.html', // Channel File
 					status     : true, // check login status
 					cookie     : true, // enable cookies to allow the server to access the session
-					xfbml      : true  // parse XFBML
+					xfbml      : true,  // parse XFBML
+					oauth			 : true
 				});
-
 				// Additional initialization code here
 			};
 
@@ -27,10 +29,17 @@
 				d.getElementsByTagName('head')[0].appendChild(js);
 			}(document));
 		</script>
+		
+		<div id="namee"> 
+
+			<h1>BroBooks</h1>
+			<h2>Buying books from friends</h2>
+		</div>
 		<p>
-			A test of whether this will show up.
+			A test of whether tsdhis will show up.
 		</p>
-		<div class="fb-login-button">Login with Facebook</div>
+		<div class="fb-login-button" onclick="window.alert()" data-scope="email">Login with Facebook</div>
+		
 	</body>
 
 </html>
