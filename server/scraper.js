@@ -1,4 +1,5 @@
 var http = require('http');
+var fs = require('fs');
 var dataChunks = "";
 var util = {
   get:function(h, p, callback){
@@ -45,7 +46,7 @@ var util = {
 var scrapers = {
   catalog:function(name, callback) {
     util.post('sis.berkeley.edu',80,'/catalog/gcc_search_sends_request','p_offering=spring', function(str){
-      console.log(str.match(/(.*?)/g));
+      console.log(str.match(/[(].*?[)]/g));
     });
   },
   course:function(year, term, name, num, callback) {
@@ -160,6 +161,6 @@ scrapers.book('2012','spring','26335', function(books){
 //  console.log(books);
 });
 scrapers.course('2012','spring','comp sci','61b', function(courses){
-//  console.log(courses);
+  console.log(courses);
 });
 exports.Scrapers = scrapers;
