@@ -76,6 +76,7 @@ ul {
   -moz-transition: all 200ms;
   -webkit-transition: background 2000ms;
   -o-transition: all 200ms;
+  font-size: 1.2em;
 }
 
 .nav_ele:hover {
@@ -122,6 +123,12 @@ ul {
   background: -ms-linear-gradient(top, rgb(19, 32, 46) 0%, rgb(20, 35, 50) 20%, rgb(23, 38, 53) 50%, rgb(25, 35, 50) 80%, rgb(19, 32, 46) 100%);
   background: linear-gradient(top, rgb(19, 32, 46) 0%, rgb(20, 35, 50) 20%, rgb(23, 38, 53) 50%, rgb(25, 35, 50) 80%, rgb(19, 32, 46) 100%);
   position: relative;
+}
+
+#lining {
+  background: rgb(19, 32, 46);
+  height: 5px;
+  width: 100%;
 }
 
 #subtitle {
