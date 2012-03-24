@@ -2,10 +2,10 @@ var express = require('express');
 var scraper = require('./scraper.js').Scrapers;
 var app = express.createServer();
 var port = 80;
-app.use(express.static('../static'));
+app.use(express.static('../public/static'));
 app.listen(80);
 app.set('view engine', 'ejs');
-app.set('views','../views');
+app.set('views','../public/views');
 app.enable("jsonp callback");
 app.get('/', function(req,res) {
   res.render('home',{page:'home'});
