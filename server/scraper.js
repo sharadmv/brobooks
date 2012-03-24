@@ -80,7 +80,6 @@ var scrapers = {
               } else if (value.indexOf('DIS') != -1){
                 val = 'dis';
               } else if (value.indexOf('LAB') != -1){
-                console.log("LAB");
                 val = 'lab';
               } else if (value.indexOf('SEM') != -1){
                 val = 'sem';
@@ -161,6 +160,6 @@ scrapers.book('2012','spring','26335', function(books){
 //  console.log(books);
 });
 scrapers.course('2012','spring','comp sci','61b', function(courses){
-  console.log(courses);
+  //console.log(courses);
 });
 exports.Scrapers = scrapers;

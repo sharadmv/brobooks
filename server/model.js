@@ -23,7 +23,7 @@ model = {
     this.user = user;
     this.book = book;
     this.state = state;
-  }jflafwa,
+  },
   Offer:function(user,book,state,price,comment,time,loc) {
     this.user = user;
     this.book = book;
