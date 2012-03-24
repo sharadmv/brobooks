@@ -1,4 +1,18 @@
 model = {
+  Message:function(status,code,result,message){
+    this.status = status;
+    this.code = code;
+    this.result = result;
+    this.message = message;
+  },
+  Response:function(status, code, message, params, start, end, result){
+    this.status = status;
+    this.code = code;
+    this.params = params;
+    this.start = start;
+    this.end = end;
+    this.length = end - start;
+  },
   User:function(fbId, email, requests, offers) {
     this.fbId= fbId;
     this.requests = requests;

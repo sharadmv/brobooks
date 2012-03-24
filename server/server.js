@@ -1,5 +1,7 @@
 var express = require('express');
 var scraper = require('./scraper.js').Scrapers;
+var Model = require('./model.js').Model;`
+var Response = Model.Response;
 var app = express.createServer();
 var port = 80;
 app.use(express.static('../public/static'));
@@ -15,6 +17,25 @@ app.get('/buy', function(req,res){
 });
 app.get('/sell', function(req,res){
   res.render('sell',{page:'sell'});
+});
+app.get'/api/service',function(req,res){
+  start = new Date();
+  //basic sanitization
+  if (req.query['name']) {
+    var service = req.query['name'].split(".");
+    if (service.length > 2) {
+      response = new Response("failure",1337,"Service name improper",req.query,start,new Date(), null);
+      res.json(response);
+    } else {
+      router.route(service, req.query, function (r) {
+          response = new Response(r.status,r.code,r.message,req.query,start,new Date(),r.result);
+          res.json(response);
+      });  
+    }
+  } else {
+    response = new Response("failure",1337,"No service name given",req.query,start,new Date(),null); 
+    res.json(response);
+  }  
 });
 app.get('/api/scraper.course', function(req,res) {
   scraper.course(req.query['year'],req.query['term'],req.query['dep'],req.query['num'],function(obj){

@@ -1,6 +1,15 @@
 var http = require('http');
 var fs = require('fs');
 var dataChunks = "";
+var classes = [];
+//Load autocomplete
+fs.readFile('classes.txt', function(err,data){
+  if(err) {
+    console.error("Could not open file: %s", err);
+    process.exit(1);
+  }
+  classes = data.toString('ascii').split("\n");
+});
 var util = {
   get:function(h, p, callback){
     dataChunks = "";
@@ -45,9 +54,16 @@ var util = {
 };
 var scrapers = {
   catalog:function(name, callback) {
-    util.post('sis.berkeley.edu',80,'/catalog/gcc_search_sends_request','p_offering=spring', function(str){
+    var temp = [];
+    for (var i in classes){
+      if (classes[i].indexOf(name) != -1 ) {
+        temp.push(classes[i]);
+      }
+    } 
+    callback(temp);
+    /*util.post('sis.berkeley.edu',80,'/catalog/gcc_search_sends_request','p_offering=spring', function(str){
       console.log(str.match(/[(].*?[)]/g));
-    });
+    });*/
   },
   course:function(year, term, name, num, callback) {
     if (term.toLowerCase() == 'spring') {
@@ -92,7 +108,6 @@ var scrapers = {
               } else if (value.indexOf('DIS') != -1){
                 val = 'dis';
               } else if (value.indexOf('LAB') != -1){
-                console.log("LAB");
                 val = 'lab';
               } else if (value.indexOf('SEM') != -1){
                 val = 'sem';
