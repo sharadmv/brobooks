@@ -1,6 +1,6 @@
 var express = require('express');
 var scraper = require('./scraper.js').Scrapers;
-var Model = require('./model.js').Model;
+var Model = require('./model.js').model;
 var Response = Model.Response;
 var app = express.createServer();
 var port = 80;
@@ -18,7 +18,7 @@ app.get('/buy', function(req,res){
 app.get('/sell', function(req,res){
   res.render('sell',{page:'sell'});
 });
-app.get'/api/service',function(req,res){
+app.get('/api/service',function(req,res){
   start = new Date();
   //basic sanitization
   if (req.query['name']) {
