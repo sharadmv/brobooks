@@ -1,6 +1,6 @@
 var express = require('express');
 var scraper = require('./scraper.js').Scrapers;
-var Model = require('./model.js').Model;`
+var Model = require('./model.js').Model;
 var Response = Model.Response;
 var app = express.createServer();
 var port = 80;
