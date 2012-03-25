@@ -1,8 +1,8 @@
 var model = require('./model.js').model;
 var Message = model.Message;
 var Router = function(s, d){
-  this.dao = d;
-  this.scraper = {
+  var dao = d;
+  var scraper = {
     catalog:function(obj, callback){
       s.catalog(obj, callback);  
     },
