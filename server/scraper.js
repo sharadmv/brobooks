@@ -57,7 +57,7 @@ var scrapers = {
     var name = obj.name;
     var temp = [];
     for (var i in classes){
-      if (classes[i].indexOf(name) != -1 ) {
+      if (classes[i].toLowerCase().indexOf(name.toLowerCase()) != -1 ) {
         temp.push(classes[i]);
       }
     } 
@@ -67,14 +67,17 @@ var scrapers = {
     });*/
   },
   course:function(year, term, name, num, callback) {
-    if (term.toLowerCase() == 'spring') {
+    var year = obj['year']
+    var num = obj['num']
+    var term;
+    if (obj['term'].toLowerCase() == 'spring') {
       term = 'SP';
     } else if (term.toLowerCase() == 'summer') {
       term = 'SU';
     } else if (term.toLowerCase() == 'fall') {
       term = 'FL';
     }
-    name = name.replace(/ /g,"%20");
+    var name = obj['name'].replace(/ /g,"%20");
     util.get('osoc.berkeley.edu','/OSOC/osoc?&p_term=SP&p_course='+num+'&p_dept='+name,
       function(str) {
         var reg = /<FONT.*?<\/TD>.*?<\/TD>/g;

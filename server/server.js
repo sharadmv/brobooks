@@ -1,9 +1,11 @@
 var express = require('express');
 var scraper = require('./scraper.js').Scrapers;
+var Dao = require('./dao.js').Dao;
+var dao = new Dao('localhost:27017/brobooks');
 var Model = require('./model.js').model;
 var Response = Model.Response;
 var Router = require('./router.js').Router;
-var router = new Router(scraper);
+var router = new Router(scraper,dao);
 var app = express.createServer();
 var port = 80;
 app.use(express.static('../public/static'));
