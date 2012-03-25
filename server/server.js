@@ -22,7 +22,7 @@ app.get('/sell', function(req,res){
 });
 app.get('/api/service',function(req,res){
   start = new Date();
-  //basic sanitization
+  //checking that service is formatted properly
   if (req.query['name']) {
     var service = req.query['name'].split(".");
     if (service.length != 2) {
@@ -38,14 +38,4 @@ app.get('/api/service',function(req,res){
     response = new Response("failure",1337,"no service name given",req.query,start,new Date(),null); 
     res.json(response);
   }  
-});
-app.get('/api/scraper.course', function(req,res) {
-  scraper.course(req.query['year'],req.query['term'],req.query['dep'],req.query['num'],function(obj){
-    res.json(obj);
-  });
-});
-app.get('/api/scraper.book', function(req,res) {
-  scraper.book(req.query['year'],req.query['term'],req.query['ccn'], function(books) {
-    res.json(books);
-  });
 });
