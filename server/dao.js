@@ -10,11 +10,35 @@ var Dao = {
         } else {
           db.user.insert(user,function(err,result){
             if (err) {
-              callback(new Message("success",300,err,null));
+              callback(new Message("failure",300,err,null));
             } else {
               callback(new Message("success",200,null,result));
             }
           });
+        }
+      });
+    },
+    update:function(user, callback) {
+      db.user.remove({_id:user._id},function(err,result) {
+        if (err){
+          callback(new Message("failure",300,err,null));
+        } else {
+          db.user.insert(user,function(err,result) {
+            if (err) {
+              callback(new Message("failure",300,err,null));
+            } else {
+              callback(new Message("success",200,null,result));
+            }
+          }):
+        }
+      });
+    },
+    find:function(user, callback){
+      db.user.find(user).toArray(function(err, result){
+        if (err) {
+          callback(new Message("failure",300,err,null));
+        } else {
+          callback(new Message("success",200,null,result));
         }
       });
     }
