@@ -66,7 +66,7 @@ var Dao = function(host){
         if (err){
           callback(new Message("failure",300,err,null));
         } else {
-          db.scraper.insert(scrape,function(err,result) {
+          db.scraper.insert(scrape, function(err,result) {
             if (err) {
               callback(new Message("failure",300,err,null));
             } else {
@@ -77,7 +77,7 @@ var Dao = function(host){
       });
     },
     find:function(scrape, callback){
-      db.user.find({id:scrape.id}).toArray(function(err, result){
+      db.scraper.find({id:scrape.id}).toArray(function(err, result){
         if (err) {
           callback(new Message("failure",300,err,null));
         } else {

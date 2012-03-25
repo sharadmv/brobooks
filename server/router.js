@@ -1,39 +1,48 @@
 var model = require('./model.js').model;
 var Message = model.Message;
 var Router = function(s, d){
-  var dao = d;
-  var scraper = {
-    catalog:function(obj, callback){
+  this.dao = d;
+  var Scraper = function(dao){
+    this.catalog=function(obj, callback){
       s.catalog(obj, callback);  
-    },
-    course:function(obj, callback){
+    }
+    this.course=function(obj, callback){
       var id = {type:'course',params:{'year':obj['year'],'term':obj['term'],'name':obj['name'],'num':obj['num']}}
       var stId = JSON.stringify(id);
-      obj.id = stId;
-      dao.scraper.find(obj, function(message) {
+      dao.scraper.find({id:stId}, function(message) {
+        console.log(message);
         if (message.code != 200) {
-          callback(message);
+          callback([]);
         } else {
-          if (message.result.length!=1){
-            s.course(obj, function(msg){
-              dao.scraper.update({id:obj.id,result:msg.result}, function(m){
+          if (!message.result || !(message.result.length==1)){
+            s.course(obj, function(r){
+              msg = new Message("success",200,null,r);
+              dao.scraper.update({id:stId,result:r}, function(m){
                 if (m.code == 200) {
-                  console.log("Scraper Cache Updated: "+obj.id);
+                  console.log("Scraper Cache Updated: "+stId);
                 } else {
                   console.log("Scraper Cache Error: "+obj.err);
                 }
               });
-              callback(msg);
+              callback(msg.result);
             });
           } else {
-            callback(message);
+            dao.scraper.update({id:stId,result:message.result[0].result}, function(m){
+              if (m.code == 200) {
+                console.log("Scraper Cache Updated: "+stId);
+              } else {
+                console.log("Scraper Cache Error: "+message.err);
+              }
+            });
+            callback(message.result[0].result);
           }
         }
       });
-    },
-    book:function(obj, callback){
+    }
+    this.book=function(obj, callback){
     }
   };
+  this.scraper = new Scraper(d);
   this.route = function(service, params, callback){
     if (this[service[0]]) {
       if (this[service[0]][service[1]]){

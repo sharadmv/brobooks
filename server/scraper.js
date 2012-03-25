@@ -66,10 +66,11 @@ var scrapers = {
       console.log(str.match(/[(].*?[)]/g));
     });*/
   },
-  course:function(year, term, name, num, callback) {
+  course:function(obj, callback) {
+    console.log(obj);
     var year = obj['year']
     var num = obj['num']
-    var term;
+    var term = obj['term'];
     if (obj['term'].toLowerCase() == 'spring') {
       term = 'SP';
     } else if (term.toLowerCase() == 'summer') {

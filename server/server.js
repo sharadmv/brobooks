@@ -2,6 +2,7 @@ var express = require('express');
 var scraper = require('./scraper.js').Scrapers;
 var Dao = require('./dao.js').Dao;
 var dao = new Dao('localhost:27017/brobooks');
+console.log(dao);
 var Model = require('./model.js').model;
 var Response = Model.Response;
 var Router = require('./router.js').Router;
