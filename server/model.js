@@ -1,5 +1,5 @@
 model = {
-  Message:function(status,code,result,message){
+  Message:function(status,code,message,result){
     this.status = status;
     this.code = code;
     this.result = result;
@@ -8,10 +8,12 @@ model = {
   Response:function(status, code, message, params, start, end, result){
     this.status = status;
     this.code = code;
+    this.message = message;
     this.params = params;
     this.start = start;
     this.end = end;
     this.length = end - start;
+    this.result = result;
   },
   User:function(fbId, email, requests, offers) {
     this.fbId= fbId;

@@ -53,7 +53,8 @@ var util = {
   }
 };
 var scrapers = {
-  catalog:function(name, callback) {
+  catalog:function(obj, callback) {
+    var name = obj.name;
     var temp = [];
     for (var i in classes){
       if (classes[i].indexOf(name) != -1 ) {
@@ -136,7 +137,10 @@ var scrapers = {
       }
     );
   },
-  book:function(year, term, ccn, callback){
+  book:function(obj, callback){
+    var year = obj.year;
+    var term = obj.term;
+    var ccn = obj.ccn;
     if (term.toLowerCase() == "fall"){
       term = "D";
     } else if (term.toLowerCase() == "spring"){
@@ -171,10 +175,12 @@ var scrapers = {
     );
   }
 };
+/*
 scrapers.book('2012','spring','26335', function(books){
 //  console.log(books);
 });
 scrapers.course('2012','spring','comp sci','61b', function(courses){
   //console.log(courses);
 });
+*/
 exports.Scrapers = scrapers;
