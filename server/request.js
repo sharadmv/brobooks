@@ -9,5 +9,8 @@ var request = function(dao){
       });
     });
   }
+  this.fulfill = function(obj, callback) {
+    req = obj.request;
+  }
 }  
 exports.Request = request;
