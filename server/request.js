@@ -4,7 +4,9 @@ var request = function(dao){
   this.create = function(obj, callback) {
     request = new Request(obj.user, obj.book, 1); 
     dao.request.update(request, function(msg){
-      callback(msg.result);
+      dao.offer.find({book:{isbn:request.book.isbn}}, function(message) {
+        callback(message.result);
+      });
     });
   }
 }  
