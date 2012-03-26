@@ -1,4 +1,5 @@
 var express = require('express');
+var fs = require('fs');
 var scraper = require('./scraper.js').Scrapers;
 var Dao = require('./dao.js').Dao;
 //var dao = new Dao('localhost:27017/brobooks');
@@ -6,14 +7,19 @@ var dao = undefined;
 console.log(dao);
 var Model = require('./model.js').model;
 var Response = Model.Response;
-var Router = undefined, router = undefined;
-//var Router = require('./router.js').Router;
-//var router = new Router(scraper,dao);
-var app = express.createServer();
+var Router = require('./router.js').Router;
+var router = new Router(scraper,dao);
+var options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+var app = express.createServer(options);
 var port = 80;
 var FB = require('./fb.js').FB;
-app.use(express.static('../public'));
-app.listen(80);
+app.use(express.static('../public/static'));
+app.listen(443);
+app.set('view engine', 'ejs');
+app.set('views','../public/views');
 app.enable("jsonp callback");
 app.get('/api/service',function(req,res){
   start = new Date();
