@@ -13,17 +13,17 @@ var FB = {
   mutual:function(u1, u2, callback) {
     var complete = false;
     var a1, a2;
-    friends(u1, function(obj){
+    FB.friends(u1, function(obj){
+      a1 = obj;
       if (!complete){
-        a1 = obj;
         complete = true;
       } else {
         callback(intersection(a1,a2));
       }
     });
-    friends(u2, function(obj){
+    FB.friends(u2, function(obj){
+      a2 = obj;
       if (!complete){
-        a2 = obj;
         complete = true;
       } else {
         callback(intersection(a1,a2));
@@ -36,9 +36,9 @@ intersection = function(a, b)
   var result = new Array();
   while( a.length > 0 && b.length > 0 )
   {  
-    if      (a[0] < b[0] ){ a.shift(); }
-    else if (a[0] > b[0] ){ b.shift(); }
-    else /* they're equal */
+    if      (parseInt(a[0].id) < parseInt(b[0].id) ){ a.shift(); }
+    else if (parseInt(a[0].id) > parseInt(b[0].id) ){ b.shift(); }
+    else 
     {
       result.push(a.shift());
       b.shift();

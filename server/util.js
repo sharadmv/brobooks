@@ -8,21 +8,21 @@ var util = {
       prot = http;
     }
       
-    dataChunks = "";
+    var dataChunks = "";
     var options = {
       host: h, 
       path: p
     };
     prot.get(options, 
       function(r) { 
-        util.process(r,callback);
+        util.process(r,dataChunks, callback);
     }).on('error', 
       function(e) { 
         console.log("Got error: " + e.message); 
     });
   },
   post:function(post_domain, post_port, post_path, data, callback){
-    dataChunks = "";
+    var dataChunks = "";
     post_options = { 
       host: post_domain, 
       port: post_port, 
@@ -34,12 +34,12 @@ var util = {
       } 
     }; 
     post_req = http.request(post_options, function(re) {
-      util.process(re, callback);
+      util.process(re,dataChunks, callback);
     }); 
     post_req.write(data); 
     post_req.end();
   },
-  process:function(res, callback) {
+  process:function(res,dataChunks, callback) {
     res.on('data', function(chunk){
       dataChunks += chunk.toString('ascii');
     });
