@@ -139,7 +139,7 @@ var Dao = function(host){
         if (err){
           callback(new Message("failure",300,err,null));
         } else {
-          db.offer.insert(action,function(err,result) {
+          db.offer.insert(offer,function(err,result) {
             if (err) {
               callback(new Message("failure",300,err,null));
             } else {
@@ -174,7 +174,7 @@ var Dao = function(host){
         if (err){
           callback(new Message("failure",300,err,null));
         } else {
-          db.request.insert(action,function(err,result) {
+          db.request.insert(request,function(err,result) {
             if (err) {
               callback(new Message("failure",300,err,null));
             } else {

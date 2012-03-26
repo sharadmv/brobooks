@@ -80,6 +80,7 @@ var Router = function(s, d){
   };
   this.scraper = new Scraper(d);
   this.route = function(service, params, callback){
+    console.log(callback);
     router = this;
     action = {start:new Date(), end:null,service:service,params:params};
     if (router[service[0]]) {
