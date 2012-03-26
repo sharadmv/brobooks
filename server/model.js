@@ -12,7 +12,7 @@ model = {
     this.params = params;
     this.start = start;
     this.end = end;
-    this.length = end - start;
+    this.duration = end - start;
     this.result = result;
   },
   User:function(fbId, email, requests, offers) {
