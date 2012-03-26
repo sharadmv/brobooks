@@ -4,7 +4,7 @@ var Dao = function(host){
   db = mongo.db(host);
   db.bind('user');
   db.bind('scraper');
-  db.bind('event');
+  db.bind('action');
   this.user = {
     create:function(user, callback){
       db.user.find({fbId:user.fbId}).toArray(function(err, result){
@@ -89,24 +89,20 @@ var Dao = function(host){
   }
   this.action = {
     create:function(action, callback){
-      if (result.length>0){
-        callback(new Message("failure",301,"user exists", null));
-      } else {
-        db.user.insert(action,function(err,result){
+        db.action.insert(action,function(err,result){
           if (err) {
             callback(new Message("failure",300,err,null));
           } else {
-            callback(new Message("success",200,null,result));
+            callback(new Message("success",200,null,result[0]));
           }
         });
-      }
     },
     update:function(action, callback) {
-      db.user.remove({_id:action._id},function(err,result) {
+      db.action.remove({_id:action._id},function(err,result) {
         if (err){
           callback(new Message("failure",300,err,null));
         } else {
-          db.user.insert(action,function(err,result) {
+          db.action.insert(action,function(err,result) {
             if (err) {
               callback(new Message("failure",300,err,null));
             } else {
@@ -117,7 +113,7 @@ var Dao = function(host){
       });
     },
     find:function(action, callback){
-      db.user.find(action).toArray(function(err, result){
+      db.action.find(action).toArray(function(err, result){
         if (err) {
           callback(new Message("failure",300,err,null));
         } else {
