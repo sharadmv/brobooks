@@ -10,7 +10,6 @@ var Router = function(s, d){
       var id = {type:'course',params:{'year':obj['year'],'term':obj['term'],'name':obj['name'],'num':obj['num']}}
       var stId = JSON.stringify(id);
       dao.scraper.find({id:stId}, function(message) {
-        console.log(message);
         if (message.code != 200) {
           callback([]);
         } else {
@@ -44,6 +43,7 @@ var Router = function(s, d){
       var stId = JSON.stringify(id);
       dao.scraper.find({id:stId}, function(message) {
         if (message.code != 200) {
+        console.log(message);
           callback([]);
         } else {
           if (!message.result || !(message.result.length==1)){
