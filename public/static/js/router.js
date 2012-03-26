@@ -3,14 +3,17 @@ define([
   'Underscore',
   'Backbone',
   'view/home/main',
-  'view/buy/main'
-], function($, _, Backbone, Session, mainView, buyView){
+  'view/buy/main',
+  'view/book/list'
+], function($, _, Backbone, mainView, buyView, sellView, aboutView){
   var AppRouter = Backbone.Router.extend({
     routes : {
       // Define some URL routes
       '': 'renderHome',
       'home': 'renderHome',
       'buy': 'renderBuy',
+      'sell': 'renderSell',
+      'about': 'renderAbout',
 
       // Default
       '*actions': 'defaultAction'
@@ -20,6 +23,14 @@ define([
     },
     renderBuy: function(){
       buyView.render();
+    },
+
+    renderSell: function() {
+      sellView.render();
+    },
+
+    renderAbout: function() {
+      aboutView.render();
     },
     defaultAction: function(actions){
       // We have no matching route, lets just log what the URL was
@@ -31,8 +42,6 @@ define([
 
   var initialize = function(){
     var app_router = new AppRouter;
-    console.log("Initialized the router");
-    console.log(Backbone.history);
     Backbone.history.start();
   };
   return { initialize: initialize };
