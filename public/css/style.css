@@ -23,47 +23,60 @@ html, body {
   line-height: 40px;
 }
 
-/* Home Page Styles */
-#main-header {
-  text-align:center;
+/* Global Font Styles */
+
+.header-wrapper {
+  text-align: center;
 }
-.main-header-text {
+h1 {
   font-size:2em;
 }
-#main-subheader {
-  text-align:center;
-}
-.main-subheader-text {
+
+h2 {
   font-size:1em;
 }
-#main-image-content-wrapper {
-  position:relative;
-  width:100%;
-  height:100%;
+
+.image-stuff-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
 }
-#main-content-wrapper {
-  float:left;
-  width:650px;
-  height:300px;
+
+.stuff-wrapper {
+  float: left;
+  width: 650px;
+  height: 300px;
 }
-#main-image-content {
-  position:relative;
-}
-.main-get-started-text {
-  font-size:2em;
-  padding-bottom:10px;
-}
-#main-browl-wrapper {
+
+.browl-wrapper {
   float:left;
   height:400px;
   width:300px;
+  background-color: rgba(200, 150, 240, .3);
 }
-#main-content {
-  text-align:center;
+
+.stuff {
   width:100%;
   height:100%;
   margin-left:auto;
   margin-right:auto;
-  margin-top:120px;
   float:left;
+  padding: 10px;
 }
+
+/* Home Page Styles */
+#home-image-content {
+  position:relative;
+}
+#home-stuff {
+  margin-top:120px;
+  text-align: center;
+}
+
+/* Buy Page Styles */
+#buy-header {
+  text-align: center;
+}
+
+
