@@ -7,7 +7,7 @@ define([
   var HomeHappyView = Backbone.View.extend({
     el: $('#content'),
     render: function() {
-      var data = {};
+      var data = {x:5};
       var compiledTemplate = _.template(homeHappyTemplate, data);
       this.$el.html(compiledTemplate);
     }

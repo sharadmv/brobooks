@@ -1,5 +1,5 @@
 var Message = require('./model.js').model.Message;
-var mongo = require('mongoskin');
+//var mongo = require('mongoskin');
 var Dao = function(host){
   db = mongo.db(host);
   db.bind('user');

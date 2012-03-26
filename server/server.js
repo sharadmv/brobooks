@@ -2,7 +2,8 @@ var express = require('express');
 var fs = require('fs');
 var scraper = require('./scraper.js').Scrapers;
 var Dao = require('./dao.js').Dao;
-var dao = new Dao('localhost:27017/brobooks');
+//var dao = new Dao('localhost:27017/brobooks');
+var dao = undefined;
 console.log(dao);
 var Model = require('./model.js').model;
 var Response = Model.Response;
@@ -20,15 +21,6 @@ app.listen(443);
 app.set('view engine', 'ejs');
 app.set('views','../public/views');
 app.enable("jsonp callback");
-app.get('/', function(req,res) {
-  res.render('home',{page:'home'});
-});
-app.get('/buy', function(req,res){
-  res.render('buy',{page:'buy'});
-});
-app.get('/sell', function(req,res){
-  res.render('sell',{page:'sell'});
-});
 app.get('/api/service',function(req,res){
   start = new Date();
   //checking that service is formatted properly

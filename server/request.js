@@ -7,17 +7,21 @@ var request = function(dao){
     dao.request.update(request, function(msg){
       dao.offer.find({book:{isbn:request.book.isbn}}, function(message) {
         var count = 0;
-        for (var i = 0;i<message.result.length;i++){
-          FB.mutual(obj.user, message.result[i].user, function(mutual){
-            message.result[i].mutual = mutual.length;
-            count++;
-            if (count == message.result.length){
-              message.result.sort(function(a,b){
-                return a.mutual-b.mutual;
-              });
-              callback(message.result);
-            }
-          });
+        if (message.result.length > 0 ){
+          for (var i = 0;i<message.result.length;i++){
+            FB.mutual(obj.user, message.result[i].user, function(mutual){
+              message.result[i].mutual = mutual.length;
+              count++;
+              if (count == message.result.length){
+                message.result.sort(function(a,b){
+                  return a.mutual-b.mutual;
+                });
+                callback(message.result);
+              }
+            });
+          }
+        } else {
+          callback(message.result);
         }
       });
     });
