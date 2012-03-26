@@ -29,3 +29,40 @@ html, body {
 .main-header-text {
   font-size:2em;
 }
+#main-subheader {
+  text-align:center;
+}
+.main-subheader-text {
+  font-size:1em;
+}
+#main-image-content-wrapper {
+  position:relative;
+  width:100%;
+  height:100%;
+}
+#main-content-wrapper {
+  float:left;
+  width:650px;
+  height:300px;
+}
+#main-image-content {
+  position:relative;
+}
+.main-get-started-text {
+  font-size:2em;
+  padding-bottom:10px;
+}
+#main-browl-wrapper {
+  float:left;
+  height:400px;
+  width:300px;
+}
+#main-content {
+  text-align:center;
+  width:100%;
+  height:100%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:120px;
+  float:left;
+}
