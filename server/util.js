@@ -1,11 +1,19 @@
+var http = require('http');
+var https = require('https');
 var util = {
-  get:function(h, p, callback){
+  get:function(h, p, safe, callback){
+    if (safe) {
+      prot = https;
+    } else {
+      prot = http;
+    }
+      
     dataChunks = "";
     var options = {
       host: h, 
       path: p
     };
-    http.get(options, 
+    prot.get(options, 
       function(r) { 
         util.process(r,callback);
     }).on('error', 
