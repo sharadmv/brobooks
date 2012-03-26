@@ -1,7 +1,7 @@
 var User = function(dao){
   this.dao = dao;
   this.save = function(user, callback) {
-    dao.user.update(user, callback);
+    dao.user.update(user, function(e) {callback(e.result)});
   }
   this.remove = function(user, callback) {
     dao.user.remove(user, callback);

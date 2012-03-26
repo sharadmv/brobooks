@@ -15,9 +15,9 @@ model = {
     this.duration = end - start;
     this.result = result;
   },
-  User:function(fbId, email, requests, offers) {
+  User:function(fbId, token, requests, offers) {
     this.fbId= fbId;
-    this.email = email;
+    this.token = token;
     this.requests = requests;
     this.offers = offers;
   },    

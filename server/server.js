@@ -14,6 +14,7 @@ app.listen(80);
 app.set('view engine', 'ejs');
 app.set('views','../public/views');
 app.enable("jsonp callback");
+app.use(express.session());
 app.get('/', function(req,res) {
   res.render('home',{page:'home'});
 });
