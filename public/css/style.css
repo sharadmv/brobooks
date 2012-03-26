@@ -1,4 +1,6 @@
-body {
+html, body {
+  height: 100%;
+  margin: 0;
 }
 
 /* Big Picture Layouts */
@@ -13,4 +15,5 @@ body {
 #footer {
   clear: both;
   height: 40px;
+  text-align: center;
 }
