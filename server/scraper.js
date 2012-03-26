@@ -79,7 +79,7 @@ var scrapers = {
       term = 'FL';
     }
     var name = obj['name'].replace(/ /g,"%20");
-    util.get('osoc.berkeley.edu','/OSOC/osoc?&p_term=SP&p_course='+num+'&p_dept='+name,
+    util.get('osoc.berkeley.edu','/OSOC/osoc?&p_term='+term+'&p_course='+num+'&p_dept='+name,
       function(str) {
         var reg = /<FONT.*?<\/TD>.*?<\/TD>/g;
         var foo = str.match(reg);

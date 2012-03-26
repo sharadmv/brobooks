@@ -17,6 +17,7 @@ model = {
   },
   User:function(fbId, email, requests, offers) {
     this.fbId= fbId;
+    this.email = email;
     this.requests = requests;
     this.offers = offers;
   },    
