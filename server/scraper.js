@@ -1,4 +1,3 @@
-var http = require('http');
 var fs = require('fs');
 var dataChunks = "";
 var classes = [];
@@ -38,7 +37,7 @@ var scrapers = {
       term = 'FL';
     }
     var name = obj['name'].replace(/ /g,"%20");
-    util.get('osoc.berkeley.edu','/OSOC/osoc?&p_term='+term+'&p_course='+num+'&p_dept='+name,
+    util.get('osoc.berkeley.edu','/OSOC/osoc?&p_term='+term+'&p_course='+num+'&p_dept='+name,false,
       function(str) {
         var reg = /<FONT.*?<\/TD>.*?<\/TD>/g;
         var foo = str.match(reg);
@@ -94,7 +93,7 @@ var scrapers = {
     );
   },
   isbn:function(isbn, callback){
-    util.get('isbndb.com','/api/books.xml?access_key=LEIREUYB&index1=isbn&value1='+isbn,
+    util.get('isbndb.com','/api/books.xml?access_key=LEIREUYB&index1=isbn&value1='+isbn,false,
       function(str){
       
       }
