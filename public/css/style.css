@@ -1,0 +1,16 @@
+body {
+}
+
+/* Big Picture Layouts */
+
+#notFooter {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 0 -40px 0;
+}
+
+#footer {
+  clear: both;
+  height: 40px;
+}
