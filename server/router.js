@@ -43,7 +43,7 @@ var Router = function(s, d){
       var stId = JSON.stringify(id);
       dao.scraper.find({id:stId}, function(message) {
         if (message.code != 200) {
-        console.log(message);
+          console.log(message);
           callback([]);
         } else {
           if (!message.result || !(message.result.length==1)){
@@ -79,7 +79,6 @@ var Router = function(s, d){
     d.action.create(action,function(message){
       if (this[service[0]]) {
         if (this[service[0]][service[1]]){
-          console.log(message);
           if (message.code == 200){
             temp[service[0]][service[1]](params, function(obj){
               message.result.end = new Date();
@@ -88,24 +87,24 @@ var Router = function(s, d){
               });
             }); 
           } else {
-              message.result.end = new Date();
-              d.action.update(message.result,function(message){
-            callback(message);
-});
+            message.result.end = new Date();
+            d.action.update(message.result,function(message){
+              callback(message);
+            });
           }
+        } else {
+          message.result.end = new Date();
+          d.action.update(message.result,function(message){
+            callback(new Message("failure",101,"service method does not exist", null));
+          });
+        }
       } else {
-              message.result.end = new Date();
-              d.action.update(message.result,function(message){
-        callback(new Message("failure",101,"service method does not exist", null));
-});
+        message.result.end = new Date();
+        d.action.update(message.result,function(message){
+          callback(new Message("failure",100,"service does not exist", null)); 
+        });
       }
-    } else {
-              message.result.end = new Date();
-              d.action.update(message.result,function(message){
-      callback(new Message("failure",100,"service does not exist", null)); 
-});
-    }
     }); 
   } 
-} 
-exports.Router = Router;
+  } 
+  exports.Router = Router;
