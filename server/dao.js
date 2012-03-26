@@ -5,6 +5,8 @@ var Dao = function(host){
   db.bind('user');
   db.bind('scraper');
   db.bind('action');
+  db.bind('offer');
+  db.bind('request');
   this.user = {
     create:function(user, callback){
       db.user.find({fbId:user.fbId}).toArray(function(err, result){
@@ -122,5 +124,75 @@ var Dao = function(host){
       });
     }
   }
+  this.offer = {
+    create:function(offer, callback){
+        db.offer.insert(offer,function(err,result){
+          if (err) {
+            callback(new Message("failure",300,err,null));
+          } else {
+            callback(new Message("success",200,null,result[0]));
+          }
+        });
+    },
+    update:function(offer, callback) {
+      db.offer.remove({_id:offer._id},function(err,result) {
+        if (err){
+          callback(new Message("failure",300,err,null));
+        } else {
+          db.offer.insert(action,function(err,result) {
+            if (err) {
+              callback(new Message("failure",300,err,null));
+            } else {
+              callback(new Message("success",200,null,result));
+            }
+          });
+        }
+      });
+    },
+    find:function(offer, callback){
+      db.offer.find(offer).toArray(function(err, result){
+        if (err) {
+          callback(new Message("failure",300,err,null));
+        } else {
+          callback(new Message("success",200,null,result));
+        }
+      });
+    }
   }
-  exports.Dao = Dao;
+  this.request = {
+    create:function(request, callback){
+        db.request.insert(request,function(err,result){
+          if (err) {
+            callback(new Message("failure",300,err,null));
+          } else {
+            callback(new Message("success",200,null,result[0]));
+          }
+        });
+    },
+    update:function(request, callback) {
+      db.request.remove({_id:request._id},function(err,result) {
+        if (err){
+          callback(new Message("failure",300,err,null));
+        } else {
+          db.request.insert(action,function(err,result) {
+            if (err) {
+              callback(new Message("failure",300,err,null));
+            } else {
+              callback(new Message("success",200,null,result));
+            }
+          });
+        }
+      });
+    },
+    find:function(request, callback){
+      db.request.find(request).toArray(function(err, result){
+        if (err) {
+          callback(new Message("failure",300,err,null));
+        } else {
+          callback(new Message("success",200,null,result));
+        }
+      });
+    }
+  }
+}
+exports.Dao = Dao;

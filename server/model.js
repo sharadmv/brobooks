@@ -28,25 +28,26 @@ model = {
     this.lecture = lecture;
     this.books = books;      
 	},
-	Book:function(title, author, edition, isbn, requests, offers){
+	Book:function(title, author, edition, isbn, requests, offers, condition){
     this.title = title;
     this.author = author;
     this.edition = edition;
     this.isbn = isbn;
     this.requests = requests;
     this.offers = offers;
+    this.condition = condition;
 	},
   Request:function(user, book, state) {
     this.user = user;
     this.book = book;
     this.state = state;
   },
-  Offer:function(user,book,state,price,comment,time,loc) {
+  Offer:function(user,book,price,condition,time,loc,state) {
     this.user = user;
     this.book = book;
     this.state = state;
     this.price = price;
-    this.comment = comment;
+    this.condition = condition;
     this.time = time;
     this.loc = loc;
   }

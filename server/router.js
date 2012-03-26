@@ -1,9 +1,13 @@
 var model = require('./model.js').model;
 var User = require('./user.js').User;
+var Request = require('./request.js').Request;
+var Offer = require('./offer.js').Offer;
 var Message = model.Message;
 var Router = function(s, d){
   var dao = d;
   this.user = new User(d);
+  this.request = new Request(d);
+  this.offer = new Offer(d);
   var Scraper = function(dao){
     this.catalog=function(obj, callback){
       s.catalog(obj, callback);  
