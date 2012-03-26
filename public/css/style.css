@@ -2,7 +2,6 @@ html, body {
   height: 100%;
   margin: 0;
 }
-
 /* Big Picture Layouts */
 
 #notFooter {
@@ -16,4 +15,12 @@ html, body {
   clear: both;
   height: 40px;
   text-align: center;
+}
+
+/* Home Page Styles */
+#main-header {
+  text-align:center;
+}
+.main-header-text {
+  font-size:2em;
 }
