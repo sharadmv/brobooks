@@ -6,8 +6,8 @@ var FB = {
     });
   },
   friends:function(user, callback){
-    util.get('graph.facebook.com','/me/friends?access_token='+user.token,true,function(obj){
-      callback(JSON.parse(obj));
+    util.get('graph.facebook.com','/me/friends?access_token='+user.token+'&limit=999999',true,function(obj){
+      callback(JSON.parse(obj).data);
     });
   }
 }
