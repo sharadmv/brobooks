@@ -9,7 +9,7 @@ define([
     render: function() {
       var data = {};
       var compiledTemplate = _.template(homeHappyTemplate, data);
-      this.$el.append(compiledTemplate);
+      this.$el.html(compiledTemplate);
     }
   });
   console.log("In home template");

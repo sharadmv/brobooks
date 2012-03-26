@@ -5,11 +5,11 @@ define([
   'text!template/buy/main.html'
 ], function($, _, Backbone, buyMainTemplate) {
   var BuyMainView = Backbone.View.extend({
-    el: $('#container'),
+    el: $('#content'),
     render: function() {
       var data = {};
       var compiledTemplate = _.template(buyMainTemplate, data);
-      this.$el.append(compiledTemplate);
+      this.$el.html(compiledTemplate);
     }
   });
   return new BuyMainView;

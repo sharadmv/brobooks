@@ -4,7 +4,8 @@ define([
   'Backbone',
   'view/home/main',
   'view/buy/main',
-  'view/book/list'
+  'view/sell/main',
+  'view/about/main'
 ], function($, _, Backbone, mainView, buyView, sellView, aboutView){
   var AppRouter = Backbone.Router.extend({
     routes : {
