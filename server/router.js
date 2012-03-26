@@ -76,9 +76,19 @@ var Router = function(s, d){
   this.route = function(service, params, callback){
     if (this[service[0]]) {
       if (this[service[0]][service[1]]){
-        this[service[0]][service[1]](params, function(obj){
-          callback(new Message("success",200,null, obj));
-        }); 
+        action = {start:new Date(), end:null,service:service,params:params};
+        dao.action.create(action,function(message){
+          if (message.code == 200){
+            this[service[0]][service[1]](params, function(obj){
+              result.end = new Date();
+              dao.action.update(result,function(message){
+                callback(new Message("success",200,null, obj));
+              }); 
+            }); 
+          } else {
+            callback(message);
+          }
+        });
       } else {
         callback(new Message("failure",101,"service method does not exist", null));
       }
@@ -86,5 +96,5 @@ var Router = function(s, d){
       callback(new Message("failure",100,"service does not exist", null)); 
     }
   } 
-} 
-exports.Router = Router;
+  } 
+  exports.Router = Router;
