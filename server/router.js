@@ -74,37 +74,28 @@ var Router = function(s, d){
   };
   this.scraper = new Scraper(d);
   this.route = function(service, params, callback){
-    temp = this;
+    router = this;
     action = {start:new Date(), end:null,service:service,params:params};
-    d.action.create(action,function(message){
-      if (this[service[0]]) {
-        if (this[service[0]][service[1]]){
-          if (message.code == 200){
-            temp[service[0]][service[1]](params, function(obj){
-              message.result.end = new Date();
-              d.action.update(message.result,function(message){
+      if (router[service[0]]) {
+        if (router[service[0]][service[1]]){
+            router[service[0]][service[1]](params, function(obj){
+              action.end = new Date();
+              d.action.update(new Message("success",200,null,action),function(message){
                 callback(new Message("success",200,null, obj));
               });
             }); 
-          } else {
-            message.result.end = new Date();
-            d.action.update(message.result,function(message){
-              callback(message);
-            });
-          }
         } else {
-          message.result.end = new Date();
-          d.action.update(message.result,function(message){
+          action.end = new Date();
+          d.action.update(new Message("failure",101,"service method does not exist",action),function(message){
             callback(new Message("failure",101,"service method does not exist", null));
           });
         }
       } else {
-        message.result.end = new Date();
-        d.action.update(message.result,function(message){
+        action.end = new Date();
+        d.action.update(new Message("failure",100,"service does not exist",action),function(message){
           callback(new Message("failure",100,"service does not exist", null)); 
         });
       }
-    }); 
   } 
   } 
   exports.Router = Router;
