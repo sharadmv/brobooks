@@ -1,4 +1,5 @@
 var express = require('express');
+var fs = require('fs');
 var scraper = require('./scraper.js').Scrapers;
 var Dao = require('./dao.js').Dao;
 var dao = new Dao('localhost:27017/brobooks');
@@ -7,14 +8,15 @@ var Model = require('./model.js').model;
 var Response = Model.Response;
 var Router = require('./router.js').Router;
 var router = new Router(scraper,dao);
-var app = express.createServer();
+var options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
+var app = express.createServer(options);
 var port = 80;
 var FB = require('./fb.js').FB;
-FB.mutual({token:'AAAEVsBVSRsYBAKmLcazYf0KRcjTfmYaxeUArbnM3corZBvSu0BZBWEsYbfoas6eqpo8XJ4CT6LS536zz4q5QeUyULElp8WGlG6XropIBZBhHj1NQR4Q'},{token:'AAAEVsBVSRsYBAIwNwDcSSOlsibEqJlZAB9YS0dWZCQV5cBpLY207eMNE40YnWc3MM4pGYMyX5lBTdl4gLZCj9DhLIsZAhaPs3TRZAOaj0QCPTCImBcBOw'}, function(obj){
-//  console.log(obj);
-});
 app.use(express.static('../public/static'));
-app.listen(80);
+app.listen(443);
 app.set('view engine', 'ejs');
 app.set('views','../public/views');
 app.enable("jsonp callback");
