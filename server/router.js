@@ -40,6 +40,36 @@ var Router = function(s, d){
       });
     }
     this.book=function(obj, callback){
+      var id = {type:'book',params:{'year':obj['year'],'term':obj['term'],'ccn':obj['ccn']}}
+      var stId = JSON.stringify(id);
+      dao.scraper.find({id:stId}, function(message) {
+        if (message.code != 200) {
+          callback([]);
+        } else {
+          if (!message.result || !(message.result.length==1)){
+            s.book(obj, function(r){
+              msg = new Message("success",200,null,r);
+              dao.scraper.update({id:stId,result:r}, function(m){
+                if (m.code == 200) {
+                  console.log("Scraper Cache Updated: "+stId);
+                } else {
+                  console.log("Scraper Cache Error: "+obj.err);
+                }
+              });
+              callback(msg.result);
+            });
+          } else {
+            dao.scraper.update({id:stId,result:message.result[0].result}, function(m){
+              if (m.code == 200) {
+                console.log("Scraper Cache Updated: "+stId);
+              } else {
+                console.log("Scraper Cache Error: "+message.err);
+              }
+            });
+            callback(message.result[0].result);
+          }
+        }
+      });
     }
   };
   this.scraper = new Scraper(d);
