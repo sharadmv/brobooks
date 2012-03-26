@@ -1,5 +1,12 @@
 var express = require('express');
 var scraper = require('./scraper.js').Scrapers;
+var Dao = require('./dao.js').Dao;
+var dao = new Dao('localhost:27017/brobooks');
+console.log(dao);
+var Model = require('./model.js').model;
+var Response = Model.Response;
+var Router = require('./router.js').Router;
+var router = new Router(scraper,dao);
 var app = express.createServer();
 var port = 80;
 app.use(express.static('../public/static'));
@@ -16,13 +23,22 @@ app.get('/buy', function(req,res){
 app.get('/sell', function(req,res){
   res.render('sell',{page:'sell'});
 });
-app.get('/api/scraper.course', function(req,res) {
-  scraper.course(req.query['year'],req.query['term'],req.query['dep'],req.query['num'],function(obj){
-    res.json(obj);
-  });
-});
-app.get('/api/scraper.book', function(req,res) {
-  scraper.book(req.query['year'],req.query['term'],req.query['ccn'], function(books) {
-    res.json(books);
-  });
+app.get('/api/service',function(req,res){
+  start = new Date();
+  //checking that service is formatted properly
+  if (req.query['name']) {
+    var service = req.query['name'].split(".");
+    if (service.length != 2) {
+      response = new Response("failure",1337,"service name improper",req.query,start,new Date(), null);
+      res.json(response);
+    } else {
+      router.route(service, req.query.params, function (r) {
+          response = new Response(r.status,r.code,r.message,req.query,start,new Date(),r.result);
+          res.json(response);
+      });  
+    }
+  } else {
+    response = new Response("failure",1337,"no service name given",req.query,start,new Date(),null); 
+    res.json(response);
+  }  
 });

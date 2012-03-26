@@ -1,6 +1,15 @@
 var http = require('http');
 var fs = require('fs');
 var dataChunks = "";
+var classes = [];
+//Load autocomplete
+fs.readFile('classes.txt', function(err,data){
+  if(err) {
+    console.error("Could not open file: %s", err);
+    process.exit(1);
+  }
+  classes = data.toString('ascii').split("\n");
+});
 var util = {
   get:function(h, p, callback){
     dataChunks = "";
@@ -44,21 +53,33 @@ var util = {
   }
 };
 var scrapers = {
-  catalog:function(name, callback) {
-    util.post('sis.berkeley.edu',80,'/catalog/gcc_search_sends_request','p_offering=spring', function(str){
+  catalog:function(obj, callback) {
+    var name = obj.name;
+    var temp = [];
+    for (var i in classes){
+      if (classes[i].toLowerCase().indexOf(name.toLowerCase()) != -1 ) {
+        temp.push(classes[i]);
+      }
+    } 
+    callback(temp);
+    /*util.post('sis.berkeley.edu',80,'/catalog/gcc_search_sends_request','p_offering=spring', function(str){
       console.log(str.match(/[(].*?[)]/g));
-    });
+    });*/
   },
-  course:function(year, term, name, num, callback) {
-    if (term.toLowerCase() == 'spring') {
+  course:function(obj, callback) {
+    console.log(obj);
+    var year = obj['year']
+    var num = obj['num']
+    var term = obj['term'];
+    if (obj['term'].toLowerCase() == 'spring') {
       term = 'SP';
     } else if (term.toLowerCase() == 'summer') {
       term = 'SU';
     } else if (term.toLowerCase() == 'fall') {
       term = 'FL';
     }
-    name = name.replace(/ /g,"%20");
-    util.get('osoc.berkeley.edu','/OSOC/osoc?&p_term=SP&p_course='+num+'&p_dept='+name,
+    var name = obj['name'].replace(/ /g,"%20");
+    util.get('osoc.berkeley.edu','/OSOC/osoc?&p_term='+term+'&p_course='+num+'&p_dept='+name,
       function(str) {
         var reg = /<FONT.*?<\/TD>.*?<\/TD>/g;
         var foo = str.match(reg);
@@ -92,7 +113,6 @@ var scrapers = {
               } else if (value.indexOf('DIS') != -1){
                 val = 'dis';
               } else if (value.indexOf('LAB') != -1){
-                console.log("LAB");
                 val = 'lab';
               } else if (value.indexOf('SEM') != -1){
                 val = 'sem';
@@ -121,7 +141,10 @@ var scrapers = {
       }
     );
   },
-  book:function(year, term, ccn, callback){
+  book:function(obj, callback){
+    var year = obj.year;
+    var term = obj.term;
+    var ccn = obj.ccn;
     if (term.toLowerCase() == "fall"){
       term = "D";
     } else if (term.toLowerCase() == "spring"){
@@ -156,10 +179,12 @@ var scrapers = {
     );
   }
 };
+/*
 scrapers.book('2012','spring','26335', function(books){
 //  console.log(books);
 });
 scrapers.course('2012','spring','comp sci','61b', function(courses){
   //console.log(courses);
 });
+*/
 exports.Scrapers = scrapers;
