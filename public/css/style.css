@@ -11,8 +11,9 @@ html, body {
   height: auto !important;
   height: 100%;
   margin: 0 auto -40px auto;
-  background: rgba(255, 230, 255, .6);
   width: 950px;
+  background: rgba(255, 240, 255, .6);
+
 }
 
 #footer {
