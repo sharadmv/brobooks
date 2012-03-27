@@ -55,7 +55,7 @@ define([
                 }
               });
             },
-            minLength: 2,
+            minLength: 1,
         });
       }
   });
