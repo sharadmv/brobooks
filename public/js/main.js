@@ -1,6 +1,7 @@
 require.config({
   paths: {
     jQuery: 'lib/jquery/jquery',
+    jQueryUI: 'lib/jquery/jquery-ui',
     Underscore: 'lib/underscore/underscore',
     Backbone: 'lib/backbone/backbone',
     template: '../template'

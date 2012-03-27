@@ -2,7 +2,8 @@ define([
     'jQuery',
     'Underscore',
     'Backbone',
-    'text!template/buy/main.html'
+    'jQueryUI',
+    'text!template/buy/main.html',
 ], function($, _, Backbone, buyMainTemplate) {
   var BuyMainView = Backbone.View.extend({
       el: $('#content'),
