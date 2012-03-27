@@ -34,8 +34,8 @@ define([
               });
             },
             select:function(event,ui){
-              console.log("SELECTED: "+ui.item);
-              var temp = ui.item.split(" ");
+              console.log("SELECTED: "+JSON.stringify(ui.item));
+              var temp = ui.item.value.split(" ");
               var name = temp.splice(0,temp.length-1).join(" ");
               var num = temp[temp.length-1];
               $.getJSON('/api/service',{name:'scraper.course',params:{year:'2012',term:'fall',name:name,num:num}},function(obj){
