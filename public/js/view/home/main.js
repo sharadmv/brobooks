@@ -18,6 +18,5 @@ define([
       });
     }
   });
-  console.log("In home template");
   return new HomeHappyView;
 });
