@@ -14,7 +14,6 @@ define([
         console.log("autocomplate");
         $( "#buy-class-select" ).autocomplete({
             source: function( request, response ) {
-          
               $.ajax({
                   url: "/api/service",
                   dataType: "jsonp",
@@ -28,14 +27,20 @@ define([
                     if (message.code == 200) {
                       response($.map(message.result.splice(0,16), function(item) {
                         return item;
-                        })
+                      })
                       );
                     }
                   }
               });
             },
             select:function(event,ui){
-              console.log("SELECTED");
+              console.log("SELECTED: "+JSON.stringify(ui.item));
+              var temp = ui.item.value.split(" ");
+              var name = temp.splice(0,temp.length-1).join(" ");
+              var num = temp[temp.length-1];
+              $.getJSON('/api/service',{name:'scraper.course',params:{year:'2012',term:'fall',name:name,num:num}},function(obj){
+                console.log(obj);
+              });
             },
             minLength: 2,
         });
