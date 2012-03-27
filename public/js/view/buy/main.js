@@ -26,13 +26,16 @@ define([
                   },
                   success: function(message) {
                     if (message.code == 200) {
-                      response($.map(message.result, function(item) {
+                      response($.map(message.result.splice(0,16), function(item) {
                         return item;
                         })
                       );
                     }
                   }
               });
+            },
+            select:function(event,ui){
+              console.log("SELECTED");
             },
             minLength: 2,
         });

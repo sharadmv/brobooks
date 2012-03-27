@@ -11,11 +11,11 @@ var options = {
   key: fs.readFileSync('key.pem'),
   cert: fs.readFileSync('cert.pem')
 };
-var app = express.createServer(options);
+var app = express.createServer();
 var port = 80;
 var FB = require('./fb.js').FB;
 app.use(express.static('../public'));
-app.listen(443);
+app.listen(port);
 app.set('view engine', 'ejs');
 app.set('views','../public/views');
 app.enable("jsonp callback");
