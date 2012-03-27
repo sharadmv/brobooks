@@ -4,8 +4,8 @@ define([
     'Backbone',
     'jQueryUI',
     'text!template/buy/main.html',
-    'view/buy/lecture',
-], function($, _, Backbone, jQueryUI, buyMainTemplate, lectureView) {
+    'collection/lectures',
+], function($, _, Backbone, jQueryUI, buyMainTemplate, lectureCollection) {
   var BuyMainView = Backbone.View.extend({
       el: $('#content'),
       render: function() {
@@ -45,13 +45,15 @@ define([
                   name:'scraper.course',
                   params: {
                     year:'2012',
-                    term:'fall',
+                    term:'spring',
                     name:name,num:num
                   }
                 },
                 success: function(obj){
-                  console.log(obj);
-                  lectureView.update(obj.result.lec);
+                  lectureCollection.clear();
+                  _.each(obj.result.lec, function(lec){
+                    lectureCollection.add(lec);
+                  });
                 }
               });
             },
