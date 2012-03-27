@@ -1,6 +1,7 @@
 var fs = require('fs');
 var dataChunks = "";
 var classes = [];
+var deps = [];
 var util = require('./util.js').util;
 //Load autocomplete
 fs.readFile('classes.txt', function(err,data){
@@ -8,16 +9,37 @@ fs.readFile('classes.txt', function(err,data){
     console.error("Could not open file: %s", err);
     process.exit(1);
   }
-  classes = data.toString('ascii').split("\n");
+  raw = data.toString('ascii').split("\n");
+  for (var i in raw) {
+    var temp = raw[i].split(" ");
+    classes.push({department:temp.splice(0,temp.length-1).join(" "),num:temp[temp.length-1]});
+  } 
+});
+fs.readFile('deps.txt', function(err,data){
+  if(err) {
+    console.error("Could not open file: %s", err);
+    process.exit(1);
+  }
+  raw = data.toString('ascii').split("\n");
+  for (var i in raw) {
+    if (raw[i] != ''){
+      var abbrev = raw[i].substring(raw[i].indexOf("(")).trim().replace(/[()]/g,'');
+      var name= raw[i].replace(/\(.*?\)/g,'').trim();
+      deps.push({name:name,abbrev:abbrev});
+    }
+  } 
 });
 var scrapers = {
   catalog:function(obj, callback) {
     var name = obj.name.trim();
     name = name.replace(/cs/,'compsci');
-    name = name.replace(/bioe/,'bio eng');
-    name = name.replace(/ee/,'el eng');
-    name = name.replace(/pe/,'phys ed');
-    var temp = [];
+    var spec = [];
+    for (var i in deps){
+      if (deps[i].name.indexOf(name)!=-1){
+        spec.push(deps[i].abbrev); 
+      }
+    }  
+    console.log(spec);
     for (var i in classes){
       if (classes[i].toLowerCase().indexOf(name.toLowerCase()) != -1 ) {
         temp.push(classes[i]);
