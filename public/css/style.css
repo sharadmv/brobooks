@@ -1,7 +1,7 @@
 html, body {
   height: 100%;
   margin: 0;
-  background: rgba(230, 255, 255, .6);
+  background: url(../img/desk_texture.png);
 }
 /* Big Picture Layouts */
 
@@ -11,7 +11,7 @@ html, body {
   height: 100%;
   margin: 0 auto -40px auto;
   width: 950px;
-  background: rgba(255, 240, 255, .6);
+  background: url(../img/lined_paper.png);
 
 }
 
