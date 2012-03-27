@@ -13,7 +13,7 @@ var Router = function(s, d){
       s.catalog(obj, callback);  
     }
     this.course=function(obj, callback){
-      var id = {type:'course',params:{'year':obj['year'],'term':obj['term'],'name':obj['name'],'num':obj['num']}}
+      var id = {type:'course',params:{'year':obj['year'],'term':obj['term'].toLowerCase(),'name':obj['name'].toLowerCase(),'num':obj['num'].toLowerCase()}}
       var stId = JSON.stringify(id);
       dao.scraper.find({id:stId}, function(message) {
         if (message.code != 200) {
@@ -45,7 +45,7 @@ var Router = function(s, d){
       });
     }
     this.book=function(obj, callback){
-      var id = {type:'book',params:{'year':obj['year'],'term':obj['term'],'ccn':obj['ccn']}}
+      var id = {type:'book',params:{'year':obj['year'],'term':obj['term'].toLowerCase(),'ccn':obj['ccn']}}
       var stId = JSON.stringify(id);
       dao.scraper.find({id:stId}, function(message) {
         if (message.code != 200) {

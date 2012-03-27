@@ -53,7 +53,19 @@ h2 {
   float:left;
   height:400px;
   width:300px;
-  background-color: rgba(200, 150, 240, .3);
+}
+.browl {
+  width:100%;
+  text-align:center;
+  margin:auto;
+}
+.browl-welcome {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+ -ms-filter: "FlipH"; 
 }
 
 .stuff {

@@ -7,10 +7,10 @@ var Model = require('./model.js').model;
 var Response = Model.Response;
 var Router = require('./router.js').Router;
 var router = new Router(scraper,dao);
-var options = {
+/*var options = {
   key: fs.readFileSync('key.pem'),
   cert: fs.readFileSync('cert.pem')
-};
+};*/
 var app = express.createServer();
 var port = 80;
 var FB = require('./fb.js').FB;
