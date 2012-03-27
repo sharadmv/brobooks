@@ -41,10 +41,43 @@ html, body {
   position: relative;
 }
 
+/* Menu */
+
 #menu {
   z-index: 2;
   position: relative;
+  padding: 20px;
 }
+
+.menu-item {
+  display: inline-block;
+  width: 130px;
+  height: 70px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+#menu-home {
+  background-image: url(../img/menu/mainlogo_test1.png);
+  width: 300px;
+}
+
+#menu-buy {
+  background-image: url(../img/menu/buy_button_regular.png);
+}
+
+#menu-sell {
+  background-image: url(../img/menu/sell_button_regular.png);
+  display: inline-block;
+  width: 150px;
+}
+
+#menu-login {
+  background-image: url(../img/menu/login_button_regular.png);
+  width: 140px;
+}
+
 
 /* Global Font Styles */
 
