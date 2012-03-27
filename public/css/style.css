@@ -11,16 +11,39 @@ html, body {
   height: 100%;
   margin: 0 auto -40px auto;
   width: 950px;
-  background: url(../img/lined_paper.png);
-
+  background: url(../img/repeatable_paper.png);
+  position: relative;
 }
 
 #footer {
+  position:relative;
+  z-index:3;
   clear: both;
   height: 40px;
   text-align: center;
   background: white;
   line-height: 40px;
+}
+
+#paper-header {
+  position: absolute;
+  width: 950px;
+  background-color: #efebaa;
+  top: 0;
+  left: 0;
+  height: 93px;
+  z-index: 1;
+
+}
+
+#content {
+  z-index: 2;
+  position: relative;
+}
+
+#menu {
+  z-index: 2;
+  position: relative;
 }
 
 /* Global Font Styles */
@@ -30,10 +53,12 @@ html, body {
 }
 h1 {
   font-size:2em;
+  z-index: 2;
 }
 
 h2 {
   font-size:1em;
+  z-index: 2;
 }
 
 .image-stuff-wrapper {
