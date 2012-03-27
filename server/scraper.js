@@ -13,12 +13,10 @@ fs.readFile('classes.txt', function(err,data){
 var scrapers = {
   catalog:function(obj, callback) {
     var name = obj.name.trim();
-    console.log(name);
     name = name.replace(/cs/,'compsci');
     name = name.replace(/bioe/,'bio eng');
     name = name.replace(/ee/,'el eng');
     name = name.replace(/pe/,'phys ed');
-    console.log(name);
     var temp = [];
     for (var i in classes){
       if (classes[i].toLowerCase().indexOf(name.toLowerCase()) != -1 ) {
@@ -59,7 +57,6 @@ var scrapers = {
           }
           if (field == 'course'){
             s = value.trim().split(" ");
-            console.log(s);
             if (!val) {
               if (s[s.length-1] == 'LEC'){
                 val = 'lec';
@@ -69,11 +66,12 @@ var scrapers = {
                 val = 'lab';
               } else if (s[s.length-1] == 'SEM'){
                 val = 'sem';
+              } else if (s[s.length-1] == 'SLF') {
+                val = 'slf';
               }
             } else {
               courses[val].push(obj);
             }
-            console.log(value,value.indexOf('LEC'));
               if (s[s.length-1] == 'LEC'){
                 val = 'lec';
               } else if (s[s.length-1] == 'DIS'){
@@ -82,8 +80,9 @@ var scrapers = {
                 val = 'lab';
               } else if (s[s.length-1] == 'SEM'){
                 val = 'sem';
+              } else if (s[s.length-1] == 'SLF') {
+                val = 'slf';
               }
-              console.log(val);
               obj = {};
           }
           if (field == 'course_control_number'){

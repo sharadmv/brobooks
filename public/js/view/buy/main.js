@@ -54,6 +54,12 @@ define([
                   _.each(obj.result.lec, function(lec){
                     lectureCollection.add(lec);
                   });
+                  _.each(obj.result.slf, function(lec){
+                    lectureCollection.add(lec);
+                  });
+                  _.each(obj.result.sem, function(lec){
+                    lectureCollection.add(lec);
+                  });
                 }
               });
             },
