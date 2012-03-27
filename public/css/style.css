@@ -62,6 +62,7 @@ html, body {
   background-image: url(../img/menu/mainlogo_pencil.png);
   background-size: 300px 70px;
   width: 300px;
+  margin-right: 35px;
 }
 
 #menu-buy {
@@ -83,11 +84,11 @@ html, body {
 
 #menu-sell:active {
   background-image: url(../img/menu/sell_click_fixed.png);
-  background-position: 5px 10px;
+  background-position: 8px 8px;
 }
 
 #menu-login {
-  width: 190px;
+  width: 60px;
   position: absolute;
   top: 10px;
   right: 0px;
@@ -118,14 +119,14 @@ h2 {
 
 .stuff-wrapper {
   float: left;
-  width: 650px;
+  width: 600px;
   height: 300px;
 }
 
 .browl-wrapper {
   float:left;
   height:400px;
-  width:300px;
+  width:320px;
   position:relative;
 }
 .browl {
@@ -134,14 +135,12 @@ h2 {
   text-align:center;
   margin:auto;
 }
-.browl-welcome {
-  -moz-transform: scaleX(-1);
-  -o-transform: scaleX(-1);
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
-  filter: FlipH;
- -ms-filter: "FlipH"; 
+
+.browl img {
+  margin-left: 40px;
+  width: 280px;
 }
+
 
 .stuff {
   width:100%;
