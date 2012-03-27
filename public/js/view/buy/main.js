@@ -4,7 +4,7 @@ define([
     'Backbone',
     'jQueryUI',
     'text!template/buy/main.html',
-], function($, _, Backbone, buyMainTemplate) {
+], function($, _, Backbone, jQueryUI, buyMainTemplate) {
   var BuyMainView = Backbone.View.extend({
       el: $('#content'),
       render: function() {
