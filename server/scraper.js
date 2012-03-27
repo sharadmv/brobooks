@@ -150,8 +150,8 @@ var scrapers = {
  scrapers.book('2012','spring','26335', function(books){
  //  console.log(books);
  });
- */
 scrapers.course({year:'2012',term:'fall',name:'el eng',num:'20n'}, function(courses){
   //console.log(courses);
 });
+*/
 exports.Scrapers = scrapers;
