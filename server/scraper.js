@@ -29,7 +29,6 @@ var scrapers = {
     });*/
   },
   course:function(obj, callback) {
-    console.log(obj);
     var year = obj['year']
     var num = obj['num']
     var term = obj['term'];
@@ -57,28 +56,32 @@ var scrapers = {
             delimiter = " ";
           }
           if (field == 'course'){
+            s = value.trim().split(" ");
+            console.log(s);
             if (!val) {
-              if (value.indexOf('LEC') != -1){
+              if (s[s.length-1] == 'LEC'){
                 val = 'lec';
-              } else if (value.indexOf('DIS') != -1){
+              } else if (s[s.length-1] == 'DIS'){
                 val = 'dis';
-              } else if (value.indexOf('LAB') != -1){
+              } else if (s[s.length-1] == 'LAB'){
                 val = 'lab';
-              } else if (value.indexOf('SEM') != -1){
+              } else if (s[s.length-1] == 'SEM'){
                 val = 'sem';
               }
             } else {
               courses[val].push(obj);
             }
-            if (value.indexOf('LEC') != -1){
+            console.log(value,value.indexOf('LEC'));
+              if (s[s.length-1] == 'LEC'){
                 val = 'lec';
-              } else if (value.indexOf('DIS') != -1){
+              } else if (s[s.length-1] == 'DIS'){
                 val = 'dis';
-              } else if (value.indexOf('LAB') != -1){
+              } else if (s[s.length-1] == 'LAB'){
                 val = 'lab';
-              } else if (value.indexOf('SEM') != -1){
+              } else if (s[s.length-1] == 'SEM'){
                 val = 'sem';
               }
+              console.log(val);
               obj = {};
           }
           if (field == 'course_control_number'){
@@ -99,7 +102,7 @@ var scrapers = {
   isbn:function(isbn, callback){
     util.get('isbndb.com','/api/books.xml?access_key=LEIREUYB&index1=isbn&value1='+isbn,false,
       function(str){
-      
+
       }
     );
   },
@@ -142,11 +145,11 @@ var scrapers = {
   }
 };
 /*
-scrapers.book('2012','spring','26335', function(books){
-//  console.log(books);
-});
-scrapers.course('2012','spring','comp sci','61b', function(courses){
+ scrapers.book('2012','spring','26335', function(books){
+ //  console.log(books);
+ });
+ */
+scrapers.course({year:'2012',term:'fall',name:'el eng',num:'20n'}, function(courses){
   //console.log(courses);
 });
-*/
 exports.Scrapers = scrapers;
