@@ -40,11 +40,12 @@ var scrapers = {
       term = 'FL';
     }
     var name = obj['name'].replace(/ /g,"%20");
+    console.log(arguments);
     util.get('osoc.berkeley.edu','/OSOC/osoc?&p_term='+term+'&p_course='+num+'&p_dept='+name,false,
       function(str) {
         var reg = /<FONT.*?<\/TD>.*?<\/TD>/g;
         var foo = str.match(reg);
-        var courses = {lec:[],dis:[],lab:[],sem:[]};
+        var courses = {lec:[],dis:[],lab:[],sem:[],slf:[]};
         obj = {}; val = null;
         for (var i in foo) {
           bar = foo[i].replace(/<[\/]?.*?>/g,'').replace(/&.*?;/g,'').split(":");
@@ -55,7 +56,7 @@ var scrapers = {
             value += delimiter + bar[k];
             delimiter = " ";
           }
-          if (field == 'course'){
+          if (i == foo.length - 1 ||field == 'course'){
             s = value.trim().split(" ");
             if (!val) {
               if (s[s.length-1] == 'LEC'){
@@ -69,6 +70,7 @@ var scrapers = {
               } else if (s[s.length-1] == 'SLF') {
                 val = 'slf';
               }
+              console.log(val);
             } else {
               courses[val].push(obj);
             }
