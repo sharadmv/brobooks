@@ -4,18 +4,18 @@ define([
     'Backbone',
     'jQueryUI',
     'text!template/buy/main.html',
-], function($, _, Backbone, jQueryUI, buyMainTemplate) {
+    'view/buy/lecture',
+], function($, _, Backbone, jQueryUI, buyMainTemplate, lectureView) {
   var BuyMainView = Backbone.View.extend({
       el: $('#content'),
       render: function() {
         var data = {};
         var compiledTemplate = _.template(buyMainTemplate, data);
         this.$el.html(compiledTemplate);
-        console.log("autocomplate");
         $( "#buy-class-select" ).autocomplete({
             source: function( request, response ) {
               $.ajax({
-                  url: "/api/service",
+                  url: "http://brobooks.com/api/service",
                   dataType: "jsonp",
                   data: {
                     name:'scraper.catalog',
@@ -38,8 +38,21 @@ define([
               var temp = ui.item.value.split(" ");
               var name = temp.splice(0,temp.length-1).join(" ");
               var num = temp[temp.length-1];
-              $.getJSON('/api/service',{name:'scraper.course',params:{year:'2012',term:'fall',name:name,num:num}},function(obj){
-                console.log(obj);
+              $.ajax({
+                url: 'http://brobooks.com/api/service', 
+                dataType: "jsonp", 
+                data: {
+                  name:'scraper.course',
+                  params: {
+                    year:'2012',
+                    term:'fall',
+                    name:name,num:num
+                  }
+                },
+                success: function(obj){
+                  console.log(obj);
+                  lectureView.update(obj.result.lec);
+                }
               });
             },
             minLength: 2,
