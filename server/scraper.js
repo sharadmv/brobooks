@@ -13,10 +13,12 @@ fs.readFile('classes.txt', function(err,data){
 var scrapers = {
   catalog:function(obj, callback) {
     var name = obj.name.trim();
-    name = name.replace('/cs/','comp sci');
-    name = name.replace('/bioe/','bio eng');
-    name = name.replace('/ee/','el eng');
-    name = name.replace('/pe/,','phys ed');
+    console.log(name);
+    name = name.replace(/cs/,'compsci');
+    name = name.replace(/bioe/,'bio eng');
+    name = name.replace(/ee/,'el eng');
+    name = name.replace(/pe/,'phys ed');
+    console.log(name);
     var temp = [];
     for (var i in classes){
       if (classes[i].toLowerCase().indexOf(name.toLowerCase()) != -1 ) {
