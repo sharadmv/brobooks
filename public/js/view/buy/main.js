@@ -11,8 +11,10 @@ define([
         var data = {};
         var compiledTemplate = _.template(buyMainTemplate, data);
         this.$el.html(compiledTemplate);
-        $( "#buy-lecture-select" ).autocomplete({
+        console.log("autocomplate");
+        $( "#buy-class-select" ).autocomplete({
             source: function( request, response ) {
+          
               $.ajax({
                   url: "/api/service",
                   dataType: "jsonp",
