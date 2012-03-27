@@ -13,12 +13,10 @@ fs.readFile('classes.txt', function(err,data){
 var scrapers = {
   catalog:function(obj, callback) {
     var name = obj.name.trim();
-    console.log(name);
     name = name.replace(/cs/,'compsci');
     name = name.replace(/bioe/,'bio eng');
     name = name.replace(/ee/,'el eng');
     name = name.replace(/pe/,'phys ed');
-    console.log(name);
     var temp = [];
     for (var i in classes){
       if (classes[i].toLowerCase().indexOf(name.toLowerCase()) != -1 ) {
@@ -42,11 +40,12 @@ var scrapers = {
       term = 'FL';
     }
     var name = obj['name'].replace(/ /g,"%20");
+    console.log(arguments);
     util.get('osoc.berkeley.edu','/OSOC/osoc?&p_term='+term+'&p_course='+num+'&p_dept='+name,false,
       function(str) {
         var reg = /<FONT.*?<\/TD>.*?<\/TD>/g;
         var foo = str.match(reg);
-        var courses = {lec:[],dis:[],lab:[],sem:[]};
+        var courses = {lec:[],dis:[],lab:[],sem:[],slf:[]};
         obj = {}; val = null;
         for (var i in foo) {
           bar = foo[i].replace(/<[\/]?.*?>/g,'').replace(/&.*?;/g,'').split(":");
@@ -57,9 +56,8 @@ var scrapers = {
             value += delimiter + bar[k];
             delimiter = " ";
           }
-          if (field == 'course'){
+          if (i == foo.length - 1 ||field == 'course'){
             s = value.trim().split(" ");
-            console.log(s);
             if (!val) {
               if (s[s.length-1] == 'LEC'){
                 val = 'lec';
@@ -69,11 +67,13 @@ var scrapers = {
                 val = 'lab';
               } else if (s[s.length-1] == 'SEM'){
                 val = 'sem';
+              } else if (s[s.length-1] == 'SLF') {
+                val = 'slf';
               }
+              console.log(val);
             } else {
               courses[val].push(obj);
             }
-            console.log(value,value.indexOf('LEC'));
               if (s[s.length-1] == 'LEC'){
                 val = 'lec';
               } else if (s[s.length-1] == 'DIS'){
@@ -82,8 +82,9 @@ var scrapers = {
                 val = 'lab';
               } else if (s[s.length-1] == 'SEM'){
                 val = 'sem';
+              } else if (s[s.length-1] == 'SLF') {
+                val = 'slf';
               }
-              console.log(val);
               obj = {};
           }
           if (field == 'course_control_number'){
