@@ -53,9 +53,11 @@ h2 {
   float:left;
   height:400px;
   width:300px;
+  position:relative;
 }
 .browl {
-  width:100%;
+  right:0px;
+  position:absolute;
   text-align:center;
   margin:auto;
 }
@@ -84,6 +86,16 @@ h2 {
 #home-stuff {
   margin-top:120px;
   text-align: center;
+}
+.home-get-started-text {
+  font-size:2.5em;
+  padding:10px;
+  margin-top:-10px;
+}
+.home-buy-sell-button {
+  width:250px;
+  height:50px;
+  font-size:2em;
 }
 
 /* Buy Page Styles */
