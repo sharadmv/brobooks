@@ -1,6 +1,7 @@
 var fs = require('fs');
 var dataChunks = "";
 var classes = [];
+var deps = [];
 var util = require('./util.js').util;
 //Load autocomplete
 fs.readFile('classes.txt', function(err,data){
@@ -8,21 +9,58 @@ fs.readFile('classes.txt', function(err,data){
     console.error("Could not open file: %s", err);
     process.exit(1);
   }
-  classes = data.toString('ascii').split("\n");
+  raw = data.toString('ascii').split("\n");
+  for (var i in raw) {
+    var temp = raw[i].split(" ");
+    classes.push({dep:temp.splice(0,temp.length-1).join(" "),num:temp[temp.length-1]});
+  } 
+});
+fs.readFile('deps.txt', function(err,data){
+  if(err) {
+    console.error("Could not open file: %s", err);
+    process.exit(1);
+  }
+  raw = data.toString('ascii').split("\n");
+  for (var i in raw) {
+    if (raw[i] != ''){
+      var abbrev = raw[i].substring(raw[i].indexOf("(")).trim().replace(/[()]/g,'');
+      var name= raw[i].replace(/\(.*?\)/g,'').trim();
+      deps.push({name:name,abbrev:abbrev});
+    }
+  } 
 });
 var scrapers = {
   catalog:function(obj, callback) {
     var name = obj.name.trim();
-    name = name.replace(/cs/,'compsci');
-    name = name.replace(/bioe/,'bio eng');
-    name = name.replace(/ee/,'el eng');
-    name = name.replace(/pe/,'phys ed');
+    var dep = name.replace(/[rR]?[0-9]+[a-zA-Z]*$/g,'').trim();
+    var t = name.match(/[rR]?[0-9]+[a-zA-Z]*$/g);
+    var num;
+    if (t == null){
+      num = "";
+    } else {
+      num = t[t.length-1];
+    }
+    var spec = [];
     var temp = [];
-    for (var i in classes){
-      if (classes[i].toLowerCase().indexOf(name.toLowerCase()) != -1 ) {
-        temp.push(classes[i]);
+    dep = dep.replace(/cs/g,'compsci');
+    for (var i in deps){
+      if (deps[i].name.toLowerCase().indexOf(dep.toLowerCase())!=-1){
+        spec.push(deps[i].abbrev); 
       }
-    } 
+    }
+    for (var i in classes){
+        var str = classes[i].dep+" "+classes[i].num;
+        if ((classes[i].dep.toLowerCase().indexOf(dep.toLowerCase()) != -1 && classes[i].num.toLowerCase().indexOf(num.toLowerCase())!=-1)){
+          temp.push(str);
+        }
+        for (var j in spec) {
+          if (classes[i].dep.toLowerCase().indexOf(spec[j].toLowerCase()) != -1 && classes[i].num.toLowerCase().indexOf(num.toLowerCase())!=-1)   {
+            if (temp.indexOf(str)==-1){
+              temp.push(str);
+            }
+          }
+        }
+      }
     callback(temp);
     /*util.post('sis.berkeley.edu',80,'/catalog/gcc_search_sends_request','p_offering=spring', function(str){
       console.log(str.match(/[(].*?[)]/g));
@@ -40,7 +78,6 @@ var scrapers = {
       term = 'FL';
     }
     var name = obj['name'].replace(/ /g,"%20");
-    console.log(arguments);
     util.get('osoc.berkeley.edu','/OSOC/osoc?&p_term='+term+'&p_course='+num+'&p_dept='+name,false,
       function(str) {
         var reg = /<FONT.*?<\/TD>.*?<\/TD>/g;
@@ -70,7 +107,6 @@ var scrapers = {
               } else if (s[s.length-1] == 'SLF') {
                 val = 'slf';
               }
-              console.log(val);
             } else {
               courses[val].push(obj);
             }

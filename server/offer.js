@@ -8,6 +8,7 @@ var offer = function(dao){
     });
   }
   this.fulfill = function(obj, callback) {
+    //email stuff here
   }
 }
 exports.Offer = offer;

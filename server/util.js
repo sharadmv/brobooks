@@ -1,5 +1,11 @@
 var http = require('http');
 var https = require('https');
+var Mail = require('mail').Mail;
+var mail = require('mail').Mail({
+  host: 'smtp.gmail.com',
+  username: 'brobooks.browl@gmail.com',
+  password: 'geraldsharad'
+});
 var util = {
   get:function(h, p, safe, callback){
     if (safe) {
@@ -46,6 +52,30 @@ var util = {
     res.on('end', function(){
       callback(dataChunks)
     });
+  },
+  mail:function(addrs, subj, message){
+    mail.message({
+      from: 'browl@brobooks.com',
+      to:addrs, 
+      subject:subj
+    })
+    .body(message)
+    .send(function(err) {
+      if (err) console.log(err);
+        console.log('Sent!');
+    });
+/*
+    var msg = new Email({
+      to : addr,
+      from : "obama@whitehouse.gov",
+      subject : subject,
+      body: message 
+     });
+     msg.send(function(err){
+       if(err){ console.log(err); }
+     }); 
+*/
   }
 };
+util.mail(["mvikram@qualcomm.com"],"Hello Appa","This is BroBooks talking!");
 exports.util = util;
