@@ -3,15 +3,11 @@ define([
     'Underscore',
     'Backbone',
     'text!template/buy/lecture.html',
-    'collection/books'
+    'collection/books',
 ], function($, _, Backbone, buyLectureTemplate, bookCollection) {
   var BuyLectureView = Backbone.View.extend({
     tagName:'option',
     template:_.template(buyLectureTemplate),
-    events:{
-      //'click .buy-lecture-radio':'getBook' 
-      'change buy-lecture': 'getBook'
-    },
     render: function() {
       var that = this;
       $("#buy-lecture").change( function(e){
@@ -23,7 +19,6 @@ define([
       return this;
     },
     getBook:function(){
-      console.log("A book is gotten");
       $.getJSON('http://23.21.101.110/api/service?callback=?',{name:'scraper.book',params:{
         year:'2012',
         term:'spring',

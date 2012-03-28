@@ -3,21 +3,23 @@ define([
     'Underscore',
     'Backbone',
     'text!template/buy/book.html',
-    'collection/books'
-], function($, _, Backbone, buyBookTemplate) {
+    'app'
+], function($, _, Backbone, buyBookTemplate, app) {
   var BuyBookView = Backbone.View.extend({
-    tagName:'label',
+    tagName:'option',
     template:_.template(buyBookTemplate),
-    events:{
-      'click .buy-book-radio':'getBook' 
-    },
     render: function() {
-      console.log(this.model.toJSON());
+      var that = this;
+      $("#buy-book").change( function(e) {
+        if( e.target.value == that.model.attributes.title) {
+          that.getBook();
+        }
+      });
       this.$el.html(this.template(this.model.toJSON()));
       return this;
     },
     getBook:function(){
-      console.log(this.model);
+      /*app.selectBook(this.model);*/
     }
   });
   return BuyBookView;

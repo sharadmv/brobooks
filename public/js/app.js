@@ -5,9 +5,17 @@ define([
   'router'
 ], function($, _, Backbone, Router) {
 
-  var init = function() {
-    Router.initialize();
+  var app = {
+    initialize: function() {
+      Router.initialize();
+    },
+
+    selectLecture: function(e) {
+      console.log(e);
+      }
   }
 
-  return {initialize: init};
+
+
+  return app;
 });
