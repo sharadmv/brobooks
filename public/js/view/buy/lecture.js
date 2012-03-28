@@ -6,31 +6,38 @@ define([
     'collection/books'
 ], function($, _, Backbone, buyLectureTemplate, bookCollection) {
   var BuyLectureView = Backbone.View.extend({
-      tagName:'label',
-      template:_.template(buyLectureTemplate),
-      events:{
-        'click .buy-lecture-radio':'getBook' 
-      },
-      render: function() {
-        console.log(this.model.toJSON());
-        this.$el.html(this.template(this.model.toJSON()));
-        return this;
-      },
-      getBook:function(){
-        $.getJSON('http://23.21.101.110/api/service?callback=?',{name:'scraper.book',params:{
-              year:'2012',
-              term:'spring',
-              ccn:this.model.attributes.ccn
+    tagName:'option',
+    template:_.template(buyLectureTemplate),
+    events:{
+      //'click .buy-lecture-radio':'getBook' 
+      'change buy-lecture': 'getBook'
+    },
+    render: function() {
+      var that = this;
+      $("#buy-lecture").change( function(e){
+        if (e.target.value == that.model.attributes.course) {
+          that.getBook();
         }
-        }, function(obj) {
-          if (obj.result[0].author){
-            bookCollection.clear();
-            _.each(obj.result, function(book){
-              bookCollection.add(book);
-            });
-          }
-        });
+      });
+      this.$el.html(this.template(this.model.toJSON()));
+      return this;
+    },
+    getBook:function(){
+      console.log("A book is gotten");
+      $.getJSON('http://23.21.101.110/api/service?callback=?',{name:'scraper.book',params:{
+        year:'2012',
+        term:'spring',
+        ccn:this.model.attributes.ccn
       }
+      }, function(obj) {
+        if (obj.result[0].author){
+          bookCollection.clear();
+          _.each(obj.result, function(book){
+            bookCollection.add(book);
+          });
+        }
+      });
+    }
   });
   return BuyLectureView;
 });

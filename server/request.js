@@ -2,9 +2,8 @@ var Request = require('./model.js').model.Request;
 var FB = require('./fb.js').FB;
 var request = function(dao){
   this.dao = dao;
-  this.create = function(obj, callback) {
+  this.find = function(obj, callback) {
     request = new Request(obj.user, obj.book, 1); 
-    dao.request.update(request, function(msg){
       dao.offer.find({book:{isbn:request.book.isbn}}, function(message) {
         var count = 0;
         if (message.result.length > 0 ){
@@ -24,11 +23,19 @@ var request = function(dao){
           callback(message.result);
         }
       });
+  }
+  this.waitlist = function(obj, callback) {
+    request = new Request(obj.user, obj.book, 1); 
+    dao.request.update(request, function(message){
+      callback(message.result);
     });
   }
   this.fulfill = function(obj, callback) {
-    req = obj.request;
-    //email stuff here
+    req = new Request(obj.user, obj.book, 0);
+    dao.request.update(request, function(message){
+      callback(message.result);
+    });
+    off = obj.offer;
   }
 }  
 exports.Request = request;

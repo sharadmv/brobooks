@@ -158,18 +158,42 @@ h1 {
   position:relative;
 }
 #home-stuff {
-  margin-top:120px;
+  margin-top:40px;
   text-align: center;
 }
 .home-get-started-text {
+  line-height:1.2em;
   font-size:2.5em;
-  padding:10px;
   margin-top:-10px;
 }
-.home-buy-sell-button {
-  width:250px;
-  height:50px;
-  font-size:2em;
+#home-text-wrapper{
+}
+#home-buy-text-wrapper{
+  width:50%;
+  position:relative;
+  float:left;
+}
+#home-sell-text-wrapper{
+  width:50%;
+  position:relative;
+  float:right;
+}
+.home-text-header{
+  font-size:1.5em;
+}
+.home-text{
+  text-align:left;
+}
+.home-text-subtitle{
+  font-weight:bold;
+}
+.home-step {
+  font-size:1.1em;
+}
+.home-step-content {
+  font-size:0.97em;
+  margin-left:10px;
+  padding:5px;
 }
 
 /* Buy Page Styles */
@@ -178,14 +202,6 @@ h1 {
 }
 
 #buy-lecture {
-  overflow-y: scroll;
-  height: 100px;
-  width: 300px;
-  overflow-x: visible;
-  background: white;
-  border-radius: 4px;
-  border: solid #CCC 1px;
-  padding: 10px;
 }
 
 /* Sell Page Styles */
