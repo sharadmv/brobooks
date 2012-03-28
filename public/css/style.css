@@ -158,7 +158,6 @@ h1 {
   position:relative;
 }
 #home-stuff {
-  margin-top:40px;
   text-align: center;
 }
 .home-get-started-text {
@@ -169,17 +168,16 @@ h1 {
 #home-text-wrapper{
 }
 #home-buy-text-wrapper{
-  width:50%;
+  width:100%;
   position:relative;
   float:left;
-}
-#home-sell-text-wrapper{
-  width:50%;
-  position:relative;
-  float:right;
+  text-align:center;
 }
 .home-text-header{
-  font-size:1.5em;
+  font-size:2.5em;
+  margin-auto;
+  width:100%;
+  line-height:1.5em;
 }
 .home-text{
   text-align:left;
@@ -188,6 +186,7 @@ h1 {
   font-weight:bold;
 }
 .home-step {
+  padding-top:10px;
   font-size:1.1em;
 }
 .home-step-content {

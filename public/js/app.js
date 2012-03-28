@@ -2,12 +2,13 @@ define([
   'jQuery',
   'Underscore',
   'Backbone',
-  'router'
-], function($, _, Backbone, Router) {
+  'router',
+  'model/user'
+], function($, _, Backbone, Router, user) {
 
   var init = function() {
     Router.initialize();
-  }
+  };
 
   return {initialize: init};
 });
