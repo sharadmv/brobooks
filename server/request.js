@@ -28,6 +28,7 @@ var request = function(dao){
   }
   this.fulfill = function(obj, callback) {
     req = obj.request;
+    //email stuff here
   }
 }  
 exports.Request = request;
