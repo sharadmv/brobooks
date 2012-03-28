@@ -15,7 +15,7 @@ define([
         $( "#buy-class-select" ).autocomplete({
             source: function( request, response ) {
               $.ajax({
-                  url: "http://brobooks.com/api/service",
+                  url: "http://23.21.101.110/api/service",
                   dataType: "jsonp",
                   data: {
                     name:'scraper.catalog',
@@ -39,7 +39,7 @@ define([
               var name = temp.splice(0,temp.length-1).join(" ");
               var num = temp[temp.length-1];
               $.ajax({
-                url: 'http://brobooks.com/api/service', 
+                url: 'http://23.21.101.110/api/service', 
                 dataType: "jsonp", 
                 data: {
                   name:'scraper.course',
