@@ -60,6 +60,7 @@ define([
                   _.each(obj.result.sem, function(lec){
                     lectureCollection.add(lec);
                   });
+                  $("#buy-lecture").change(function(e) {console.log(e.target.value); x = e;});
                 }
               });
             },
