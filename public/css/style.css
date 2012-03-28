@@ -102,9 +102,34 @@ html, body {
 /* Global Font Styles */
 
 .header-wrapper {
+  text-align:center;
+} 
+.header {
+  display:inline-block;
+}
+.header-text-wrapper {
   text-align: center;
+  background-image: url(../img/talk_repeat.png);
+  position:relative;
+  float:left;
+  height:89px;
+}
+.header-wrapper-left {
+  background: url("../img/talk_left.png");
+  height: 89px;
+  width: 37px;
+  position:relative;
+  float:left;
+}
+.header-wrapper-right{
+  background: url("../img/talk_right.png");
+  height: 89px;
+  width: 29px;
+  position:relative;
+  float:left;
 }
 h1 {
+  margin-top:20px;
   font-size:1.8em;
   font-weight: normal;
   font-family: Helvetica Neue;
@@ -118,8 +143,10 @@ h1 {
 }
 
 .image-stuff-wrapper {
+  margin-top:-20px;
   position: relative;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right:10px;
 }
 
 .stuff-wrapper {
