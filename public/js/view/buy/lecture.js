@@ -17,7 +17,7 @@ define([
         return this;
       },
       getBook:function(){
-        $.getJSON('http://www.brobooks.com/api/service?callback=?',{name:'scraper.book',params:{
+        $.getJSON('http://23.21.101.110/api/service?callback=?',{name:'scraper.book',params:{
               year:'2012',
               term:'spring',
               ccn:this.model.attributes.ccn
