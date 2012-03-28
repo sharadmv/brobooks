@@ -5,8 +5,9 @@ define([
   'view/home/main',
   'view/buy/main',
   'view/sell/main',
-  'view/about/main'
-], function($, _, Backbone, mainView, buyView, sellView, aboutView){
+  'view/about/main',
+  'model/user'
+], function($, _, Backbone, mainView, buyView, sellView, aboutView, user){
   var AppRouter = Backbone.Router.extend({
     routes : {
       // Define some URL routes
@@ -37,8 +38,6 @@ define([
       // We have no matching route, lets just log what the URL was
       console.log('404 Page not found: ', actions);
     }
-
-
   });
 
   var initialize = function(){

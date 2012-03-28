@@ -2,20 +2,15 @@ define([
   'jQuery',
   'Underscore',
   'Backbone',
-  'router'
-], function($, _, Backbone, Router) {
+  'router',
+  'model/user'
+], function($, _, Backbone, Router, user) {
 
-  var app = {
-    initialize: function() {
-      Router.initialize();
-    },
-
-    selectLecture: function(e) {
-      console.log(e);
-      }
-  }
+  var init = function() {
+    Router.initialize();
+  };
 
 
 
-  return app;
+  return {initialize: init};
 });

@@ -12,11 +12,10 @@ require.config({
 
 
 require([
+  'order!jQuery',
+  'order!Underscore',
+  'order!Backbone',
   'app',
-  'order!lib/jquery/jquery-min',
-  'order!lib/underscore/underscore-min',
-  'order!lib/backbone/backbone-min',
-  //'order!lib/fb/jquery.facebook'
-], function(App) {
+], function($,_,Backbone, App) {
   App.initialize();
 });
