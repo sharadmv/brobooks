@@ -16,6 +16,7 @@ var port = 80;
 var FB = require('./fb.js').FB;
 app.use(express.static('../public'));
 app.listen(port);
+console.log("Server listening on port "+port);
 app.set('view engine', 'ejs');
 app.set('views','../public/views');
 app.enable("jsonp callback");

@@ -1,4 +1,4 @@
-define([], function() {
+define(['jQuery'], function($) {
   var FBAuth = { 
     authed: false,
     accessToken: undefined
@@ -21,6 +21,24 @@ define([], function() {
             FB.api('/me', function(e) {
               FBAuth.me = e;
               FBAuth.email = e.email;
+              user = {name:FBAuth.me.name,email:e.email,token:FBAuth.accessToken,fbId:FBAuth.FBId};
+              $.ajax({
+                url: '/api/service', 
+                dataType: "jsonp", 
+                data: {
+                  name:'user.save',
+                  params: {
+                    user:user
+                  }
+                },
+                success: function(obj){
+                  if( obj.status === "success") {
+                    FBAuth.user = obj.result[0];
+                  } else {
+                    console.log("Login failed");
+                  }
+                }
+              });
             });
           } else if (response.status === "not_authorized") {
             FBAuth.authed = false;

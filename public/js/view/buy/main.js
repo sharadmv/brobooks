@@ -5,9 +5,14 @@ define([
     'jQueryUI',
     'text!template/buy/main.html',
     'collection/lectures',
-], function($, _, Backbone, jQueryUI, buyMainTemplate, lectureCollection) {
+    'collection/books',
+    'model/user',
+], function($, _, Backbone, jQueryUI, buyMainTemplate, lectureCollection, bookCollection, user) {
   var BuyMainView = Backbone.View.extend({
       el: $('#content'),
+      events: {
+        'click #pickBook': 'pickBook'
+      },
       render: function() {
         var data = {};
         var compiledTemplate = _.template(buyMainTemplate, data);
@@ -34,7 +39,6 @@ define([
               });
             },
             select:function(event,ui){
-              console.log("SELECTED: "+JSON.stringify(ui.item));
               var temp = ui.item.value.split(" ");
               var name = temp.splice(0,temp.length-1).join(" ");
               var num = temp[temp.length-1];
@@ -60,13 +64,30 @@ define([
                   _.each(obj.result.sem, function(lec){
                     lectureCollection.add(lec);
                   });
-                  $("#buy-lecture").change(function(e) {console.log(e.target.value); x = e;});
+                  $("#buy-lecture").change(function(e) {console.log("In here");console.log(e.target.value); x = e;});
                 }
               });
             },
             minLength: 1,
         });
+      },
+      pickBook: function() {
+        var bookTitle = $("#buy-book").val();
+        var book = bookCollection.getBookFromTitle(bookTitle);
+        console.log("User: ");
+        console.log(user);
+        $.getJSON( '/api/service', {
+          name: 'request.find',
+          params: {
+            book: book,
+            user: user.attributes.auth.user
+          }
+        }, function(e) {
+            console.log(e);
+          }
+        );
       }
   });
+
   return new BuyMainView;
 });

@@ -77,5 +77,4 @@ var util = {
 */
   }
 };
-util.mail(["mvikram@qualcomm.com"],"Hello Appa","This is BroBooks talking!");
 exports.util = util;

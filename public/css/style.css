@@ -15,7 +15,7 @@ html, body {
   position: relative;
 }
 
-#cleared {
+.cleared {
   clear: both;
 }
 
@@ -60,6 +60,7 @@ html, body {
   background-repeat: no-repeat;
   cursor: pointer;
   margin-right: 20px;
+  float: left;
 }
 
 #menu-home {
@@ -231,4 +232,14 @@ h1 {
 /* Sell Page Styles */
 #sell-header {
   text-align:center;
+}
+
+#sell-or, .substep {
+  float: left;
+}
+
+#sell-or {
+  width: 70px;
+  text-align: center;
+  line-height: 100px;
 }

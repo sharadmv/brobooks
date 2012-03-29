@@ -12,6 +12,7 @@ define([
         this.bind('add',function(model){
           view = new lectureView({model:model});
           $("#buy-lecture").append(view.render().el);
+          $("#sell-lecture").append(view.render().el);
         });
       },
       clear:function(){
@@ -19,6 +20,7 @@ define([
           model.destroy();
         });
         $("#buy-lecture").html("");
+        $("#sell-lecture").html("");
       }
   });
 

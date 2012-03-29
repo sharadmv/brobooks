@@ -4,25 +4,30 @@ var request = function(dao){
   this.dao = dao;
   this.find = function(obj, callback) {
     request = new Request(obj.user, obj.book, 1); 
-      dao.offer.find({book:{isbn:request.book.isbn}}, function(message) {
-        var count = 0;
-        if (message.result.length > 0 ){
-          for (var i = 0;i<message.result.length;i++){
-            FB.mutual(obj.user, message.result[i].user, function(mutual){
-              message.result[i].mutual = mutual.length;
-              count++;
-              if (count == message.result.length){
-                message.result.sort(function(a,b){
-                  return a.mutual-b.mutual;
-                });
-                callback(message.result);
-              }
-            });
-          }
-        } else {
-          callback(message.result);
+    dao.offer.find({book:{isbn:request.book.isbn}}, function(message) {
+      console.log(JSON.stringify(message));
+      var count = 0;
+      if (message.result.length > 0 ){
+        if (obj.user && message.result[i].user){
+        for (var i = 0;i<message.result.length;i++){
+          FB.mutual(obj.user, message.result[i].user, function(mutual){
+            message.result[i].mutual = mutual.length;
+            count++;
+            if (count == message.result.length){
+              message.result.sort(function(a,b){
+                return a.mutual-b.mutual;
+              });
+              callback(message.result);
+            }
+          });
         }
-      });
+        }else {
+        callback(message.result);
+        }
+      } else {
+        callback(message.result);
+      }
+    });
   }
   this.waitlist = function(obj, callback) {
     request = new Request(obj.user, obj.book, 1); 

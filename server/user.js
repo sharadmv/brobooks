@@ -1,13 +1,13 @@
 var User = function(dao){
   this.dao = dao;
-  this.save = function(user, callback) {
-    dao.user.update(user, function(e) {callback(e.result)});
+  this.save = function(obj, callback) {
+    dao.user.update(obj.user, function(e) {callback(e.result)});
   }
-  this.remove = function(user, callback) {
-    dao.user.remove(user, callback);
+  this.remove = function(obj, callback) {
+    dao.user.remove(obj.user, callback);
   }
-  this.login = function(user, callback) {
-    dao.user.find(user, function(message) {
+  this.login = function(obj, callback) {
+    dao.user.find(obj.user, function(message) {
       if (message.code == 200){
         if (message.result > 0){
           callback(message);

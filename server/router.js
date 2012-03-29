@@ -49,7 +49,6 @@ var Router = function(s, d){
       var stId = JSON.stringify(id);
       dao.scraper.find({id:stId}, function(message) {
         if (message.code != 200) {
-          console.log(message);
           callback([]);
         } else {
           if (!message.result || !(message.result.length==1)){
@@ -80,7 +79,6 @@ var Router = function(s, d){
   };
   this.scraper = new Scraper(d);
   this.route = function(service, params, callback){
-    console.log(callback);
     router = this;
     action = {start:new Date(), end:null,service:service,params:params};
     if (router[service[0]]) {

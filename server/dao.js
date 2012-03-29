@@ -24,7 +24,7 @@ var Dao = function(host){
       });
     },
     update:function(user, callback) {
-      db.user.remove({_id:user._id},function(err,result) {
+      db.user.remove({fbId:user.fbId},function(err,result) {
         if (err){
           callback(new Message("failure",300,err,null));
         } else {
