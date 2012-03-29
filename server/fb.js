@@ -10,7 +10,7 @@ var FB = {
       callback(JSON.parse(obj).data);
     });
   },
-  mutual:function(u1, u2, callback) {
+  mutual:function(u1, u2,i, callback) {
     var complete = false;
     var a1, a2;
     FB.friends(u1, function(obj){
@@ -18,7 +18,7 @@ var FB = {
       if (!complete){
         complete = true;
       } else {
-        callback(intersection(a1,a2));
+        callback(intersection(a1,a2),i);
       }
     });
     FB.friends(u2, function(obj){
@@ -26,7 +26,7 @@ var FB = {
       if (!complete){
         complete = true;
       } else {
-        callback(intersection(a1,a2));
+        callback(intersection(a1,a2),i);
       }
     });
   }

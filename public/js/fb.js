@@ -12,9 +12,7 @@ define(['jQuery'], function($) {
           oauth      : true,
         });
         FB.getLoginStatus( function(response) {
-          console.log(response);
           if( response.status === "connected") {
-            console.log("connected");
             FBAuth.FBId = response.authResponse.userID;
             FBAuth.accessToken = response.authResponse.accessToken;
             FBAuth.authed = true;

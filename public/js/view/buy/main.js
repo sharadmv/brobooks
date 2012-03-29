@@ -64,7 +64,8 @@ define([
                   _.each(obj.result.sem, function(lec){
                     lectureCollection.add(lec);
                   });
-                  $("#buy-lecture").change(function(e) {console.log("In here");console.log(e.target.value); x = e;});
+
+                  //$("#buy-lecture").change(function(e) {console.log("In here");console.log(e.target.value); x = e;});
                 }
               });
             },
@@ -74,8 +75,6 @@ define([
       pickBook: function() {
         var bookTitle = $("#buy-book").val();
         var book = bookCollection.getBookFromTitle(bookTitle);
-        console.log("User: ");
-        console.log(user);
         $.getJSON( '/api/service', {
           name: 'request.find',
           params: {
