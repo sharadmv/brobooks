@@ -10,11 +10,9 @@ var request = function(dao){
       if (message.result.length > 0 ){
         if (obj.user && message.result){
         for (var i = 0;i<message.result.length;i++){
-          var j = i;
-          console.log(message.result[i].user.fbId);
-          dao.user.find({fbId:message.result[i].user.fbId}, function(user) {
-          user = user.result[0];
-          FB.mutual(obj.user, user,i, function(mutual,i){
+          dao.user.find({fbId:message.result[i].user.fbId},i, function(user) {
+          u = user.result[0];
+          FB.mutual(obj.user, u, user.i, function(mutual,i){
             message.result[i].mutual = mutual.length;
             count++;
             if (count == message.result.length){

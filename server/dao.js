@@ -46,6 +46,17 @@ var Dao = function(host){
           callback(new Message("success",200,null,result));
         }
       });
+    },
+    find:function(user,i, callback){
+      db.user.find(user).toArray(function(err, result){
+        if (err) {
+          callback(new Message("failure",300,err,null));
+        } else {
+          msg = new Message("success", 200, null, result);
+          msg.i = i;
+          callback(msg);
+        }
+      });
     }
   }
   this.scraper = {
