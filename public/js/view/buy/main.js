@@ -7,7 +7,8 @@ define([
     'collection/lectures',
     'collection/books',
     'model/user',
-], function($, _, Backbone, jQueryUI, buyMainTemplate, lectureCollection, bookCollection, user) {
+    'collection/offers'
+], function($, _, Backbone, jQueryUI, buyMainTemplate, lectureCollection, bookCollection, user, offerCollection) {
   var BuyMainView = Backbone.View.extend({
       el: $('#content'),
       events: {
@@ -83,9 +84,12 @@ define([
             user: user.attributes.auth.user
           }
         }, function(e) {
-            console.log(e);
-          }
-        );
+          console.log(e);
+          offerCollection.clear();
+          _.each(e.result, function(offer) {
+            offerCollection.add(offer);
+          });
+        });
       }
   });
 
