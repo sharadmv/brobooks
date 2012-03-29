@@ -118,7 +118,7 @@ html, body {
 .header-wrapper-left {
   background: url("../img/talk_left.png");
   height: 89px;
-  width: 37px;
+  width: 35px;
   position:relative;
   float:left;
 }
