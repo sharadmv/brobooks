@@ -43,6 +43,7 @@ html, body {
 #content {
   z-index: 2;
   position: relative;
+  margin-top: 10px;
 }
 
 /* Menu */
@@ -67,7 +68,8 @@ html, body {
   background-image: url(../img/menu/mainlogo_pencil.png);
   background-size: 300px 70px;
   width: 300px;
-  margin-right: 35px;
+  margin-right: 45px;
+  margin-left: 25px;
 }
 
 #menu-buy {
@@ -198,18 +200,39 @@ h1 {
   width:100%;
   position:relative;
   float:left;
+  margin-left: 30px;
+  margin-top: 20px;
 }
-.home-text-header{
-  font-size:2em;
-  width:100%;
-  line-height:1.6em;
-  margin-top:9px;
+
+.home-buy-sell {
+  float: left;
+  margin-right: 30px;
+}
+
+.home-buy-sell img {
+  width: 110px;
+}
+
+.home-sell-instruction,.home-buy-instruction {
+  margin-bottom: 30px;
+  border: solid rgba(130, 130, 130, .3) 2px;
+  border-radius: 5px;
+  background: rgba(150, 155, 155, .05);
+  width: 500px;
+  padding: 10px;
+}
+
+.home-instructions {
+  float: left;
 }
 .home-text{
   text-align:left;
 }
 .home-text-subtitle{
-  font-weight:bold;
+  font-size: 1.5em;
+  line-height: 1.7em;
+  font-variant: small-caps;
+  font-weight: bold;
 }
 .home-step {
   padding-top:10px;
