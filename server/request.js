@@ -11,7 +11,10 @@ var request = function(dao){
         if (obj.user && message.result){
         for (var i = 0;i<message.result.length;i++){
           var j = i;
-          FB.mutual(obj.user, message.result[i].user,i, function(mutual,i){
+          console.log(message.result[i].user.fbId);
+          dao.user.find({fbId:message.result[i].user.fbId}, function(user) {
+          user = user.result[0];
+          FB.mutual(obj.user, user,i, function(mutual,i){
             message.result[i].mutual = mutual.length;
             count++;
             if (count == message.result.length){
@@ -21,6 +24,7 @@ var request = function(dao){
               message.result.map(function(offer) {offer.user.token = null});
               callback(message.result);
             }
+          });
           });
           }
         }

@@ -2,12 +2,22 @@ var util = require('./util.js').util;
 var FB = {
   me:function(user, callback){
     util.get('graph.facebook.com','/me?access_token='+user.token,true,function(obj){
-      callback(JSON.parse(obj));
+      obj = JSON.parse(obj);
+      if (obj != null) {
+      callback(obj.data);
+      } else {
+        callback({});
+      }
     });
   },
   friends:function(user, callback){
     util.get('graph.facebook.com','/me/friends?access_token='+user.token+'&limit=999999',true,function(obj){
-      callback(JSON.parse(obj).data);
+      obj = JSON.parse(obj);
+      if (obj != null) {
+        callback(obj.data);
+      } else {
+        callback([]);
+      }
     });
   },
   mutual:function(u1, u2,i, callback) {
@@ -17,6 +27,7 @@ var FB = {
       a1 = obj;
       if (!complete){
         complete = true;
+        console.log(a1.length);
       } else {
         callback(intersection(a1,a2),i);
       }
