@@ -17,5 +17,5 @@ require([
   'order!Backbone',
   'app',
 ], function($,_,Backbone, App) {
-  App.initialize();
+   App.initialize();
 });

@@ -13,6 +13,9 @@ html, body {
   width: 950px;
   background: url(../img/repeatable_paper.png);
   position: relative;
+  border: 1px solid black;
+  border-radius: 3px;
+  box-shadow: rgba(50, 50, 50, .6) -8px 15px 8px;
 }
 
 .cleared {
@@ -37,6 +40,7 @@ html, body {
   left: 0;
   height: 93px;
   z-index: 1;
+  border-radius: 3px 3px 0 0;
 
 }
 
@@ -69,7 +73,7 @@ html, body {
   background-size: 300px 70px;
   width: 300px;
   margin-right: 45px;
-  margin-left: 25px;
+  margin-left: 27px;
 }
 
 #menu-buy {
@@ -140,9 +144,9 @@ h1 {
 }
 
 .step-title {
-  font-size:1.2em;
-  line-height: 1.5em;
-  z-index: 2;
+  font-size: 1.3em;
+  line-height: 1.7em;
+  font-weight: bold;
 }
 
 .image-stuff-wrapper {
@@ -155,13 +159,12 @@ h1 {
 .stuff-wrapper {
   float: left;
   width: 600px;
-  height: 300px;
 }
 
 .browl-wrapper {
   float:left;
   height:400px;
-  width:320px;
+  width:300px;
   position:relative;
 }
 .browl {
@@ -178,7 +181,6 @@ h1 {
 
 
 .stuff {
-  height:100%;
   padding: 10px 30px;
 
 }
@@ -207,6 +209,8 @@ h1 {
 .home-buy-sell {
   float: left;
   margin-right: 30px;
+  margin-left: 65px;
+  margin-top: 3px;
 }
 
 .home-buy-sell img {
@@ -250,6 +254,10 @@ h1 {
 }
 
 #buy-lecture {
+}
+
+.buy-step {
+  margin-bottom: 20px;
 }
 
 /* Sell Page Styles */
