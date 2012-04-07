@@ -19,7 +19,6 @@ define([
       return this;
     },
     getBook:function(){
-      /*app.selectBook(this.model);*/
     }
   });
   return BuyBookView;

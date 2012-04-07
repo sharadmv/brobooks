@@ -9,10 +9,11 @@ define([
   'model/user',
   'collection/offers'
 ], function($, _, Backbone, jQueryUI, buyMainTemplate, lectureCollection, bookCollection, user, offerCollection) {
+  window.$ = $;
   var BuyMainView = Backbone.View.extend({
     el: $('#content'),
     events: {
-      'click #pickBook': 'pickBook'
+      'click #pickBook': 'pickBook',
     },
     render: function() {
       var data = {};
@@ -57,6 +58,7 @@ define([
             },
             success: function(obj){
               lectureCollection.clear();
+              lectureCollection.add({course: "Select a lecture"});
               _.each(obj.result.lec, function(lec){
                 lectureCollection.add(lec);
               });
@@ -66,8 +68,6 @@ define([
               _.each(obj.result.sem, function(lec){
                 lectureCollection.add(lec);
               });
-
-              //$("#buy-lecture").change(function(e) {console.log("In here");console.log(e.target.value); x = e;});
             }
           });
         },
@@ -84,7 +84,6 @@ define([
           user: user.attributes.auth.user
         }
       }, function(e) {
-        console.log(e);
         offerCollection.clear();
         _.each(e.result, function(offer) {
           offerCollection.add(offer);

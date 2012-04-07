@@ -17,47 +17,65 @@
       </div>
     </div>
     <div class="stuff-wrapper">
-      <div class="stuff">
-        <div class="step" id="sell-step-1">
-          <div class="step-title">Step 1: Pick Book</div>
-          <div class="substep">
-            <div class="step-subtitle">Pick by selecting a class</div>
-            <div class="step-description">Pick a Class</div>
-            <input id="sell-class-select" type="text"/>
-            <div class="step-description">Pick a Lecture</div>
-            <select id="sell-lecture"></select>
-            <div class="step-description">Pick a Book </div>
-            <select id="sell-book"></select>
+      <form class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label">Pick a class</label>
+          <div class="controls">
+            <input id="sell-class-select" type="text" placeholder="English R1B"/>
+            <p class="help-block">Enter the department name and course number</p>
           </div>
-          <div id="sell-or">or</div>
-          <div class="substep" id="sell-isbn">
-            <div class="step-subtitle">Pick by entering ISBN</div>
-            <div class="step-description">Book ISBN</div>
-            <input id="sell-isbn-input" type="text"/>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Pick a lecture</label>
+          <div class="controls">
+            <select id="sell-lecture"> </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Pick a book</label>
+          <div class="controls">
+            <select id="sell-book"> </select>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="appendedPrependedInput">Preferred Price</label>
+          <div class="controls">
+            <div class="input-prepend input-append">
+              <span class="add-on">$</span><input id="sell-condition" type="text" placeholder="14" class="span2"/><span class="add-on">.00</span>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Condition</label>
+          <div class="controls">
+            <input id="sell-time" type="text" placeholder="Slightly worn edges"/>
+            <p class="help-block">Additional Comments</p>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Meetup Time</label>
+          <div class="controls">
+            <input id="sell-location" type="text" placeholder="Mon, Wed or Fri at 2pm"/>
+            <p class="help-block">Preferred times slots to sell your book</p>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Meetup Location</label>
+          <div class="controls">
+            <select id="sell-location">
+              <option>North Side</option>
+              <option>South Side</option>
+              <option>West Side</option>
+              <option>Campus</option>
+            </select>
+            <p class="help-block">Roughly where you want to sell your book</p>
           </div>
         </div>
 
-
-        <div class="step cleared" id="sell-step-2">
-          <div class="step-title">Step 2: Pick the details</div>
-          <div class="step-description">Price</div>
-          <input id="sell-price" type="text"/>
-          <div class="step-description">Condition</div>
-          <input id="sell-condition" type="text"/>
-          <div class="step-description">Meetup Time</div>
-          <input id="sell-time" type="text"/>
-          <div class="step-description">Meetup Location</div>
-          <select id="sell-location">
-            <option>North Side</option>
-            <option>South Side</option>
-            <option>West Side</option>
-            <option>Campus</option>
-          </select>
+        <div class="form-actions">
+          <button id="submit-offer" type="submit" class="btn btn-primary">Sell my book!</button>
         </div>
-        <button id="submit-offer" class="btn btn-primary">Submit</button>
-
-      </div>
-
+      </form>
     </div>
   </div>
 </div>
