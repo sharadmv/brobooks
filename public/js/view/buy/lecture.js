@@ -27,6 +27,7 @@ define([
       }, function(obj) {
         if (obj.result[0].author){
           bookCollection.clear();
+          bookCollection.add({title: "Select a book"});
           _.each(obj.result, function(book){
             bookCollection.add(book);
           });
