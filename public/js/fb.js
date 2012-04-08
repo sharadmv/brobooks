@@ -36,7 +36,7 @@ define(['jQuery'], function($) {
 
     onLoginStatus : function(response, onSuccess) {
       if( response.status === "connected") {
-        onFbLogin(response, onSuccess);
+        this.onFbLogin(response, onSuccess);
       } else if (response.status === "not_authorized") {
         FBAuth.authed = false;
       } else {
