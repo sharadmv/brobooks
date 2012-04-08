@@ -74,17 +74,18 @@ define([
       });
     },
     pickBook: function() {
-      window.x = bookCollection.getBookFromTitle;
+      var bookTitle = $("#buy-book").val();
       var book = bookCollection.getBookFromTitle(bookTitle);
       if( book === null) {
         console.log("A book has not been chosen");
+        $("#buy-book-group").addClass("error");
+        return;
       }
       if( !user.attributes.authed ) {
         user.triggerAuth(this.pickBook);
         return;
       }
 
-      var bookTitle = $("#buy-book").val();
       $.getJSON( '/api/service', {
         name: 'request.find',
         params: {
