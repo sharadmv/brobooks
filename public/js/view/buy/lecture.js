@@ -11,6 +11,11 @@ define([
     render: function() {
       var that = this;
       $("#buy-lecture, #sell-lecture").change( function(e){
+        if( e.target.value == "Select a lecture") {
+          $("#buy-lecture-group, #sell-lecture-group").removeClass("success");
+        } else {
+          $("#buy-lecture-group, #sell-lecture-group").addClass("success");
+        }
         if (e.target.value == that.model.attributes.course) {
           that.getBook();
         }

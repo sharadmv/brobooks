@@ -56,6 +56,7 @@ define([
               }
             },
             success: function(obj){
+              $("#buy-class-group").addClass("success");
               lectureCollection.clear();
               lectureCollection.add({course: "Select a lecture"});
               _.each(obj.result.lec, function(lec){

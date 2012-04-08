@@ -22,7 +22,7 @@ define([
       },
       getBookFromTitle: function(bookTitle) {
         for( var x in this.models) {
-          if( this.models[x].attributes.title == bookTitle) {
+          if( this.models[x].get('title') == _.escape(bookTitle)) {
             return this.models[x].attributes;
           }
         }
