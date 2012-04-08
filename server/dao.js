@@ -148,6 +148,9 @@ var Dao = function(host){
         });
     },
     update:function(offer, callback) {
+      if (typeof(offer._id)=="string"){
+        offer._id=db.bson_serializer.ObjectID.createFromHexString(offer._id);
+      }
       db.offer.remove({_id:offer._id},function(err,result) {
         if (err){
           callback(new Message("failure",300,err,null));

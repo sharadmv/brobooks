@@ -7,12 +7,14 @@ define([
   'collection/lectures',
   'collection/books',
   'model/user',
-  'collection/offers'
+  'collection/offers',
+
 ], function($, _, Backbone, jQueryUI, buyMainTemplate, lectureCollection, bookCollection, user, offerCollection) {
   var BuyMainView = Backbone.View.extend({
     el: $('#content'),
     events: {
       'click #pickBook': 'pickBook',
+      'click #buy-offer': 'pickOffer',
     },
     render: function() {
       var data = {};
@@ -77,15 +79,18 @@ define([
     pickBook: function() {
       var bookTitle = $("#buy-book").val();
       var book = bookCollection.getBookFromTitle(bookTitle);
+      console.log("Hi");
       if( book === null) {
         console.log("A book has not been chosen");
         $("#buy-book-group").addClass("error");
         return;
       }
-      if( !user.attributes.authed ) {
+      console.log(user);
+      if( !user.attributes.auth.authed ) {
         user.triggerAuth(this.pickBook);
         return;
       }
+      $("#buy-offer-loading").css("visibility", "visible");
 
       $.getJSON( '/api/service', {
         name: 'request.find',
@@ -94,10 +99,47 @@ define([
           user: user.attributes.auth.user
         }
       }, function(e) {
+        $("#buy-offer-loading").css("visibility", "hidden");
         offerCollection.clear();
-        _.each(e.result, function(offer) {
-          offerCollection.add(offer);
-        });
+        console.log(e.result.length);
+        if( e.result.length != 0) {
+          _.each(e.result, function(offer) {
+            offerCollection.add(offer);
+          });
+          $("#collapseOne").collapse("hide");
+          $("#collapseTwo").collapse("show");
+        }
+      });
+    },
+    pickOffer: function() {
+      var time = $("#buy-time").val();
+      if( time == null || time == "") {
+        $("#buy-time-group").addClass("error");
+        return;
+      }
+      var loc = $("#buy-loc-specific").val();
+      if( loc == null || loc == "") {
+        $("#buy-loc-group").addClass("error");
+        return;
+      }
+      var offer = offerCollection.getSelectedOffer();
+      $("#buy-request-loading").css("visibility", "visible");
+      $.getJSON( '/api/service', {
+        name: 'request.fulfill',
+        params: {
+          user: user.attributes.auth.user,
+          loc: loc,
+          time: time,
+          offer: offer
+        }
+      }, function(e) {
+        $("#buy-request-loading").css("visibility", "hidden");
+        if( e.status == "success") {
+          message = "Success! You will receive an email shortly with  more details";
+        } else {
+          message = "Sorry, something went wrong with our servers, try again later";
+        }
+        $("#buy-message").html(message);
       });
     }
   });

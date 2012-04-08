@@ -6,64 +6,99 @@
       </div>
     </div>
     <div class="stuff-wrapper">
-      <form class="form-horizontal">
-        <h3>Step 1: Pick a book</h3>
-        <div id="buy-class-group" class="control-group">
-          <label class="control-label">Pick a class</label>
-          <div class="controls">
-            <input id="buy-class-select" type="text" placeholder="English R1B"/>
-            <p class="help-block">Enter the department name and course number</p>
+      <div class="accordion" id="buy-accordion">
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#buy-accordion" href="#collapseOne">
+              <h3>Step 1: Pick a book</h3>
+            </a>
+          </div>
+          <div id="collapseOne" class="accordion-body collapse in">
+            <div class="accordion-inner">
+              <form class="form-horizontal">
+                <div id="buy-class-group" class="control-group">
+                  <label class="control-label">Pick a class</label>
+                  <div class="controls">
+                    <input id="buy-class-select" type="text" placeholder="English R1B" />
+                    <p class="help-block">Enter the department name and course number</p>
+                  </div>
+                </div>
+                <div id="buy-lecture-group" class="control-group">
+                  <label class="control-label">Pick a lecture</label>
+                  <div class="controls">
+                    <select id="buy-lecture"> </select>
+                  </div>
+                </div>
+                <div id="buy-book-group" class="control-group">
+                  <label class="control-label">Pick a book</label>
+                  <div class="controls"><select id="buy-book"></select></div>
+                </div>
+                <div class="form-actions">
+                  <div id="pickBook" class="btn btn-primary">Show me friends with this book</div>
+                  <img class="loading" id="buy-offer-loading" src="img/loading.gif" />
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-        <div id="buy-lecture-group" class="control-group">
-          <label class="control-label">Pick a lecture</label>
-          <div class="controls">
-            <select id="buy-lecture"> </select>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#buy-accordion" href="#collapseTwo">
+              <h3>Step 2: Pick a friend</h3>
+            </a>
+          </div>
+          <div id="collapseTwo" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <div class="buy-step" id="buy-step-2">
+                <table class="table" id="buy-offer-table">
+                  <thead>
+                    <tr>
+                      <td>Name</td>
+                      <td>Price</td> 
+                      <td>Condition</td>
+                      <td>Time</td> 
+                      <td>Location</td>
+                    </tr>
+                  </thead>
+                  <tbody id="buy-offer-body">
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
-        <div id="buy-book-group" class="control-group">
-          <label class="control-label">Pick a book</label>
-          <div class="controls"><select id="buy-book"></select></div>
+        <div class="accordion-group">
+          <div class="accordion-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="#buy-accordion" href="#collapseThree">
+              <h3>Step 3: Setup a meetup</h3>
+            </a>
+          </div>
+          <div id="collapseThree" class="accordion-body collapse">
+            <div class="accordion-inner">
+              <form class="form-horizontal">
+                <div class="control-group">
+                  <label class="control-label">Pick a time</label>
+                  <div class="controls">
+                    <input id="buy-time" type="text" placeholder="Monday 2pm"/>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">Pick a place </label>
+                  <div class="controls">
+                    <!--<input id="buy-loc" type="text" placeholder="Golden Bear Cafe"/>-->
+                    <select id="buy-loc-specific"></select>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <div id="buy-offer" type="submit" class="btn btn-primary">Buy this book!</div>
+                  <img class="loading" id="buy-request-loading" src="img/loading.gif" />
+                  <div id="buy-message" class="help-block" ></div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
-        <div class="form-actions">
-          <button id="pickBook" class="btn btn-primary">Show me friends with this book</button>
-        </div>
-      </form>
-      <div class="buy-step" id="buy-step-2">
-        <div class="step-title">Step 2: Pick a friend to buy from</div>
-        <table class="table" id="buy-offer-table">
-          <thead>
-            <tr>
-              <td>Name</td>
-              <td>Price</td> 
-              <td>Condition</td>
-              <td>Time</td> 
-              <td>Location</td>
-            </tr>
-          </thead>
-          <tbody id="buy-offer-body">
-          </tbody>
-        </table>
       </div>
-
-      <form class="form-horizontal">
-        <h3>Step 3: Pick a time and place</h3>
-        <div class="control-group">
-          <label class="control-label">Pick a time</label>
-          <div class="controls">
-            <input id="buy-time" type="text" placeholder="Monday 2pm"/>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label">Pick a place </label>
-          <div class="controls">
-            <input id="buy-loc" type="text" placeholder="Golden Bear Cafe"/>
-          </div>
-        </div>
-        <div class="form-actions">
-          <button id="buy-offer" type="submit" class="btn btn-primary">Buy this book!</button>
-        </div>
-      </form>
     </div>
 
   </div>

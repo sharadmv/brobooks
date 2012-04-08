@@ -16,6 +16,9 @@ require([
   'order!lib/jquery/jquery-min',
   'order!lib/underscore/underscore-min',
   'order!lib/backbone/backbone-min',
+  'order!lib/misc/bootstrap-collapse',
+  'order!lib/misc/bootstrap-tooltip',
+  'order!lib/misc/bootstrap-popover',
 ], function(App) {
    App.initialize();
 });

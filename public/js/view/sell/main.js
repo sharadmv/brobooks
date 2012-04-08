@@ -13,6 +13,14 @@ define([
     events: {
       'click #submit-offer': 'submitOffer'
     },
+    initialize:function(){
+      $.getJSON("http://23.21.101.110/api/service?callback=?",{name:'location.distinct'},function(obj){
+        for (var i in obj.result){
+          $("#sell-location").append("<option>"+obj.result[i]+"</option>");
+        }
+
+      });
+    },
     render: function() {
       var data = {};
       var compiledTemplate = _.template(sellMainTemplate, data);
@@ -73,19 +81,6 @@ define([
       });
     },
     submitOffer: function() {
-      /*
-      params =  {
-      user: user.attributes.auth.user,
-      book: bookCollection.getBookFromTitle($("#sell-book").val()),
-      condition: $("#sell-condition").val(),
-      price: $("#sell-price").val(),
-      time: $("#sell-time").val(),
-      loc: $("#sell-location").val()
-      }
-      console.log(params);
-      */
-
-      return;
       $.getJSON( '/api/service', {
         name: 'offer.create',
         params: {

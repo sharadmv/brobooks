@@ -20,8 +20,19 @@ define([
       });
       $("#buy-offer-body").html("");
     },
+    getSelectedOffer: function() {
+      for( var i in this.models) {
+        var offer = this.models[i]
+        x = offer;
+        console.log(offer.attributes);
+        if( offer.attributes.selected) {
+          console.log("In here");
+          return offer.attributes;
+        }
+      }
+    }
   });
 
   return new OfferCollection;
-    
+
 });

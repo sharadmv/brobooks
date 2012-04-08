@@ -52,11 +52,13 @@ var request = function(dao){
     obj.offer.state = 0;
     loc = obj.loc;
     off = obj.offer;
+    console.log(off);
     time = obj.time;
     dao.request.update(request, function(message){
+      console.log(off);
       dao.offer.update(off, function(message){
-      util.mail([off.user.email,req.user.email],"BroBooks offer/request fulfilled!", "Your offers and requests have been fulfilled!","Greetings from BroBooks.\nThis email is confirming that the requester, "+req.user.name+", has responded to "+off.user.name+"'s offer for:\n\nBook: "+off.book.name+"\nPrice: "+off.price+"\nLocation: "+loc.specific+"\nTime: "+time+"\n\nYour offers and requests have officially been removed from the listings and you will no longer be contacted about these ones.\n\nThank you for using BroBooks!\n\nSincerely,\nBrowl");  
-      callback(message.result);
+        util.mail([off.user.email,req.user.email],"BroBooks offer/request fulfilled!", "Greetings from BroBooks!\nI'm just confirming that the requester, "+req.user.name+", has responded to "+off.user.name+"'s offer for:\n\nBook: "+off.book.title+"\nPrice: "+off.price+"\nLocation: "+loc+"\nTime: "+time+"\n\nYour offers and requests have officially been removed from the listings and you will no longer be contacted about these ones.\n\nThank you for using BroBooks! We hope your transaction goes well! And may the odds ever be in your favor.\n\nSincerely,\nBrowl\n\nhttp://www.brobooks.com");  
+        callback(message.result);
       });
     });
   }
