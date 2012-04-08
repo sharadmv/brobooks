@@ -21,14 +21,13 @@ define([
         $("#buy-book, #sell-book").html("");
       },
       getBookFromTitle: function(bookTitle) {
-        console.log(this.models);
         for( var x in this.models) {
           if( this.models[x].attributes.title == bookTitle) {
             return this.models[x].attributes;
           }
         }
         console.log("Unable to find isbn for title: " + bookTitle);
-        return "Error"
+        return null
       }
   });
 

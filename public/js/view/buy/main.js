@@ -9,7 +9,6 @@ define([
   'model/user',
   'collection/offers'
 ], function($, _, Backbone, jQueryUI, buyMainTemplate, lectureCollection, bookCollection, user, offerCollection) {
-  window.$ = $;
   var BuyMainView = Backbone.View.extend({
     el: $('#content'),
     events: {
@@ -75,8 +74,17 @@ define([
       });
     },
     pickBook: function() {
-      var bookTitle = $("#buy-book").val();
+      window.x = bookCollection.getBookFromTitle;
       var book = bookCollection.getBookFromTitle(bookTitle);
+      if( book === null) {
+        console.log("A book has not been chosen");
+      }
+      if( !user.attributes.authed ) {
+        user.triggerAuth(this.pickBook);
+        return;
+      }
+
+      var bookTitle = $("#buy-book").val();
       $.getJSON( '/api/service', {
         name: 'request.find',
         params: {
