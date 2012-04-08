@@ -6,6 +6,7 @@ define(['jQuery'], function($) {
     * When someone has authed in, this creates a new user and saves it 
     */
     onFbConnected : function(response, onSuccess) {
+      $("#menu-login").css("visibility: hidden;");
       FBAuth.FBId = response.authResponse.userID;
       FBAuth.accessToken = response.authResponse.accessToken;
       FBAuth.authed = true;
