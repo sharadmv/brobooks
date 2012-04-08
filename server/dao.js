@@ -7,6 +7,8 @@ var Dao = function(host){
   db.bind('action');
   db.bind('offer');
   db.bind('request');
+  db.bind('location');
+  db.bind('waitlist');
   this.user = {
     create:function(user, callback){
       db.user.find({fbId:user.fbId}).toArray(function(err, result){
@@ -202,6 +204,77 @@ var Dao = function(host){
         } else {
           callback(new Message("success",200,null,result));
         }
+      });
+    }
+  }
+  this.location = {
+    find:function(location, callback){
+      db.location.find(location).toArray(function(err, result){
+        if (err) {
+          callback(new Message("failure",300,err,null));
+        } else {
+          callback(new Message("success",200,null,result));
+        }
+      });
+    },
+    get:function(callback){
+      db.location.distinct('general', function(err, result){
+        if (err) {
+          callback(new Message("failure",300,err,null));
+        } else {
+          callback(new Message("success",200,null,result));
+        }
+      });
+    }
+  }
+  this.waitlist = {
+    get:function(book, callback){
+      db.waitlist.find(book).toArray(function(err,result){
+        if (err) {
+          callback(new Message("failure",300,err,null));
+        } else {
+          callback(new Message("success",200,null,result));
+        }
+      });
+    },
+    enqueue:function(book, user, callback){
+      db.waitlist.find(book).toArray(function(err, result) {
+        if (result.length == 0){
+          result = {book:book,waitlist:[user]};
+        } else {
+          result.waitlist.push(user);
+        }
+        db.waitlist.remove({_id:result._id},function(err,result) {
+          if (err){
+            callback(new Message("failure",300,err,null));
+          } else {
+            db.waitlist.insert(result,function(err,result) {
+              if (err) {
+                callback(new Message("failure",300,err,null));
+              } else {
+                callback(new Message("success",200,null,result));
+              }
+            });
+          }
+        });
+      });
+    },
+    dequeue:function(book, user, callback){
+      db.waitlist.find({book:book}).toArray(function(err, result) {
+        result.waitlist.shift(user);
+        db.waitlist.remove({_id:result._id},function(err,result) {
+          if (err){
+            callback(new Message("failure",300,err,null));
+          } else {
+            db.waitlist.insert(result,function(err,result) {
+              if (err) {
+                callback(new Message("failure",300,err,null));
+              } else {
+                callback(new Message("success",200,null,result));
+              }
+            });
+          }
+        });
       });
     }
   }

@@ -3,6 +3,15 @@ var FB = require('./fb.js').FB;
 var util = require('./util.js').util;
 var request = function(dao){
   this.dao = dao;
+  this.get = function(obj, callback){
+    dao.request.find(obj,function(message){
+      if (message.code == 200){
+        callback(message.result);
+      } else {
+        callback(message.message);
+      }
+    });
+  }
   this.find = function(obj, callback) {
     request = new Request(obj.user, obj.book, 1); 
     dao.offer.find({'user.fbId':{"$not":new RegExp(obj.user.fbId,'i')},'book.isbn':request.book.isbn,'state':1}, function(message) {
@@ -12,6 +21,7 @@ var request = function(dao){
         for (var i = 0;i<message.result.length;i++){
           dao.user.find({fbId:message.result[i].user.fbId},i, function(user) {
           u = user.result[0];
+          console.log(u);
           FB.mutual(obj.user, u, user.i, function(mutual,i){
             message.result[i].mutual = mutual.length;
             count++;
@@ -45,7 +55,7 @@ var request = function(dao){
     time = obj.time;
     dao.request.update(request, function(message){
       dao.offer.update(off, function(message){
-      util.mail([off.user.email,req.user.email],"BroBooks offer/request fulfilled!", "Your offers and requests have been fulfilled!","Greetings from BroBooks.\nThis email is confirming that the requester, "+req.user.name+", has responded to "+off.user.name+"'s offer for:\n\nBook: "+off.book.name+"\nPrice: "+off.price+"\nLocation: "+loc+"\nTime: "+time+"\n\nYour offers and requests have officially been removed from the listings and you will no longer be contacted about these ones.\n\nThank you for using BroBooks!\n\nSincerely,\nBrowl");  
+      util.mail([off.user.email,req.user.email],"BroBooks offer/request fulfilled!", "Your offers and requests have been fulfilled!","Greetings from BroBooks.\nThis email is confirming that the requester, "+req.user.name+", has responded to "+off.user.name+"'s offer for:\n\nBook: "+off.book.name+"\nPrice: "+off.price+"\nLocation: "+loc.specific+"\nTime: "+time+"\n\nYour offers and requests have officially been removed from the listings and you will no longer be contacted about these ones.\n\nThank you for using BroBooks!\n\nSincerely,\nBrowl");  
       callback(message.result);
       });
     });

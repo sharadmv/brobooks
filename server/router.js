@@ -2,12 +2,50 @@ var model = require('./model.js').model;
 var User = require('./user.js').User;
 var Request = require('./request.js').Request;
 var Offer = require('./offer.js').Offer;
+var Location = require('./location.js').Location;
 var Message = model.Message;
 var Router = function(s, d){
   var dao = d;
   this.user = new User(d);
   this.request = new Request(d);
-  this.offer = new Offer(d);
+  this.waitlist = {
+    enqueue:function(obj, callback){
+      if (obj){
+      if (obj.book){
+        d.waitlist.enqueue(obj.book, obj.user, callback);
+      } else {
+        callback(null);
+      }
+      }
+      else {
+        callback(null);
+      }
+    },
+    dequeue:function(obj, callback){
+      if (obj){
+      if (obj.book) {
+        d.waitlist.dequeue(obj.book, obj.user, callback);
+      } else {
+        callback(null);
+      }
+      } else {
+        callback(null);
+      }
+    },
+    get:function(obj, callback){
+      if (obj){
+      if (obj.book) {
+        d.waitlist.get(obj.book, callback);
+      } else {
+        callback(null);
+      }
+      } else {
+        callback(null);
+      }
+    }
+  }
+  this.offer = new Offer(d, this.waitlist);
+  this.location = new Location(d);
   var Scraper = function(dao){
     this.catalog=function(obj, callback){
       s.catalog(obj, callback);  

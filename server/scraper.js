@@ -32,18 +32,18 @@ fs.readFile('deps.txt', function(err,data){
 var scrapers = {
   catalog:function(obj, callback) {
     var name = obj.name.trim();
-    var dep = name.replace(/[rR]?[0-9]*[a-zA-Z]*$/g,'').trim();
-    var t = name.match(/[rR]?[0-9]*[a-zA-Z]*$/g);
+    var dep = name.replace(/[rR]?[0-9]+?[a-zA-Z]*?$/g,'').trim();
+    var t = name.match(/[rR]?[0-9]+?[a-zA-Z]*?$/g);
     var num;
     if (t == null){
       num = "";
     } else {
       num = t[t.length-1];
     }
-    console.log("DEP: "+dep,"NUM: "+num);
     var spec = [];
     var temp = [];
     dep = dep.replace(/cs/g,'compsci');
+    dep = dep.replace(/ee/g,'el eng');
     for (var i in deps){
       if (deps[i].name.toLowerCase().indexOf(dep.toLowerCase())!=-1){
         spec.push(deps[i].abbrev); 
