@@ -22,6 +22,7 @@ html, body {
   clear: both;
 }
 
+
 #footer {
   position:relative;
   z-index:3;
@@ -210,7 +211,7 @@ h1 {
 .home-buy-sell {
   float: left;
   margin-right: 30px;
-  margin-left: 65px;
+  margin-left: 40px;
   margin-top: 3px;
 }
 
@@ -220,10 +221,10 @@ h1 {
 
 .home-sell-instruction,.home-buy-instruction {
   margin-bottom: 30px;
-  border: solid rgba(130, 130, 130, .3) 2px;
+  border: solid rgba(30, 30, 30, .7) 3px;
   border-radius: 5px;
-  background: rgba(150, 155, 155, .05);
-  width: 500px;
+  background: rgba(245, 245, 245,.6);
+  width: 450px;
   padding: 10px;
 }
 

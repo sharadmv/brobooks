@@ -9,6 +9,7 @@ define([
   var init = function() {
     Router.initialize();
   };
+  window.$ = $;
 
 
 
