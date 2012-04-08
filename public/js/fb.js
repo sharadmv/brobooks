@@ -25,7 +25,9 @@ define(['jQuery'], function($) {
           success: function(obj){
             if( obj.status === "success") {
               FBAuth.user = obj.result[0];
-              onSuccess();
+              if( typeof onSuccess === "function") {
+                onSuccess();
+              }
             } else {
               // login with brobooks failed
             }
