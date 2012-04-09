@@ -158,8 +158,10 @@ h1 {
 
 .stuff-wrapper {
   float: left;
-  width: 500px;
+  width: 520px;
   padding: 10px;
+  margin-left: 20px;
+  margin-top: 20px;
 }
 
 .browl-wrapper {
