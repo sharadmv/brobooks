@@ -1,3 +1,6 @@
+/**
+ * Specifies the requirements of this class
+ */
 define([
   'jQuery',
   'Underscore',
@@ -9,6 +12,7 @@ define([
   var init = function() {
     Router.initialize();
   };
+  /* '$' used for debugging */
   window.$ = $;
 
 

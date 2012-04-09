@@ -1,3 +1,6 @@
+/**
+ * User encapsulation model
+ */
 var User = function(dao){
   this.dao = dao;
   this.save = function(obj, callback) {

@@ -1,3 +1,6 @@
+/**
+ * Offer encapsulation model
+ */
 var Offer = require('./model.js').model.Offer;
 var util = require('./util.js').util;
 var offer = function(dao, waitlist){
@@ -28,6 +31,9 @@ var offer = function(dao, waitlist){
       callback(msg.result)
     });
   }
+  /*
+   * Never actually called, handled by Request
+   */
   this.fulfill = function(obj, callback) {
     req = new Request(obj.user, obj.book, 0);
     obj.offer.state = 0;

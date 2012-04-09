@@ -103,9 +103,10 @@ define([
         offerCollection.clear();
         console.log(e.result.length);
         if( e.result.length != 0) {
-          _.each(e.result, function(offer) {
+          for( var i in e.result) {
+            var offer = e.result[i];
             offerCollection.add(offer);
-          });
+          }
           $("#collapseOne").collapse("hide");
           $("#collapseTwo").collapse("show");
         }

@@ -1,7 +1,15 @@
+/**
+ * Database Access Object for the MongoDB
+ */
+//requiring modules
 var Message = require('./model.js').model.Message;
 var mongo = require('mongoskin');
+/*
+ * @param host location of MongoDB 
+ */
 var Dao = function(host){
   db = mongo.db(host);
+  //binding names for db object
   db.bind('user');
   db.bind('scraper');
   db.bind('action');
@@ -9,6 +17,9 @@ var Dao = function(host){
   db.bind('request');
   db.bind('location');
   db.bind('waitlist');
+  /*
+   * User DAO
+   */
   this.user = {
     create:function(user, callback){
       db.user.find({fbId:user.fbId}).toArray(function(err, result){
@@ -61,6 +72,9 @@ var Dao = function(host){
       });
     }
   }
+  /*
+   * Scraper DAO
+   */
   this.scraper = {
     create:function(scrape, callback){
       db.scraper.find({id:scrape.id}).toArray(function(err, result){
@@ -102,6 +116,9 @@ var Dao = function(host){
       });
     }
   }
+  /*
+   * Action DAO
+   */
   this.action = {
     create:function(action, callback){
         db.action.insert(action,function(err,result){
@@ -137,6 +154,9 @@ var Dao = function(host){
       });
     }
   }
+  /*
+   * Offer DAO
+   */
   this.offer = {
     create:function(offer, callback){
         db.offer.insert(offer,function(err,result){
@@ -151,7 +171,7 @@ var Dao = function(host){
       if (typeof(offer._id)=="string"){
         offer._id=db.bson_serializer.ObjectID.createFromHexString(offer._id);
       }
-      db.offer.remove({_id:offer._id},function(err,result) {
+      db.offer.remove({'user.fbId':offer.user.fbId,'book':offer.book},function(err,result) {
         if (err){
           callback(new Message("failure",300,err,null));
         } else {
@@ -175,6 +195,9 @@ var Dao = function(host){
       });
     }
   }
+  /**
+   * Request DAO
+   */
   this.request = {
     create:function(request, callback){
         db.request.insert(request,function(err,result){
@@ -210,6 +233,9 @@ var Dao = function(host){
       });
     }
   }
+  /**
+   * Location DAO
+   */
   this.location = {
     find:function(location, callback){
       db.location.find(location).toArray(function(err, result){
@@ -230,6 +256,9 @@ var Dao = function(host){
       });
     }
   }
+  /**
+   * Waitlist DAO
+   */
   this.waitlist = {
     get:function(book, callback){
       db.waitlist.find(book).toArray(function(err,result){

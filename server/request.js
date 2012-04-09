@@ -1,3 +1,6 @@
+/**
+ * Request encapsulation module
+ */
 var Request = require('./model.js').model.Request;
 var FB = require('./fb.js').FB;
 var util = require('./util.js').util;
@@ -12,6 +15,9 @@ var request = function(dao){
       }
     });
   }
+  /*
+   * This is where relationship mapping is performed and FB mutual friend sorting happens
+   */
   this.find = function(obj, callback) {
     request = new Request(obj.user, obj.book, 1); 
     dao.offer.find({'user.fbId':{"$not":new RegExp(obj.user.fbId,'i')},'book.isbn':request.book.isbn,'state':1}, function(message) {
@@ -21,7 +27,6 @@ var request = function(dao){
         for (var i = 0;i<message.result.length;i++){
           dao.user.find({fbId:message.result[i].user.fbId},i, function(user) {
           u = user.result[0];
-          console.log(u);
           FB.mutual(obj.user, u, user.i, function(mutual,i){
             message.result[i].mutual = mutual.length;
             count++;
@@ -47,15 +52,16 @@ var request = function(dao){
       callback(message.result);
     });
   }
+  /**
+   * Emails both users about the fulfillment
+   */
   this.fulfill = function(obj, callback) {
     req = new Request(obj.user, obj.book, 0);
     obj.offer.state = 0;
     loc = obj.loc;
     off = obj.offer;
-    console.log(off);
     time = obj.time;
     dao.request.update(request, function(message){
-      console.log(off);
       dao.offer.update(off, function(message){
         util.mail([off.user.email,req.user.email],"BroBooks offer/request fulfilled!", "Greetings from BroBooks!\nI'm just confirming that the requester, "+req.user.name+", has responded to "+off.user.name+"'s offer for:\n\nBook: "+off.book.title+"\nPrice: "+off.price+"\nLocation: "+loc+"\nTime: "+time+"\n\nYour offers and requests have officially been removed from the listings and you will no longer be contacted about these ones.\n\nThank you for using BroBooks! We hope your transaction goes well! And may the odds ever be in your favor.\n\nSincerely,\nBrowl\n\nhttp://www.brobooks.com");  
         callback(message.result);

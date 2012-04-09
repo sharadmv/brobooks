@@ -1,7 +1,14 @@
+/*
+ * Scraper class for acquiring class data
+ */
+//requiring node modules
 var fs = require('fs');
 var dataChunks = "";
 var classes = [];
 var deps = [];
+/*
+ * a GET/POST util class
+ */
 var util = require('./util.js').util;
 //Load autocomplete
 fs.readFile('classes.txt', function(err,data){
@@ -30,6 +37,9 @@ fs.readFile('deps.txt', function(err,data){
   } 
 });
 var scrapers = {
+  /**
+   * Grabs data from the cached catalog file
+   */
   catalog:function(obj, callback) {
     var name = obj.name.trim();
     var dep = name.replace(/[rR]?[0-9]+?[a-zA-Z]*?$/g,'').trim();
@@ -63,10 +73,10 @@ var scrapers = {
         }
       }
     callback(temp);
-    /*util.post('sis.berkeley.edu',80,'/catalog/gcc_search_sends_request','p_offering=spring', function(str){
-      console.log(str.match(/[(].*?[)]/g));
-    });*/
   },
+  /**
+   * Grabs data from the OSOC schedule search
+   */
   course:function(obj, callback) {
     var year = obj['year']
     var num = obj['num']
@@ -139,6 +149,9 @@ var scrapers = {
       }
     );
   },
+  /*
+   * Partially implemented but unused ISBN book function
+   */
   isbn:function(isbn, callback){
     util.get('isbndb.com','/api/books.xml?access_key=LEIREUYB&index1=isbn&value1='+isbn,false,
       function(str){
@@ -146,6 +159,9 @@ var scrapers = {
       }
     );
   },
+  /**
+   * Book scraping function that grabs bkstr.com data
+   */
   book:function(obj, callback){
     var year = obj.year;
     var term = obj.term;
@@ -184,8 +200,8 @@ var scrapers = {
     );
   }
 };
-/*
- scrapers.book('2012','spring','26335', function(books){
+/* TEST CODE
+ scrapers.book({year:'2012',term:'spring',ccn:'26335', function(books){
  //  console.log(books);
  });
 scrapers.course({year:'2012',term:'fall',name:'el eng',num:'20n'}, function(courses){

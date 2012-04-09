@@ -1,3 +1,6 @@
+/**
+ * Contains simple models used by other modules
+ */
 model = {
   Message:function(status,code,message,result){
     this.status = status;

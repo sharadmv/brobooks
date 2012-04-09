@@ -1,3 +1,6 @@
+/*
+ * Util class used by other modules
+ */
 var http = require('http');
 var https = require('https');
 var Mail = require('mail').Mail;
@@ -64,17 +67,6 @@ var util = {
       if (err) console.log(err);
         console.log('Sent!');
     });
-/*
-    var msg = new Email({
-      to : addr,
-      from : "obama@whitehouse.gov",
-      subject : subject,
-      body: message 
-     });
-     msg.send(function(err){
-       if(err){ console.log(err); }
-     }); 
-*/
   }
 };
 exports.util = util;

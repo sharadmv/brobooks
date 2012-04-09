@@ -1,11 +1,19 @@
+/*
+ * Router class for REST API services
+ */
+//requiring modules
 var model = require('./model.js').model;
 var User = require('./user.js').User;
 var Request = require('./request.js').Request;
 var Offer = require('./offer.js').Offer;
 var Location = require('./location.js').Location;
 var Message = model.Message;
+/*
+ * Router class that takes a scraper and dao in the constructor
+ */
 var Router = function(s, d){
   var dao = d;
+  //setting up routing objects
   this.user = new User(d);
   this.request = new Request(d);
   this.waitlist = {
@@ -46,6 +54,9 @@ var Router = function(s, d){
   }
   this.offer = new Offer(d, this.waitlist);
   this.location = new Location(d);
+  /**
+   * Scraper router intercepts scrape requests and looks in the MongoDB cache. If present, it grabs the DB entry and then fires off an asynchronous scrape request to update the DB. If not present, it just redirects the scraping request
+   */
   var Scraper = function(dao){
     this.catalog=function(obj, callback){
       s.catalog(obj, callback);  
@@ -116,6 +127,10 @@ var Router = function(s, d){
     }
   };
   this.scraper = new Scraper(d);
+  /**
+   * IMPORTANT: routing function
+   * It looks for services located in objects in this class. If not present, it returns an error message. if not, it records the action and forwards the request
+   */
   this.route = function(service, params, callback){
     router = this;
     action = {start:new Date(), end:null,service:service,params:params};

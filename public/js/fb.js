@@ -1,4 +1,11 @@
+/**
+ * This requires only jquery
+ */
 define(['jQuery'], function($) {
+
+  /**
+   * This is the shared FB Auth object which encapsulates all facebook authentication
+   */
   var FBAuth = { 
     authed: false,
     accessToken: undefined,
@@ -38,16 +45,21 @@ define(['jQuery'], function($) {
     },
 
     onLoginStatus : function(response, onSuccess) {
+      console.log(response);
       if( response.status === "connected") {
         FBAuth.onFbConnected(response, onSuccess);
+        console.log("The user is logged in already");
       } else if (response.status === "not_authorized") {
         FBAuth.authed = false;
+        console.log("The user is not authorized");
       } else {
         // they are not logged into facebook
+        console.log("The user is not logged into FB");
       }
     }
   };
 
+  window.FBAuth = FBAuth;
 
   window.fbAsyncInit = function() {
     FB.init({
@@ -58,6 +70,7 @@ define(['jQuery'], function($) {
       oauth      : true,
     });
     FB.getLoginStatus( FBAuth.onLoginStatus);
+    FB.Event.subscribe('auth.login', FBAuth.onLoginStatus);
   };
   (function(d){
     var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
