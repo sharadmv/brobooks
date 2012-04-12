@@ -27,6 +27,7 @@ define([
           general: this.model.get("loc")
         }
       }, function(e) {
+        $("#buy-loc-specific").html("");
         _.each(e.result, function(loc) {
           $("#buy-loc-specific").append("<option>" + loc.specific + "</option>");
         });

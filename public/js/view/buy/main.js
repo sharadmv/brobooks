@@ -79,13 +79,11 @@ define([
     pickBook: function() {
       var bookTitle = $("#buy-book").val();
       var book = bookCollection.getBookFromTitle(bookTitle);
-      console.log("Hi");
       if( book === null) {
         console.log("A book has not been chosen");
         $("#buy-book-group").addClass("error");
         return;
       }
-      console.log(user);
       if( !user.attributes.auth.authed ) {
         user.triggerAuth(this.pickBook);
         return;

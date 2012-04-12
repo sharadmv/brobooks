@@ -8,11 +8,11 @@ define([
   var OfferCollection = Backbone.Collection.extend( {
     model: offerModel,
     initialize: function() {
-        this.bind('add',function(model){
-          view = new offerView({model:model});
-          $("#buy-offer-body").append(view.render().el);
-        });
-      
+      this.bind('add',function(model){
+        view = new offerView({model:model});
+        $("#buy-offer-body").append(view.render().el);
+      });
+
     },
     clear: function() {
       _.each(this.models, function(model) {
@@ -24,9 +24,7 @@ define([
       for( var i in this.models) {
         var offer = this.models[i]
         x = offer;
-        console.log(offer.attributes);
         if( offer.attributes.selected) {
-          console.log("In here");
           return offer.attributes;
         }
       }
