@@ -21,6 +21,9 @@ fs.readFile('classes.txt', function(err,data){
     var temp = raw[i].split(" ");
     classes.push({dep:temp.splice(0,temp.length-1).join(" "),num:temp[temp.length-1]});
   } 
+  scrapers.catalog({name:"cs61b"},function(obj){
+    console.log(obj);
+  });
 });
 fs.readFile('deps.txt', function(err,data){
   if(err) {
@@ -52,8 +55,13 @@ var scrapers = {
     }
     var spec = [];
     var temp = [];
-    dep = dep.replace(/cs/g,'compsci');
-    dep = dep.replace(/ee/g,'el eng');
+    if (dep == 'cs'){
+      dep = 'compsci';
+    }
+    if (dep=='ee'){
+      dep = 'el eng';
+    }
+    console.log(dep,num);
     for (var i in deps){
       if (deps[i].name.toLowerCase().indexOf(dep.toLowerCase())!=-1){
         spec.push(deps[i].abbrev); 
@@ -204,6 +212,7 @@ var scrapers = {
  scrapers.book({year:'2012',term:'spring',ccn:'26335', function(books){
  //  console.log(books);
  });
+ /*
 scrapers.course({year:'2012',term:'fall',name:'el eng',num:'20n'}, function(courses){
   //console.log(courses);
 });
