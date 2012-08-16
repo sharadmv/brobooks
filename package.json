@@ -1,0 +1,10 @@
+{
+  "version": "0.0.0",
+  "name": "brobooks",
+  "dependencies": {
+    "express": "",
+    "ejs": "",
+    "mongoskin": "",
+    "mail": ""
+  }
+}

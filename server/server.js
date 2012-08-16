@@ -20,7 +20,7 @@ var FB = require('./fb.js').FB;
   cert: fs.readFileSync('cert.pem')
 };*/
 //setting up express http server
-var app = express.createServer();
+var app = express();
 var port = 80;
 //setting up static routing
 app.use(express.static('../public'));
