@@ -16,36 +16,36 @@ var util = {
     } else {
       prot = http;
     }
-      
+
     var dataChunks = "";
     var options = {
-      host: h, 
+      host: h,
       path: p
     };
-    prot.get(options, 
-      function(r) { 
+    prot.get(options,
+      function(r) {
         util.process(r,dataChunks, callback);
-    }).on('error', 
-      function(e) { 
-        console.log("Got error: " + e.message); 
+    }).on('error',
+      function(e) {
+        console.log("Got error: " + e.message);
     });
   },
   post:function(post_domain, post_port, post_path, data, callback){
     var dataChunks = "";
-    post_options = { 
-      host: post_domain, 
-      port: post_port, 
-      path: post_path, 
-      method: 'POST', 
-      headers: { 
-        'Content-Type': 'application/x-www-form-urlencoded', 
-        'Content-Length': data.length 
-      } 
-    }; 
+    post_options = {
+      host: post_domain,
+      port: post_port,
+      path: post_path,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': data.length
+      }
+    };
     post_req = http.request(post_options, function(re) {
       util.process(re,dataChunks, callback);
-    }); 
-    post_req.write(data); 
+    });
+    post_req.write(data);
     post_req.end();
   },
   process:function(res,dataChunks, callback) {
@@ -59,7 +59,7 @@ var util = {
   mail:function(addrs, subj, message){
     mail.message({
       from: 'browl@brobooks.com',
-      to:addrs, 
+      to:addrs,
       subject:subj
     })
     .body(message)
@@ -67,6 +67,19 @@ var util = {
       if (err) console.log(err);
         console.log('Sent!');
     });
+  },
+
+  toMysqlFormat: function () {
+    function twoDigits(d) {
+      if(0 <= d && d < 10) return "0" + d.toString();
+      if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+      return d.toString();
+    }
+
+    Date.prototype.toMysqlFormat = function() {
+      return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) +
+      " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+    };
   }
 };
 exports.util = util;

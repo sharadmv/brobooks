@@ -3,9 +3,23 @@
  */
 var User = function(dao){
   this.dao = dao;
-  this.save = function(obj, callback) {
-    dao.user.update(obj.user, function(e) {callback(e.result)});
+  var self = this;
+  this.getId = function (user, callback) {
+    dao.user.getId(user, callback);
+  };
+
+  this.save = function(user, callback) {
+    dao.user.save(user, function(e) {
+      if (e.insertId == 0) {
+        self.getId(user, function(id) {
+          callback(id);
+        });
+      } else {
+        callback(e.insertId)
+      }
+    });
   }
+
   this.remove = function(obj, callback) {
     dao.user.remove(obj.user, callback);
   }

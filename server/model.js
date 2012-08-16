@@ -23,13 +23,13 @@ model = {
     this.token = token;
     this.requests = requests;
     this.offers = offers;
-  },    
+  },
 	Course:function(year, term, name, lecture, books){
     this.year = year;
     this.term = term;
     this.name = name;
     this.lecture = lecture;
-    this.books = books;      
+    this.books = books;
 	},
 	Book:function(title, author, edition, isbn, requests, offers, condition){
     this.title = title;

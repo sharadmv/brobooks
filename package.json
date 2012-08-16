@@ -2,9 +2,10 @@
   "version": "0.0.0",
   "name": "brobooks",
   "dependencies": {
-    "express": "",
+    "express": "2.5",
     "ejs": "",
     "mongoskin": "",
-    "mail": ""
+    "mail": "",
+    "mysql": "2.0.0-alpha3"
   }
 }

@@ -1,314 +1,61 @@
-/**
- * Database Access Object for the MongoDB
- */
-//requiring modules
-var Message = require('./model.js').model.Message;
-var mongo = require('mongoskin');
-/*
- * @param host location of MongoDB 
- */
-var Dao = function(host){
-  db = mongo.db(host);
-  //binding names for db object
-  db.bind('user');
-  db.bind('scraper');
-  db.bind('action');
-  db.bind('offer');
-  db.bind('request');
-  db.bind('location');
-  db.bind('waitlist');
-  /*
-   * User DAO
-   */
+var mysql = require('mysql');
+require('./util.js').util.toMysqlFormat();
+
+
+/*connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+  if (err) throw err;
+
+  console.log('The solution is: ', rows[0].solution);
+});
+
+connection.query('INSERT INTO user values ()', function(err, results) {
+  if (err) throw err;
+
+  console.log(results);
+});*/
+
+//connection.end();
+
+var Dao = function() {
+  var connection = mysql.createConnection({
+    host     : 'localhost',
+    user     : 'root',
+    password : '',
+    database: 'brobooks'
+  });
+
+  connection.connect();
   this.user = {
-    create:function(user, callback){
-      db.user.find({fbId:user.fbId}).toArray(function(err, result){
-        if (result.length>0){
-          callback(new Message("failure",301,"user exists", null));
-        } else {
-          db.user.insert(user,function(err,result){
-            if (err) {
-              callback(new Message("failure",300,err,null));
-            } else {
-              callback(new Message("success",200,null,result));
-            }
-          });
-        }
-      });
+    save: function (user, callback) {
+      var params = [user.fbId, user.accessToken, user.email, user.accessToken, user.email];
+      connection.query('INSERT INTO user (fb_id, access_token, email) values (?, ?, ?) ' +
+        'ON DUPLICATE KEY UPDATE access_token=?, email=?',
+        params, function (err, result) {
+          if (err) throw err;
+          callback(result);
+        });
     },
-    update:function(user, callback) {
-      db.user.remove({fbId:user.fbId},function(err,result) {
-        if (err){
-          callback(new Message("failure",300,err,null));
-        } else {
-          db.user.insert(user,function(err,result) {
-            if (err) {
-              callback(new Message("failure",300,err,null));
-            } else {
-              callback(new Message("success",200,null,result));
-            }
-          });
-        }
-      });
-    },
-    find:function(user, callback){
-      db.user.find(user).toArray(function(err, result){
-        if (err) {
-          callback(new Message("failure",300,err,null));
-        } else {
-          callback(new Message("success",200,null,result));
-        }
-      });
-    },
-    find:function(user,i, callback){
-      db.user.find(user).toArray(function(err, result){
-        if (err) {
-          callback(new Message("failure",300,err,null));
-        } else {
-          msg = new Message("success", 200, null, result);
-          msg.i = i;
-          callback(msg);
-        }
+    getId: function (user, callback) {
+      var params = [user.fbId];
+      connection.query('SELECT user_id FROM user WHERE fb_id=?', params, function (err, result) {
+        if (err) throw err;
+        callback(result[0]);
       });
     }
-  }
-  /*
-   * Scraper DAO
-   */
-  this.scraper = {
-    create:function(scrape, callback){
-      db.scraper.find({id:scrape.id}).toArray(function(err, result){
-        if (result.length>0){
-          callback(new Message("failure",301,"scrape exists", null));
-        } else {
-          db.scrape.insert(scrape,function(err,result){
-            if (err) {
-              callback(new Message("failure",300,err,null));
-            } else {
-              callback(new Message("success",200,null,result));
-            }
-          });
-        }
-      });
-    },
-    update:function(scrape, callback) {
-      db.scraper.remove({id:scrape.id},function(err,result) {
-        if (err){
-          callback(new Message("failure",300,err,null));
-        } else {
-          db.scraper.insert(scrape, function(err,result) {
-            if (err) {
-              callback(new Message("failure",300,err,null));
-            } else {
-              callback(new Message("success",200,null,result));
-            }
-          });
-        }
-      });
-    },
-    find:function(scrape, callback){
-      db.scraper.find({id:scrape.id}).toArray(function(err, result){
-        if (err) {
-          callback(new Message("failure",300,err,null));
-        } else {
-          callback(new Message("success",200,null,result));
-        }
-      });
-    }
-  }
-  /*
-   * Action DAO
-   */
+  };
+
   this.action = {
-    create:function(action, callback){
-        db.action.insert(action,function(err,result){
-          if (err) {
-            callback(new Message("failure",300,err,null));
-          } else {
-            callback(new Message("success",200,null,result[0]));
-          }
+    update: function (action, callback) {
+      var params = [action.status, action.code, action.error ? "": action.error, action.result.service.join("."),
+        action.result.start.toMysqlFormat(), action.result.end.toMysqlFormat(), JSON.stringify(action.result.params)];
+      connection.query('INSERT INTO action (status, code, error, service, start, end, params) ' +
+        'values (?, ?, ?, ?, ?, ?, ?)',
+        params, function (err, result) {
+          if (err) throw err;
+          callback(result);
         });
-    },
-    update:function(action, callback) {
-      db.action.remove({_id:action._id},function(err,result) {
-        if (err){
-          callback(new Message("failure",300,err,null));
-        } else {
-          db.action.insert(action,function(err,result) {
-            if (err) {
-              callback(new Message("failure",300,err,null));
-            } else {
-              callback(new Message("success",200,null,result));
-            }
-          });
-        }
-      });
-    },
-    find:function(action, callback){
-      db.action.find(action).toArray(function(err, result){
-        if (err) {
-          callback(new Message("failure",300,err,null));
-        } else {
-          callback(new Message("success",200,null,result));
-        }
-      });
     }
-  }
-  /*
-   * Offer DAO
-   */
-  this.offer = {
-    create:function(offer, callback){
-        db.offer.insert(offer,function(err,result){
-          if (err) {
-            callback(new Message("failure",300,err,null));
-          } else {
-            callback(new Message("success",200,null,result[0]));
-          }
-        });
-    },
-    update:function(offer, callback) {
-      if (typeof(offer._id)=="string"){
-        offer._id=db.bson_serializer.ObjectID.createFromHexString(offer._id);
-      }
-      db.offer.remove({'user.fbId':offer.user.fbId,'book':offer.book},function(err,result) {
-        if (err){
-          callback(new Message("failure",300,err,null));
-        } else {
-          db.offer.insert(offer,function(err,result) {
-            if (err) {
-              callback(new Message("failure",300,err,null));
-            } else {
-              callback(new Message("success",200,null,result));
-            }
-          });
-        }
-      });
-    },
-    find:function(offer, callback){
-      db.offer.find(offer).toArray(function(err, result){
-        if (err) {
-          callback(new Message("failure",300,err,null));
-        } else {
-          callback(new Message("success",200,null,result));
-        }
-      });
-    }
-  }
-  /**
-   * Request DAO
-   */
-  this.request = {
-    create:function(request, callback){
-        db.request.insert(request,function(err,result){
-          if (err) {
-            callback(new Message("failure",300,err,null));
-          } else {
-            callback(new Message("success",200,null,result[0]));
-          }
-        });
-    },
-    update:function(request, callback) {
-      db.request.remove({_id:request._id},function(err,result) {
-        if (err){
-          callback(new Message("failure",300,err,null));
-        } else {
-          db.request.insert(request,function(err,result) {
-            if (err) {
-              callback(new Message("failure",300,err,null));
-            } else {
-              callback(new Message("success",200,null,result));
-            }
-          });
-        }
-      });
-    },
-    find:function(request, callback){
-      db.request.find(request).toArray(function(err, result){
-        if (err) {
-          callback(new Message("failure",300,err,null));
-        } else {
-          callback(new Message("success",200,null,result));
-        }
-      });
-    }
-  }
-  /**
-   * Location DAO
-   */
-  this.location = {
-    find:function(location, callback){
-      db.location.find(location).toArray(function(err, result){
-        if (err) {
-          callback(new Message("failure",300,err,null));
-        } else {
-          callback(new Message("success",200,null,result));
-        }
-      });
-    },
-    get:function(callback){
-      db.location.distinct('general', function(err, result){
-        if (err) {
-          callback(new Message("failure",300,err,null));
-        } else {
-          callback(new Message("success",200,null,result));
-        }
-      });
-    }
-  }
-  /**
-   * Waitlist DAO
-   */
-  this.waitlist = {
-    get:function(book, callback){
-      db.waitlist.find(book).toArray(function(err,result){
-        if (err) {
-          callback(new Message("failure",300,err,null));
-        } else {
-          callback(new Message("success",200,null,result));
-        }
-      });
-    },
-    enqueue:function(book, user, callback){
-      db.waitlist.find(book).toArray(function(err, result) {
-        if (result.length == 0){
-          result = {book:book,waitlist:[user]};
-        } else {
-          result.waitlist.push(user);
-        }
-        db.waitlist.remove({_id:result._id},function(err,result) {
-          if (err){
-            callback(new Message("failure",300,err,null));
-          } else {
-            db.waitlist.insert(result,function(err,result) {
-              if (err) {
-                callback(new Message("failure",300,err,null));
-              } else {
-                callback(new Message("success",200,null,result));
-              }
-            });
-          }
-        });
-      });
-    },
-    dequeue:function(book, user, callback){
-      db.waitlist.find({book:book}).toArray(function(err, result) {
-        result.waitlist.shift(user);
-        db.waitlist.remove({_id:result._id},function(err,result) {
-          if (err){
-            callback(new Message("failure",300,err,null));
-          } else {
-            db.waitlist.insert(result,function(err,result) {
-              if (err) {
-                callback(new Message("failure",300,err,null));
-              } else {
-                callback(new Message("success",200,null,result));
-              }
-            });
-          }
-        });
-      });
-    }
-  }
-}
+  };
+};
+
 exports.Dao = Dao;

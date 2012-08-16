@@ -59,7 +59,7 @@ var Router = function(s, d){
    */
   var Scraper = function(dao){
     this.catalog=function(obj, callback){
-      s.catalog(obj, callback);  
+      s.catalog(obj, callback);
     }
     this.course=function(obj, callback){
       var id = {type:'course',params:{'year':obj['year'],'term':obj['term'].toLowerCase(),'name':obj['name'].toLowerCase(),'num':obj['num'].toLowerCase()}}
@@ -141,7 +141,7 @@ var Router = function(s, d){
           d.action.update(new Message("success",200,null,action),function(message){
             callback(new Message("success",200,null, obj));
           });
-        }); 
+        });
       } else {
         action.end = new Date();
         d.action.update(new Message("failure",101,"service method does not exist",action),function(message){
@@ -151,9 +151,9 @@ var Router = function(s, d){
     } else {
       action.end = new Date();
       d.action.update(new Message("failure",100,"service does not exist",action),function(message){
-        callback(new Message("failure",100,"service does not exist", null)); 
+        callback(new Message("failure",100,"service does not exist", null));
       });
     }
-  } 
-} 
+  }
+}
 exports.Router = Router;

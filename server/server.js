@@ -8,7 +8,7 @@ var express = require('express');
 //var fs = require('fs');
 var scraper = require('./scraper.js').Scrapers;
 var Dao = require('./dao.js').Dao;
-var dao = new Dao('localhost:27017/brobooks');
+var dao = new Dao();
 var Model = require('./model.js').model;
 var Response = Model.Response;
 var Router = require('./router.js').Router;
@@ -20,15 +20,25 @@ var FB = require('./fb.js').FB;
   cert: fs.readFileSync('cert.pem')
 };*/
 //setting up express http server
-var app = express();
+var app = express.createServer();
 var port = 80;
 //setting up static routing
-app.use(express.static('../public'));
 app.listen(port);
 console.log("Server listening on port "+port);
 app.enable("jsonp callback");
+
+app.configure(function () {
+  app.use(express.static('../public/'));
+  app.set('view engine', 'ejs');
+  app.set('views', __dirname + '/views');
+});
+
+app.get('/', function (req, res) {
+  res.render('home', { page: 'home' });
+});
+
 //setting up REST API routing services
-app.get('/api/service',function(req,res){
+app.get('/api/service',function (req,res){
   start = new Date();
   //checking that service is formatted properly (name=object.method)
   if (req.query['name']) {
@@ -42,11 +52,11 @@ app.get('/api/service',function(req,res){
       router.route(service, req.query.params, function (r) {
           response = new Response(r.status,r.code,r.message,req.query,start,new Date(),r.result);
           res.json(response);
-      });  
+      });
     }
   } else {
     //service error returned
-    response = new Response("failure",1337,"no service name given",req.query,start,new Date(),null); 
+    response = new Response("failure",1337,"no service name given",req.query,start,new Date(),null);
     res.json(response);
-  }  
+  }
 });
