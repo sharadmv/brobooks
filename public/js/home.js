@@ -1,11 +1,11 @@
 var onFbLogin;
 (function () {
-  var user;
 
 
   var UserModel = Backbone.Model.extend({
     initialize: function () {
       this.loggedIn = false;
+      x = this;
       onFbLogin = this.onFbLogin.bind(this);
     },
 
@@ -39,10 +39,48 @@ var onFbLogin;
           email: this.email
         }
       }, function (e) {
-        this.id = e.result.user_id;
+        this.id = e.result.id;
       }.bind(this));
     }
   });
 
-  var user = new UserModel();
+  user = new UserModel();
+
+  var OfferModel = Backbone.Model.extend({
+    initialize: function () {
+    },
+
+    createOffer: function () {
+      $.getJSON('/api/service', {
+        name: 'offer.create',
+        params: {
+          userId: this.get('userId'),
+          dept: this.get('dept'),
+          course: this.get('course'),
+          title: this.get('title'),
+          price: this.get('price'),
+          loc: this.get('loc'),
+          author: this.get('author'),
+          edition: this.get('edition'),
+          fulfilled: this.get('fulfilled'),
+          condition: this.get('condition')
+        }
+      }, function (e) {
+        console.log(e);
+      });
+    }
+  });
+
+  offer = new OfferModel({
+    userId: 10,
+    dept: "EDU",
+    course: "140AC",
+    title: "Pedagogy",
+    price: "20",
+    loc: "South Side",
+    author: "Dickens",
+    edition: "2",
+    fulfilled: false,
+    condition: "decent"
+  });
 })();

@@ -25,6 +25,7 @@ var Dao = function() {
   });
 
   connection.connect();
+
   this.user = {
     save: function (user, callback) {
       var params = [user.fbId, user.accessToken, user.email, user.accessToken, user.email];
@@ -35,11 +36,118 @@ var Dao = function() {
           callback(result);
         });
     },
+
+    getUser: function (userId, callback) {
+      connection.query('SELECT * FROM user WHERE user_id=?', [userId], function (err, result) {
+        if (err) throw err;
+        callback(result[0]);
+      });
+    },
     getId: function (user, callback) {
       var params = [user.fbId];
       connection.query('SELECT user_id FROM user WHERE fb_id=?', params, function (err, result) {
         if (err) throw err;
+        callback(result[0].user_id);
+      });
+    }
+  };
+
+  this.fill = {
+    create: function (fill, callback) {
+      var mysqlFill = {
+        user_id: fill.userId,
+        offer_id: fill.offerId,
+        price: fill.price,
+        loc: fill.loc,
+        time: fill.time
+      };
+      connection.query('INSERT INTO fill SET ?', mysqlFill, function (err, result) {
+        if (err) throw err;
+
+        fill.fillId = result.insertId;
+        callback(fill);
+      });
+    },
+
+    getFill: function (fillId, callback) {
+      connection.query('SELECT * FROM fill WHERE fill_id=?', [fillId], function (err, result) {
+        if (err) throw err;
+
         callback(result[0]);
+      });
+    }
+  };
+
+  this.offer = {
+    create: function (offer, callback) {
+      var mysqlOffer = {
+        user_id: offer.userId,
+        dept: offer.dept,
+        course: offer.course,
+        title: offer.title,
+        price: offer.price,
+        loc: offer.loc,
+        author: offer.author,
+        edition: offer.edition,
+        fulfilled: offer.fulfilled,
+        condition: offer.condition
+      };
+      connection.query('INSERT INTO offer SET ?', mysqlOffer, function (err, result) {
+        if (err) throw err;
+
+        offer.offerId = result.insertId;
+        callback(offer);
+      });
+    },
+
+    getOffer: function (offerId, callback) {
+      connection.query('SELECT * FROM offer where offer_id=?', [offerId], function (err, result) {
+        if (err) throw err;
+        callback(result[0]);
+      });
+    },
+
+    update: function (offer, callback) {
+      var mysqlOffer = {
+        dept: offer.dept,
+        course: offer.course,
+        title: offer.title,
+        price: offer.price,
+        loc: offer.loc,
+        author: offer.author,
+        edition: offer.edition,
+        fulfilled: offer.fulfilled,
+        condition: offer.condition
+      };
+      var query = connection.query('UPDATE offer SET ? where offer_id=?', [mysqlOffer, offer.offerId], function (err, result) {
+        if (err) throw err;
+
+        callback(offer);
+      });
+      console.log(query.sql);
+    },
+
+    delete: function (offerId, callback) {
+      var params = [offerId];
+      var query = connection.query('DELETE FROM offer WHERE offer_id=?', params, function (err, result) {
+        if (err) throw err;
+
+        callback(result);
+      });
+      console.log(query.sql);
+    },
+
+    getAll: function (callback) {
+      connection.query('SELECT * FROM offer', function (err, result) {
+        if (err) throw err;
+
+        for (var i = 0; i < result.length; i++) {
+          result[i].userId = result[i].user_id;
+          result[i].offerId = result[i].offer_id;
+          delete result[i].user_id;
+          delete result[i].offer_id;
+        }
+        callback(result);
       });
     }
   };

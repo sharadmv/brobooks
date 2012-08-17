@@ -3,10 +3,11 @@
  */
 //requiring modules
 var model = require('./model.js').model;
-var User = require('./user.js').User;
+var UserService = require('./userService.js').UserService;
 var Request = require('./request.js').Request;
-var Offer = require('./offer.js').Offer;
+var OfferService = require('./offerService.js').OfferService;
 var Location = require('./location.js').Location;
+var FillService = require('./fillService.js').FillService;
 var Message = model.Message;
 /*
  * Router class that takes a scraper and dao in the constructor
@@ -14,7 +15,7 @@ var Message = model.Message;
 var Router = function(s, d){
   var dao = d;
   //setting up routing objects
-  this.user = new User(d);
+  this.user = new UserService(d);
   this.request = new Request(d);
   this.waitlist = {
     enqueue:function(obj, callback){
@@ -52,7 +53,8 @@ var Router = function(s, d){
       }
     }
   }
-  this.offer = new Offer(d, this.waitlist);
+  this.offer = new OfferService(d, this.waitlist);
+  this.fill = new FillService(d);
   this.location = new Location(d);
   /**
    * Scraper router intercepts scrape requests and looks in the MongoDB cache. If present, it grabs the DB entry and then fires off an asynchronous scrape request to update the DB. If not present, it just redirects the scraping request

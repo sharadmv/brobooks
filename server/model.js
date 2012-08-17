@@ -18,11 +18,10 @@ model = {
     this.duration = end - start;
     this.result = result;
   },
-  User:function(fbId, token, requests, offers) {
+  User:function(fbId, accessToken, email) {
     this.fbId= fbId;
-    this.token = token;
-    this.requests = requests;
-    this.offers = offers;
+    this.accessToken = accessToken;
+    this.email = email;
   },
 	Course:function(year, term, name, lecture, books){
     this.year = year;
@@ -45,14 +44,24 @@ model = {
     this.book = book;
     this.state = state;
   },
-  Offer:function(user,book,price,condition,time,loc,state) {
-    this.user = user;
-    this.book = book;
-    this.state = state;
+  Offer:function(userId, dept, course, title, price, loc, author, edition, fulfilled, condition) {
+    this.userId = userId;
+    this.dept = dept;
+    this.course = course;
+    this.title = title;
     this.price = price;
-    this.condition = condition;
-    this.time = time;
     this.loc = loc;
+    this.author = author;
+    this.edition = edition;
+    this.fulfilled = fulfilled;
+    this.condition = condition;
+  },
+  Fill: function (userId, offerId, price, loc, time) {
+    this.userId = userId;
+    this.offerId = offerId;
+    this.price = price;
+    this.loc = loc;
+    this.time = time;
   }
 }
 exports.model = model;
