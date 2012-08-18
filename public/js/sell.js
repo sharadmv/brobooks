@@ -14,6 +14,8 @@ var validate;
     },
 
     onFbLogin: function (response) {
+      console.log("response: " + response);
+      console.log(response);
       if (response.status === 'connected') {
         this.fbId = response.authResponse.userID;
         this.accessToken = response.authResponse.accessToken;
@@ -22,6 +24,7 @@ var validate;
           this.data = data;
           this.name = data.name;
           this.email = data.email;
+          console.log("About to save");
           this.saveUser();
         }.bind(this));
       } else if (response.status === 'not_authorized') {

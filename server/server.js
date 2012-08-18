@@ -25,7 +25,7 @@ var Util = require('./util.js').util;
 };*/
 //setting up express http server
 var app = express.createServer();
-var port = 8000;
+var port = 80;
 //setting up static routing
 app.listen(port);
 console.log("Server listening on port "+port);

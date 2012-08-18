@@ -8,7 +8,7 @@ $(document).ready(function() {
     });
     // Additional initialization code here
     FB.getLoginStatus(onFbLogin);
-    FB.Event.subscribe(onFbLogin);
+    FB.Event.subscribe('auth.login', onFbLogin);
   };
   // Load the SDK Asynchronously
   (function(d){
