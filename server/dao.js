@@ -148,7 +148,7 @@ var Dao = function() {
     },
 
     getAll: function (callback) {
-      connection.query('SELECT * FROM offer WHERE fulfilled="false"', function (err, result) {
+      connection.query('SELECT * FROM offer WHERE fulfilled="false" order by dept, course', function (err, result) {
         if (err) callback(err);
 
         for (var i = 0; i < result.length; i++) {
