@@ -1,0 +1,100 @@
+<h3>Post a Listing</h3>
+<form class='form-horizontal' onSubmit="return validate()" action="/offer/create" method="get">
+  <fieldset>
+    <input id="fulfilled-input" type="text" name="fulfilled" val="0" style="display: none;"/>
+    <div class="control-group">
+      <div class="controls">
+        <input id="user-input" type="text" name="userId" style="display: none;" val=""/>
+        <div class="fb-stuff">
+          <div class="fb-login-button nav-ele" scope="email" style="margin: 0;">
+            Login With Facebook
+          </div>
+          <p class="help-block">
+            You must be logged into facebook to list a book for security reasons.</br>
+            Brobooks will not share or sell your personal information.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="dept-select">Department</label>
+      <div class="controls">
+        <select id="dept-select" name="dept">
+          <% for (var i = 0; i < depts.length; i++) {%>
+          <% if (depts[i] == "COMPSCI") { %>
+          <option SELECTED><%= depts[i] %></option>
+          <% console.log("HI") %>
+          <% } else {%>
+          <option><%= depts[i] %></option>
+          <% } %>
+          <% } %>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="course-input">Course Number</label>
+      <div class="controls">
+        <input id="course-input" type="text" class="span1" placeholder="61B" maxlength="8" name="course"/>
+        <p class="help-block">Accurate course information helps buyers find your book.</p>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="title-input">Book Title</label>
+      <div class="controls">
+        <input id="title-input" type="text" class="span3" placeholder="Data Structures and Algorithms in Java" maxlength="50" name="title"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="author-input">Author</label>
+      <div class="controls">
+        <input id="author-input" type="text" class="span3" placeholder="Goodrich and Tamassia" maxlength="50" name="author"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="edition-input">Edition</label>
+      <div class="controls">
+        <input id="edition-input" type="text" class="span1" placeholder="4" maxlength="10" name="edition"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="price-input">Sale Price</label>
+      <div class="controls">
+        <div class="input-prepend input-append">
+          <span class="add-on">$</span><input id="price-input" class="span1" style="margin-bottom: 0; width:30px; text-align: right" type="text" placeholder="30" maxlength="3" name="price"/><span class="add-on">.00</span>
+        </div>
+        <p class="help-block">You can look around amazon.com for price inspiration if you are unsure.</p>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="condition-input">Condition</label>
+      <div class="controls">
+        <input id="condition-input" class="span3" type="text" placeholder="Slightly worn edges" maxlength="50" name="condition"/>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="loc-input">Preferred Location</label>
+      <div class="controls">
+        <input id="loc-input" class="span3" type="text" placeholder="Front of Dwinelle" maxlength="50" name="loc"/>
+        <p class="help-block">
+          Specify approximately where you live or want to sell your book from.</br>
+          ie. Unit 1 Courtyard, Golden Bear Cafe, or Asian Ghetto
+        </p>
+      </div>
+    </div>
+    <div>
+      <div class="control-group">
+        <label class="control-label" for="time-input">Preferred Time</label>
+        <div class="controls">
+          <input id="time-input" class="span3" type="text" placeholder="Any weekday morning" maxlength="50" name="time"/>
+          <p class="help-block">
+            General time preferences to help the buyer pick a time to meetup.</br>
+            ie. Sooner the better!, weekday lunch, afternoons
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">List this book</button>
+    </div>
+  </fieldset>
+</form>

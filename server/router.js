@@ -17,6 +17,7 @@ var Router = function(s, d){
   //setting up routing objects
   this.user = new UserService(d);
   this.request = new Request(d);
+  this.location = new Location(d);
   this.waitlist = {
     enqueue:function(obj, callback){
       if (obj){
@@ -54,8 +55,7 @@ var Router = function(s, d){
     }
   }
   this.offer = new OfferService(d, this.waitlist);
-  this.fill = new FillService(d);
-  this.location = new Location(d);
+  this.fill = new FillService(d, this.user, this.offer);
   /**
    * Scraper router intercepts scrape requests and looks in the MongoDB cache. If present, it grabs the DB entry and then fires off an asynchronous scrape request to update the DB. If not present, it just redirects the scraping request
    */

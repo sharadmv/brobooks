@@ -1,6 +1,6 @@
 var onFbLogin;
-(function () {
 
+(function () {
 
   var UserModel = Backbone.Model.extend({
     initialize: function () {
@@ -47,6 +47,7 @@ var onFbLogin;
   user = new UserModel();
 
   var OfferModel = Backbone.Model.extend({
+    url: '/test',
     initialize: function () {
     },
 
@@ -83,4 +84,17 @@ var onFbLogin;
     fulfilled: false,
     condition: "decent"
   });
+
+  var OfferCollection = Backbone.Collection.extend({
+    model: OfferModel,
+    url: '/api/service'
+  });
+
+  offers = new OfferCollection();
+
+  Backbone.sync = function(method, model) {
+    console.log(method + ': ' + method.url);
+  };
+
+
 })();

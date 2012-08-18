@@ -1,0 +1,79 @@
+<h3>Buy the Book</h3>
+<form class='form-horizontal' onSubmit="return validate()" action="/fill/create" method="get">
+  <fieldset>
+    <div class="control-group">
+      <div class="controls">
+        <input id="user-input" type="text" name="userId" style="display: none;" val=""/>
+        <div class="fb-stuff">
+          <div class="fb-login-button nav-ele" scope="email" style="margin: 0;">
+            Login With Facebook
+          </div>
+          <p class="help-block">
+            You must be logged into facebook to buy a book for security reasons.</br>
+            Brobooks will not share or sell your personal information.
+          </p>
+        </div>
+      </div>
+    </div>
+    <input type="text" name="offerId" style="display: none;" value="<%= offer.offerId %>"/>
+    <div class="control-group">
+      <label class="control-label" for="course-input">Course</label>
+      <div class="controls">
+        <span id="course-input" type="text" class="uneditable-input"><%= offer.dept + " " + offer.course %></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="title-input">Book Title</label>
+      <div class="controls">
+        <span id="title-input" type="text" class="uneditable-input"><%= offer.title %></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="author-input">Book Author</label>
+      <div class="controls">
+        <span id="author-input" type="text" class="uneditable-input"><%= offer.author %></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="edition-input">Edition</label>
+      <div class="controls">
+        <span id="edition-input" type="text" class="uneditable-input"><%= offer.edition %></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="condition-input">Condition</label>
+      <div class="controls">
+        <span id="condition-input" type="text" class="uneditable-input"><%= offer.condition %></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="price-input">Price</label>
+      <div class="controls">
+        <span id="price-input" type="text" class="uneditable-input"><%= "$" + offer.price + ".00"%></span>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="loc-input">Meeting Location</label>
+      <div class="controls">
+        <input id="loc-input" class="span3" type="text" maxlength="50" name="loc"/>
+        <p class="help-block">
+          The seller would like to meet you near <strong><%= offer.loc %></strong>
+        </p>
+      </div>
+    </div>
+    <div>
+      <div class="control-group">
+        <label class="control-label" for="time-input">Meeting Time</label>
+        <div class="controls">
+          <input id="time-input" class="span3" type="text" maxlength="50" name="time"/>
+          <p class="help-block">
+            The seller would like to sell it during <strong><%= offer.time %></strong>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Buy this book</button>
+    </div>
+  </fieldset>
+</form>

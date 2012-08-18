@@ -1,4 +1,4 @@
-<h3>Books for Sale</h3>
+<h3>Your Listings</h3>
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
@@ -9,6 +9,9 @@
         Book Title
       </th>
       <th>
+        Author
+      </th>
+      <th>
         Edition
       </th>
       <th>
@@ -16,6 +19,12 @@
       </th>
       <th>
         Price
+      </th>
+      <th>
+        Location
+      </th>
+      <th>
+        Time
       </th>
       <th></th>
     </tr>
@@ -26,10 +35,14 @@
     <tr>
       <td><%= offers[i].dept + " " + offers[i].course %></td>
       <td><%= offers[i].title %></td>
+      <td><%= offers[i].author %></td>
       <td><%= offers[i].edition %></td>
       <td><%= offers[i].condition %></td>
       <td><%= "$" + offers[i].price + ".00" %></td>
-      <td><a href="/buy?offerId=<%= offers[i].offerId %>">Buy This Book</a></td>
+      <td><%= offers[i].loc %></td>
+      <td><%= offers[i].time %></td>
+      <td><a href="/offer/delete?offerId=<%= offers[i].offerId %>&userId=<%= offers[i].userId %>">Delete</a>   <a href="/offer/toUpdate?offerId=<%=offers[i].offerId%>">Update</a>
+      </td>
     </tr>
     <% } %>
   </tbody>

@@ -9,6 +9,8 @@ var mail = require('mail').Mail({
   username: 'brobooks.browl@gmail.com',
   password: 'geraldsharad'
 });
+var fs = require('fs');
+
 var util = {
   get:function(h, p, safe, callback){
     if (safe) {
@@ -56,10 +58,11 @@ var util = {
       callback(dataChunks)
     });
   },
-  mail:function(addrs, subj, message){
+  mail:function(addrs, cc, subj, message){
     mail.message({
       from: 'browl@brobooks.com',
       to:addrs,
+      cc: cc,
       subject:subj
     })
     .body(message)
@@ -80,6 +83,23 @@ var util = {
       return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) +
       " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
     };
+  },
+
+  depts: function (callback) {
+    fs.readFile('./depsShort.txt', function (err, result) {
+      if (err) callback(err);
+      callback(false, result.toString().split('\n').sort());
+    });
+  },
+
+  hasParams: function (obj, params) {
+    console.log("in here");
+    for (var i = 0; i < params.length; i++) {
+      if (typeof(obj[params[i]]) === "undefined") {
+        return false;
+      }
+    }
+    return true;
   }
 };
 exports.util = util;
