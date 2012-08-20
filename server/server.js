@@ -1,32 +1,22 @@
-/**
- * Server class where http server is created
- */
-var fs = require('fs');
+var isDevMode = process.argv[2] === "dev";
+
 var express = require('express');
 var Dao = require('./dao.js').Dao;
-var dao = new Dao();
 var Model = require('./model.js').model;
-var Response = Model.Response;
-var FB = require('./fb.js').FB;
 var OfferService = require('./offerService.js').OfferService;
-var offerService = new OfferService(dao, {});
-
 var UserService = require('./userService.js').UserService;
-var userService = new UserService(dao);
-
 var FillService = require('./fillService.js').FillService;
+var Util = require('./util.js').util;
+
+var fbKey = isDevMode ? "356895117719349" : "305320992851654";
+var dao = new Dao();
+var offerService = new OfferService(dao, {});
+var userService = new UserService(dao);
 var fillService = new FillService(dao, userService, offerService);
 
-var Util = require('./util.js').util;
-//options if https is in use
-/*var options = {
-  key: fs.readFileSync('key.pem'),
-  cert: fs.readFileSync('cert.pem')
-};*/
-//setting up express http server
 var app = express.createServer();
 var port = 80;
-//setting up static routing
+
 app.listen(port);
 console.log("Server listening on port "+port);
 app.enable("jsonp callback");
@@ -44,7 +34,8 @@ app.get('/', function (req, res) {
 
     res.render('home', {
       page: 'home',
-      offers: offers
+      offers: offers,
+      fbKey: fbKey
     });
   })
 });
@@ -56,7 +47,8 @@ app.get('/buy', function (req, res) {
 
     res.render('buy', {
       page: 'buy',
-      offer: offer
+      offer: offer,
+      fbKey: fbKey,
     });
   });
 });
@@ -67,7 +59,8 @@ app.get('/sell', function (req, res) {
 
     res.render('sell', {
       page: 'sell',
-      depts: depts
+      depts: depts,
+      fbKey: fbKey
     });
   });
 });
@@ -79,7 +72,8 @@ app.get('/offer/create', function (req, res) {
     offerService.getByUser(req.query, function (err, offers) {
       res.render('offers', {
         page: 'offers',
-        offers: offers
+        offers: offers,
+        fbKey: fbKey
       });
     });
   });
@@ -89,14 +83,16 @@ app.get('/offers', function (req, res) {
   offerService.getByUser(req.query, function (err, offers) {
     res.render('offers', {
       page: 'offers',
-      offers: offers
+      offers: offers,
+      fbKey: fbKey
     });
   });
 });
 
 app.get('/offersSplash', function (req, res) {
   res.render('offersSplash', {
-    page: 'offersSplash'
+    page: 'offersSplash',
+    fbKey: fbKey
   });
 });
 
@@ -105,7 +101,8 @@ app.get('/offer/delete', function (req, res) {
     offerService.getByUser(req.query, function (err, offers) {
       res.render('offers', {
         page: 'offers',
-        offers: offers
+        offers: offers,
+        fbKey: fbKey
       });
     });
   });
@@ -118,7 +115,8 @@ app.get('/offer/toUpdate', function (req, res) {
       res.render('offerUpdate', {
         page: 'offerUpdate',
         offer: offer,
-        depts: depts
+        depts: depts,
+        fbKey: fbKey
       });
 
     })
@@ -130,7 +128,8 @@ app.get('/offer/update', function (req, res) {
     offerService.getByUser(req.query, function (err, offers) {
       res.render('offers', {
         page: 'offers',
-        offers: offers
+        offers: offers,
+        fbKey: fbKey
       });
     });
   });
@@ -143,7 +142,8 @@ app.get('/fill/create', function (req, res) {
     if (err) renderErr(err, res);
 
     res.render('fill', {
-      page: 'fill'
+      page: 'fill',
+        fbKey: fbKey
     });
   });
 });
@@ -156,39 +156,16 @@ app.get('/user/save', function (req, res) {
 
 app.get('/about', function (req, res) {
   res.render('about', {
-    page: 'about'
+    page: 'about',
+    fbKey: fbKey
   });
 });
 
 function renderErr (err, res) {
   console.error(err);
   res.render('error', {
-    page: 'error'
+    page: 'error',
+    fbKey: fbKey
   });
 };
 
-/*
-//setting up REST API routing services
-app.get('/api/service',function (req,res){
-  start = new Date();
-  //checking that service is formatted properly (name=object.method)
-  if (req.query['name']) {
-    var service = req.query['name'].split(".");
-    if (service.length != 2) {
-      //sends back failed response
-      response = new Response("failure",1337,"service name improper",req.query,start,new Date(), null);
-      res.json(response);
-    } else {
-      //routes service through router class where it returns the appropriate response
-      router.route(service, req.query.params, function (r) {
-        response = new Response(r.status,r.code,r.message,req.query,start,new Date(),r.result);
-        res.json(response);
-      });
-    }
-  } else {
-    //service error returned
-    response = new Response("failure",1337,"no service name given",req.query,start,new Date(),null);
-    res.json(response);
-  }
-});
-*/
