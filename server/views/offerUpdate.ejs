@@ -84,7 +84,7 @@
       <div class="control-group">
         <label class="control-label" for="contact-input">Contact</label>
         <div class="controls">
-          <input id="contact-input" class="span3" type="text" placeholder="Text me (123)456-7890" value="<%= offer.contact %>" maxlength="50" name="contact"/>
+          <input id="contact-input" class="span3" type="text" placeholder="Text me (123)456-7890" <% if (offer.contact) { %> value="<%= offer.contact %>" <% } %>maxlength="50" name="contact"/>
           <span class="help-inline">Optional</span>
           <p class="help-block">
             Place to put additional contact info in case email or fb chat is not the best way to reach you.</br>
@@ -97,7 +97,7 @@
       <div class="control-group">
         <label class="control-label" for="isbn-input">ISBN</label>
         <div class="controls">
-          <input id="isbn-input" class="span3" type="text" placeholder="123-4567890123" maxlength="15" value="<%= offer.isbn %>" name="isbn"/>
+          <input id="isbn-input" class="span3" type="text" placeholder="123-4567890123" maxlength="15" <% if (offer.isbn) { %> value="<%= offer.isbn %>" <% } %> name="isbn"/>
           <span class="help-inline">Optional</span>
         </div>
       </div>
