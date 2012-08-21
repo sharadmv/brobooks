@@ -26,22 +26,50 @@
       <th>
         Time
       </th>
+      <th>
+        Contact
+      </th>
+      <th>
+        ISBN
+      </th>
+      <th>
+        Sold?
+      </th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <% for (var i = 0; i < offers.length; i++) { %>
-      <% console.log(offers[i]); %>
+      <% var offer = offers[i]; %>
     <tr>
-      <td><%= offers[i].dept + " " + offers[i].course %></td>
-      <td><%= offers[i].title %></td>
-      <td><%= offers[i].author %></td>
-      <td><%= offers[i].edition %></td>
-      <td><%= offers[i].condition %></td>
-      <td><%= "$" + offers[i].price + ".00" %></td>
-      <td><%= offers[i].loc %></td>
-      <td><%= offers[i].time %></td>
-      <td><a href="/offer/delete?offerId=<%= offers[i].offerId %>&userId=<%= offers[i].userId %>">Delete</a>   <a href="/offer/toUpdate?offerId=<%=offers[i].offerId%>">Update</a>
+      <td><%= offer.dept + " " + offers[i].course %></td>
+      <td><%= offer.title %></td>
+      <td><%= offer.author %></td>
+      <td><%= offer.edition %></td>
+      <td><%= offer.condition %></td>
+      <td><%= "$" + offer.price + ".00" %></td>
+      <td><%= offer.loc %></td>
+      <td><%= offer.time %></td>
+      <td>
+        <% if (offer.contact) { %>
+        <%= offer.contact %>
+        <% } %>
+      </td>
+      <td>
+        <% if (offer.isbn) { %>
+        <%= offer.isbn %>
+        <% } %>
+      </td>
+      <td>
+        <% if (offer.fulfilled === 0) { %>
+        no
+        <% } else { %>
+        <a href="/fill/<%= offer.fillId %>">yes</a>
+        <% } %>
+      </td>
+      <td>
+        <a href="/offer/delete/<%=offer.offerId%>?userId=<%=offer.userId%>">Delete</a>
+        <a href="/offer/update/<%=offer.offerId%>">Update</a>
       </td>
     </tr>
     <% } %>

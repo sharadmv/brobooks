@@ -24,6 +24,7 @@ app.enable("jsonp callback");
 
 app.configure(function () {
   app.use(express.static('../public/'));
+  app.use(express.bodyParser());
   app.set('view engine', 'ejs');
   app.set('views', __dirname + '/views');
 });
@@ -65,11 +66,11 @@ app.get('/sell', function (req, res) {
   });
 });
 
-app.get('/offer/create', function (req, res) {
-  offerService.create(req.query, function (err, offer) {
+app.post('/offer/create', function (req, res) {
+  offerService.create(req.body, function (err, offer) {
     if (err) renderErr(err, res);
 
-    offerService.getByUser(req.query, function (err, offers) {
+    offerService.getByUser(req.body, function (err, offers) {
       res.render('offers', {
         page: 'offers',
         offers: offers,
@@ -96,8 +97,8 @@ app.get('/offersSplash', function (req, res) {
   });
 });
 
-app.get('/offer/delete', function (req, res) {
-  offerService.delete(req.query, function (err, offer) {
+app.get('/offer/delete/:offerId', function (req, res) {
+  offerService.delete({ offerId: req.route.params.offerId }, function (err, offer) {
     offerService.getByUser(req.query, function (err, offers) {
       res.render('offers', {
         page: 'offers',
@@ -109,8 +110,8 @@ app.get('/offer/delete', function (req, res) {
 });
 
 
-app.get('/offer/toUpdate', function (req, res) {
-  offerService.getOffer(req.query, function (err, offer) {
+app.get('/offer/update/:offerId', function (req, res) {
+  offerService.getOffer({ offerId: req.route.params.offerId }, function (err, offer) {
     Util.depts(function (err, depts) {
       res.render('offerUpdate', {
         page: 'offerUpdate',
@@ -123,9 +124,24 @@ app.get('/offer/toUpdate', function (req, res) {
   });
 });
 
-app.get('/offer/update', function (req, res) {
-  offerService.update(req.query, function (err, offer) {
-    offerService.getByUser(req.query, function (err, offers) {
+app.get('/fill/:fillId', function (req, res) {
+  fillService.getFill({
+    fillId: req.route.params.fillId
+  }, function (err, fill) {
+    userService.getUser({ userId: fill.userId }, function (err, buyer) {
+      res.render('fill', {
+        user: buyer,
+        page: 'fill',
+        fill: fill,
+        fbKey: fbKey
+      });
+    });
+  });
+});
+
+app.post('/offer/update', function (req, res) {
+  offerService.update(req.body, function (err, offer) {
+    offerService.getByUser(req.body, function (err, offers) {
       res.render('offers', {
         page: 'offers',
         offers: offers,
@@ -135,15 +151,15 @@ app.get('/offer/update', function (req, res) {
   });
 });
 
-
-
-app.get('/fill/create', function (req, res) {
-  fillService.create(req.query, function (err, fill) {
-    if (err) renderErr(err, res);
-
-    res.render('fill', {
-      page: 'fill',
+app.post('/fill/create', function (req, res) {
+  fillService.create(req.body, function (err, fill) {
+    userService.getUser({ userId: fill.userId }, function (err, user) {
+      res.render('fill', {
+        page: 'fill',
+        user: user,
+        fill: fill,
         fbKey: fbKey
+      });
     });
   });
 });

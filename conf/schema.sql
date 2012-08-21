@@ -54,3 +54,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `fb_id` (`fb_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+alter table offer add isbn varchar(30) default null after `condition`;
+alter table offer add column `contact` varchar(255) default null after time;
+alter table fill add column `contact` varchar(255) default null after time;

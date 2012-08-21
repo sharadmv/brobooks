@@ -1,5 +1,7 @@
 var mysql = require('mysql');
-require('./util.js').util.toMysqlFormat();
+var Util = require('./util.js').util
+
+Util.toMysqlFormat();
 
 var Dao = function() {
   var connection = mysql.createConnection({
@@ -23,15 +25,23 @@ var Dao = function() {
     },
 
     getUser: function (userId, callback) {
-      connection.query('SELECT * FROM user WHERE user_id=?', [userId], function (err, result) {
+      var query = connection.query('SELECT * FROM user WHERE user_id=?', [userId], function (err, result) {
         if (err) callback(err);
-        callback(false, result[0]);
+
+        if (result.length === 0) {
+          callback(new Error("No users found with id " + userId))
+          return;
+        }
+        var user = result[0];
+        Util.sqlToJson(user);
+        callback(false, user);
       });
     },
     getId: function (user, callback) {
       var params = [user.fbId];
       connection.query('SELECT user_id FROM user WHERE fb_id=?', params, function (err, result) {
         if (err) callback(err);
+
         callback(false, result[0].user_id);
       });
     }
@@ -43,7 +53,8 @@ var Dao = function() {
         user_id: fill.userId,
         offer_id: fill.offerId,
         loc: fill.loc,
-        time: fill.time
+        time: fill.time,
+        contact: fill.contact
       };
       connection.query('INSERT INTO fill SET ?', mysqlFill, function (err, result) {
         if (err) callback(err);
@@ -54,10 +65,12 @@ var Dao = function() {
     },
 
     getFill: function (fillId, callback) {
-      connection.query('SELECT * FROM fill WHERE fill_id=?', [fillId], function (err, result) {
+      var query = connection.query('SELECT * FROM fill WHERE fill_id=?', [fillId], function (err, result) {
         if (err) callback(err);
 
-        callback(false, result[0]);
+        var fill = result[0];
+        Util.sqlToJson(fill);
+        callback(false, fill);
       });
     }
   };
@@ -72,10 +85,12 @@ var Dao = function() {
         price: offer.price,
         loc: offer.loc,
         time: offer.time,
+        contact: offer.contact,
         author: offer.author,
         edition: offer.edition,
         fulfilled: false,
-        condition: offer.condition
+        condition: offer.condition,
+        isbn: offer.isbn
       };
       connection.query('INSERT INTO offer SET ?', mysqlOffer, function (err, result) {
         if (err) callback(err);
@@ -88,25 +103,21 @@ var Dao = function() {
     getOffer: function (offerId, callback) {
       connection.query('SELECT * FROM offer where offer_id=?', [offerId], function (err, result) {
         if (err) callback(err);
-        console.log(result);
+
         var offer = result[0];
-        offer.userId = offer.user_id;
-        delete offer.user_id;
-        offer.offerId = offer.offer_id;
-        delete offer.offer_id;
-        callback(false, result[0]);
+        Util.sqlToJson(offer)
+        callback(false, offer);
       });
     },
 
     getByUser: function (userId, callback) {
-      connection.query('SELECT * FROM offer WHERE user_id=?', [userId], function (err, result) {
+      connection.query('SELECT o.*, f.fill_id FROM offer o left join fill f on o.offer_id=f.offer_id WHERE o.user_id=?', [userId], function (err, result) {
         if (err) callback(err);
+
         for (var i = 0; i < result.length; i++) {
-          result[i].userId = result[i].user_id;
-          delete result[i].user_id;
-          result[i].offerId = result[i].offer_id;
-          delete result[i].offer_id;
+          Util.sqlToJson(result[i]);
         }
+
         callback(false, result);
       });
     },
@@ -119,10 +130,12 @@ var Dao = function() {
         price: offer.price,
         loc: offer.loc,
         time: offer.time,
+        contact: offer.contact,
         author: offer.author,
         edition: offer.edition,
         fulfilled: offer.fulfilled,
-        condition: offer.condition
+        condition: offer.condition,
+        isbn: offer.isbn
       };
       var query = connection.query('UPDATE offer SET ? where offer_id=?', [mysqlOffer, offer.offerId], function (err, result) {
         if (err) callback(err);
@@ -152,10 +165,7 @@ var Dao = function() {
         if (err) callback(err);
 
         for (var i = 0; i < result.length; i++) {
-          result[i].userId = result[i].user_id;
-          result[i].offerId = result[i].offer_id;
-          delete result[i].user_id;
-          delete result[i].offer_id;
+          Util.sqlToJson(result[i]);
         }
         callback(false, result);
       });

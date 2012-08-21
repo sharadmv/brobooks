@@ -93,13 +93,39 @@ var util = {
   },
 
   hasParams: function (obj, params) {
-    console.log("in here");
     for (var i = 0; i < params.length; i++) {
       if (typeof(obj[params[i]]) === "undefined") {
         return false;
       }
     }
     return true;
+  },
+
+  capitalize: function(str) {
+    return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+  },
+
+  underscoreToCamel: function (str) {
+    var words = str.split("_");
+    if (words.length == 1) {
+      return words[0];
+    }
+    for (var i = 1; i < words.length; i++) {
+      words[i] = util.capitalize(words[i]);
+    }
+
+    return words.join('');
+  },
+
+  sqlToJson: function (obj) {
+    var keys = Object.keys(obj);
+    for (var i = 0; i < keys.length; i++) {
+      var key = keys[i];
+      if (key.indexOf("_") !== -1) {
+        obj[util.underscoreToCamel(key)] = obj[key];
+        delete obj[key];
+      }
+    }
   }
 };
 exports.util = util;

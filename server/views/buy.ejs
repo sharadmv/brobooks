@@ -1,5 +1,5 @@
 <h3>Buy the Book</h3>
-<form class='form-horizontal' onSubmit="return validate()" action="/fill/create" method="get">
+<form class='form-horizontal' onSubmit="return validate()" action="/fill/create" method="post">
   <fieldset>
     <div class="control-group">
       <div class="controls">
@@ -50,6 +50,27 @@
       <label class="control-label" for="price-input">Price</label>
       <div class="controls">
         <span id="price-input" type="text" class="uneditable-input"><%= "$" + offer.price + ".00"%></span>
+      </div>
+    </div>
+    <% if (offer.isbn) { %>
+    <div class="control-group">
+      <label class="control-label" for="isbn-input">ISBN</label>
+      <div class="controls">
+        <span id="isbn-input" type="text" class="uneditable-input"><%= offer.isbn %></span>
+      </div>
+    </div>
+    <% } %>
+    <div class="control-group">
+      <label class="control-label" for="contact-input">Contact Info</label>
+      <div class="controls">
+        <input id="contact-input" class="span3" type="text" maxlength="50" name="contact"/>
+        <p class="help-block">
+          State the best way the seller can reach you once he/she receives an email notifying you would like the book.</br>
+          ie. "Text me at (123)456-7890", "I check my emails religiously", "gchat me at anotheremail@gmail.com"
+        <% if (offer.contact) { %>
+          </br>The seller has listed his contact info as <strong><%= offer.contact %></strong>
+        <% } %>
+        </p>
       </div>
     </div>
     <div class="control-group">
